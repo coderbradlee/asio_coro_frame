@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 
 
-project(muduo C CXX)
+project(asio_coro_frame C CXX)
 
 enable_testing()
 
@@ -98,12 +98,7 @@ if (NOT NO_SUB)
     #add_subdirectory("libgo")
 endif()
 
-
-add_subdirectory(muduo/base)
-add_subdirectory(muduo/net)
 add_subdirectory(src)
-add_definitions(-DMUDUO_STD_STRING)
-#add_subdirectory(bitcoin)
 configure_file(${PROJECT_SOURCE_DIR}/config.ini  ${PROJECT_BINARY_DIR}/bin/config.ini COPYONLY)
-#configure_file(${PROJECT_SOURCE_DIR}/libmicrohttpd/libmicrohttpd.a  ${PROJECT_BINARY_DIR}/lib/libmicrohttpd.a COPYONLY)
+configure_file($SOURCE_DIR/lib/libredispp.a  ${PROJECT_BINARY_DIR}/lib/libredispp.a COPYONLY)
 file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/bin/logs)
