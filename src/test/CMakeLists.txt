@@ -3,4 +3,4 @@ set(MAIN_LIB_LIST boost_system  boost_program_options boost_filesystem boost_cor
 
 set_target_properties(test PROPERTIES COMPILE_FLAGS "-std=c++14")
 
-target_link_libraries(test MAIN_LIB_LIST)
+target_link_libraries(test ${MAIN_LIB_LIST})
