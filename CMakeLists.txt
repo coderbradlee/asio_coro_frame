@@ -99,6 +99,7 @@ if (NOT NO_SUB)
 endif()
 
 add_subdirectory(src)
+add_subdirectory(src/test)
 configure_file(${PROJECT_SOURCE_DIR}/config.ini  ${PROJECT_BINARY_DIR}/bin/config.ini COPYONLY)
 configure_file($SOURCE_DIR/lib/libredispp.a  ${PROJECT_BINARY_DIR}/lib/libredispp.a COPYONLY)
 file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/bin/logs)
