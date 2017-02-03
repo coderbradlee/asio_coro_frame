@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
   {
     int i=i;
     printf("%d\n", i);
-    int a={6,7,8,9,10};
+    int a[]={6,7,8,9,10};
     int *pa=a;
     *(pa++)+=123;
     printf("%d,%d\n",*pa,*(++pa));
