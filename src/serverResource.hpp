@@ -36,55 +36,12 @@ using namespace boost::property_tree;
 
 typedef SimpleWeb::Server<SimpleWeb::HTTP> HttpServer;
 typedef SimpleWeb::Client<SimpleWeb::HTTP> HttpClient;
-//Connection *connRedis;
 string redisHost;
 string redisPort;
 string redisPassword;
 string url;
 string flow_number_param1;
 string flow_number_param2;
-///定义redis库
-#define KV_SYS_PARAMS 0
-#define KV_MF 1
-#define KV_SESSION 2
-#define KV_VISIT_RECORDS 3
-#define KV_SHOPPING_CART 4
-#define KV_OBJ_SNAPSHOT 5
-#define KV_OPERATION_LOG 6
-// response error code define -8001 ~ -9000 隔-10或-5
-//JSON_READ_OR_WRITE_ERROR(-8010, "json read or write error", "json 格式问题")
-#define JSON_READ_OR_WRITE_ERROR -8010
-//CREATE_SESSION_UNKNOWN_ERROR(-8020, "create session unknown error", "创建session时未知的错误")
-#define CREATE_SESSION_UNKNOWN_ERROR -8020
-//CREATE_SESSION_KEY_EXIST(-8025, "key already exist when create session", "创建session时key已经存在")
-#define CREATE_SESSION_KEY_EXIST -8025
-//ADD_USERID_UNDER_SESSION_UNKNOWN_ERROR(-8030, "add userid unknown error", "增加userid时未知的错误")
-#define ADD_USERID_UNDER_SESSION_UNKNOWN_ERROR -8030
-//ADD_USERID_KEY_NOT_EXIST(-8035, "key does not exist when add userid", "增加userid时key不存在")
-#define ADD_USERID_KEY_NOT_EXIST -8035
-//DELETE_SESSION_UNKNOWN_ERROR(-8040, "del session unknown error", "删除session时未知的错误")
-#define DELETE_SESSION_UNKNOWN_ERROR -8040
-//DELETE_SESSION_KEY_NOT_EXIST(-8045, "key does not exist when del session", "删除session时key不存在")
-#define DELETE_SESSION_KEY_NOT_EXIST -8045
-//QUERY_SESSION_UNKNOWN_ERROR(-8050, "unknown error when query session ", "查询session时未知的错误")
-#define QUERY_SESSION_UNKNOWN_ERROR -8050
-//QUERY_SESSION_KEY_NOT_EXIST(-8055, "key does not exist when query session", "查询session时key不存在")
-#define QUERY_SESSION_KEY_NOT_EXIST -8055
-//UPDATE_SESSION_DEADLINE_UNKNOWN_ERROR(-8060, "update session unknown error", "更新session时未知的错误")
-#define UPDATE_SESSION_DEADLINE_UNKNOWN_ERROR -8060
-//UPDATE_SESSION_DEADLINE_KEY_NOT_EXIST(-8065, "key does not exist when update session", "更新session时key不存在")
-#define UPDATE_SESSION_DEADLINE_KEY_NOT_EXIST -8065
-//*********************************************************
-//BATCH_CREATE_AREAS_KEY_EXIST(-8070, "key already exists when batch create areas", "批量增加地区key时key已经存在")
-#define BATCH_CREATE_AREAS_KEY_EXIST -8070
-//BATCH_CREATE_AREAS_UNKNOWN_ERROR(-8080, "unknown error when batch create areas", "批量增加地区key时未知错误")
-#define BATCH_CREATE_AREAS_UNKNOWN_ERROR -8080
-//UNKNOWN_ERROR(-8085, "unknown error", "未知错误")
-#define UNKNOWN_ERROR -8085
-
-//*********************************************************
-
-///////////////redis cluster thread pool//////////////////////
 
 
 template<typename redisConnection>
@@ -268,54 +225,8 @@ private:
 
 typedef Cluster<redisContext, ThreadedPool<redisContext> > ThreadPoolCluster;
 
-volatile int cnt = 0;
-std::mutex lockRedis;
-
 //set global variable value ThreadPoolCluster::ptr_t cluster_p;，set value through timer
 ThreadPoolCluster::ptr_t cluster_p;
-//std::mutex lockRedis;
-void commandThread( ThreadPoolCluster::ptr_t cluster_p )
-{
-    redisReply * reply;
-    // use defined custom cluster as template parameter for HiredisCommand here
-    reply = static_cast<redisReply*>( HiredisCommand<ThreadPoolCluster>::Command( cluster_p, "FOO", "SET %d %s", cnt, "BAR1" ) );
-    
-    // check the result with assert
-    assert( reply->type == REDIS_REPLY_STATUS && string(reply->str) == "OK" );
-    
-    {
-        std::lock_guard<std::mutex> locker(lockRedis);
-        cout << ++cnt << endl;
-    }
-    
-    freeReplyObject( reply );
-}
-
-void processCommandPool()
-{
-    const int threadsNum = 1000;
-    
-    // use defined ThreadedPool here
-    ThreadPoolCluster::ptr_t cluster_p;
-    // and here as template parameter
-	cout<<__LINE__<<":"<<redisHost<<endl;
-	cout<<__LINE__<<":"<<redisPort<<endl;
-    cluster_p = HiredisCommand<ThreadPoolCluster>::createCluster( redisHost.c_str(),boost::lexical_cast<int>(redisPort) );
-    
-    std::thread thr[threadsNum];
-    for( int i = 0; i < threadsNum; ++i )
-    {
-        thr[i] = std::thread( commandThread, cluster_p );
-    }
-    
-    for( int i = 0; i < threadsNum; ++i )
-    {
-        thr[i].join();
-    }
-    
-    delete cluster_p;
-}
-
 ///////////////redis cluster thread pool//////////////////////
 
 void deal_with_flow_number(HttpServer::Response& response, std::shared_ptr<HttpServer::Request> request)
@@ -338,32 +249,30 @@ void deal_with_flow_number(HttpServer::Response& response, std::shared_ptr<HttpS
             cout<<incr_command<<endl;
             cout<<get_command<<endl;
             
-        //redisReply * incr=static_cast<redisReply*>( HiredisCommand<ThreadPoolCluster>::Command( cluster_p, "{flow_number}:id", "incr {flow_number}:id"));
             redisReply * incr=static_cast<redisReply*>( HiredisCommand<ThreadPoolCluster>::Command( cluster_p, id_name.c_str(), incr_command.c_str()));
-        freeReplyObject(incr);
-        //redisReply * reply=static_cast<redisReply*>( HiredisCommand<ThreadPoolCluster>::Command( cluster_p, "{flow_number}:id", "get {flow_number}:id"));
-        cout<<__FILE__<<""<<__LINE__<<endl;
-        redisReply * reply=static_cast<redisReply*>( HiredisCommand<ThreadPoolCluster>::Command( cluster_p, id_name.c_str(), get_command.c_str()));
-        string value="";
-        //cout<<__LINE__<<endl;
-        if(reply->str!=nullptr)
-        {
-            //cout<<reply->type<<endl;
-          value+=reply->str;
-          //retJson.put<std::string>("flow_number",value);
-        }
-        freeReplyObject(reply);
-        cout<<value<<":"<<__FILE__<<""<<__LINE__<<endl;
-        ptime now = second_clock::local_time();  
-        string now_str  =  to_iso_extended_string(now.date()) + " " + to_simple_string(now.time_of_day());  
-        string temp="{\"flowNo\":\""+value+"\",\"replyTime\" : \""+now_str+"\"}";
+            freeReplyObject(incr);
+            cout<<__FILE__<<""<<__LINE__<<endl;
+            redisReply * reply=static_cast<redisReply*>( HiredisCommand<ThreadPoolCluster>::Command( cluster_p, id_name.c_str(), get_command.c_str()));
+            string value="";
+            //cout<<__LINE__<<endl;
+            if(reply->str!=nullptr)
+            {
+                //cout<<reply->type<<endl;
+              value+=reply->str;
+              //retJson.put<std::string>("flow_number",value);
+            }
+            freeReplyObject(reply);
+            cout<<value<<":"<<__FILE__<<""<<__LINE__<<endl;
+            ptime now = second_clock::local_time();  
+            string now_str  =  to_iso_extended_string(now.date()) + " " + to_simple_string(now.time_of_day());  
+            string temp="{\"flowNo\":\""+value+"\",\"replyTime\" : \""+now_str+"\"}";
 
-        cout<<temp<<":"<<__FILE__<<""<<__LINE__<<endl;
-        // std::stringstream ss;
-        // write_json(ss, retJson);
-        // //在这里判断里面的children及childrens的值，如果为空，设置为空数组,用replace
-        // string temp=ss.str();
-        response <<"HTTP/1.1 200 OK\r\nContent-Length: " << temp.length() << "\r\n\r\n" <<temp;
+            cout<<temp<<":"<<__FILE__<<""<<__LINE__<<endl;
+            // std::stringstream ss;
+            // write_json(ss, retJson);
+            // //在这里判断里面的children及childrens的值，如果为空，设置为空数组,用replace
+            // string temp=ss.str();
+            response <<"HTTP/1.1 200 OK\r\nContent-Length: " << temp.length() << "\r\n\r\n" <<temp;
         }
         catch(json_parser_error& e) 
         {
@@ -381,7 +290,6 @@ void defaultindex(HttpServer& server)
 {
 	try
 	{
-		std::lock_guard<std::mutex> locker(lockRedis);
 		 server.default_resource["GET"]=[](HttpServer::Response& response, std::shared_ptr<HttpServer::Request> request) {
 		string filename="web";
         
@@ -446,76 +354,6 @@ void defaultindex(HttpServer& server)
 }
 
 
-int apollo(HttpServer& server,string url)
-{
-	try
-	{
-         server.resource["^/flowNo/*+$"]["GET"]=[](HttpServer::Response& response, std::shared_ptr<HttpServer::Request> request) {
-        try 
-        {
-            cout<<request->path<<endl;
-            ////cout<<__LINE__<<endl;
-            string type="";
-            string company="";
-            string id_name="{"+type+"_"+company+"_"+"flow_number}:id";
-            string incr_command="incr "+id_name;
-            string get_command="get "+id_name;
-            cout<<id_name<<endl;
-            cout<<incr_command<<endl;
-            cout<<get_command<<endl;
-        //redisReply * incr=static_cast<redisReply*>( HiredisCommand<ThreadPoolCluster>::Command( cluster_p, "{flow_number}:id", "incr {flow_number}:id"));
-            redisReply * incr=static_cast<redisReply*>( HiredisCommand<ThreadPoolCluster>::Command( cluster_p, id_name.c_str(), incr_command.c_str()));
-        freeReplyObject(incr);
-        //redisReply * reply=static_cast<redisReply*>( HiredisCommand<ThreadPoolCluster>::Command( cluster_p, "{flow_number}:id", "get {flow_number}:id"));
-        redisReply * reply=static_cast<redisReply*>( HiredisCommand<ThreadPoolCluster>::Command( cluster_p, id_name.c_str(), get_command.c_str()));
-        string value="";
-        //cout<<__LINE__<<endl;
-        if(reply->str!=nullptr)
-        {
-            //cout<<reply->type<<endl;
-          value+=reply->str;
-          //retJson.put<std::string>("flow_number",value);
-        }
-        freeReplyObject(reply);
-
-        ptime now = second_clock::local_time();  
-        string now_str  =  to_iso_extended_string(now.date()) + " " + to_simple_string(now.time_of_day());  
-        string temp="{\"flowNo\":"+value+",\"replyTime\" : \""+now_str+"\"}";
-        // std::stringstream ss;
-        // write_json(ss, retJson);
-        // //在这里判断里面的children及childrens的值，如果为空，设置为空数组,用replace
-        // string temp=ss.str();
-        response <<"HTTP/1.1 200 OK\r\nContent-Length: " << temp.length() << "\r\n\r\n" <<temp;
-        }
-        catch(json_parser_error& e) 
-        {
-            string temp="json error";
-            response << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << temp.length()<< "\r\n\r\n" << temp;
-            return -1;
-        }
-        catch(exception& e) {
-            response << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n" << e.what();
-            return -1;
-        }
-        catch(...) {
-            response << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen("unknown error") << "\r\n\r\n" << "unknown error";
-            return -1;
-        }
-    };
-
-		return 0;
-	}
-	catch(exception& e) 
-	{
-          BOOST_LOG(test_lg::get())<<__LINE__<<": "<<e.what();
-		  return -1;
-	}
-	catch(...) 
-	{
-          BOOST_LOG(test_lg::get())<<__LINE__<<": "<<"unknown error";
-		  return -1;
-	}
-}
 
 void serverRedisResource(HttpServer& server,string redisHost,string redisPort,string redisPassword,string url)
 {
@@ -524,7 +362,6 @@ void serverRedisResource(HttpServer& server,string redisHost,string redisPort,st
 		//init redis connection pool
 
 		 cluster_p = HiredisCommand<ThreadPoolCluster>::createCluster( redisHost.c_str(),boost::lexical_cast<int>(redisPort));
-		apollo(server,url);
 		defaultindex(server);
 	}
 	catch(exception& e) 
@@ -538,156 +375,6 @@ void serverRedisResource(HttpServer& server,string redisHost,string redisPort,st
 }
 
 
-
-
-
-
-
-void testhash(Connection &conn)
-{
-    conn.del("hello");
-    cout<<((bool)conn.hset("hello", "world", "one"))<<std::endl;
-    cout<<((bool)conn.hset("hello", "mars", "two"))<<std::endl;
-    cout<<((std::string)conn.hget("hello", "world") == "one")<<std::endl;
-    cout<<(!conn.hsetNX("hello", "mars", "two"))<<std::endl;
-    cout<<((bool)conn.hsetNX("hello", "venus", "1"))<<std::endl;
-    cout<<(conn.hincrBy("hello", "venus", 3) == 4)<<std::endl;
-    cout<<((bool)conn.hexists("hello", "venus"))<<std::endl;
-    cout<<((bool)conn.hdel("hello", "venus"))<<std::endl;
-    cout<<(!conn.hexists("hello", "venus"))<<std::endl;
-    cout<<(conn.hlen("hello") == 2)<<std::endl;
-    MultiBulkEnumerator result = conn.hkeys("hello");
-    std::string str1;
-    std::string str2;
-    cout<<(result.next(&str1))<<std::endl;
-    cout<<(result.next(&str2))<<std::endl;
-    cout<<((str1 == "world" && str2 == "mars") || (str2 == "world" && str1 == "mars"))<<std::endl;
-    result = conn.hvals("hello");
-    cout<<(result.next(&str1))<<std::endl;
-    cout<<(result.next(&str2))<<std::endl;
-    cout<<((str1 == "one" && str2 == "two") || (str2 == "one" && str1 == "two"))<<std::endl;
-    result = conn.hgetAll("hello");
-    std::string str3;
-    std::string str4;
-    cout<<(result.next(&str1))<<std::endl;
-    cout<<(result.next(&str2))<<std::endl;
-    cout<<(result.next(&str3))<<std::endl;
-    cout<<(result.next(&str4))<<std::endl;
-    cout<<(
-                    (str1 == "world" && str2 == "one" && str3 == "mars" && str4 == "two")
-                    ||
-                    (str1 == "mars" && str2 == "two" && str3 == "world" && str4 == "one")
-                )<<std::endl;
-}
-
-void testset(Connection &conn)
-{
-	conn.del("hello");
-	cout<<((bool)conn.sadd("hello", "world"))<<std::endl;
-    cout<<((bool)conn.sisMember("hello", "world"))<<std::endl;
-    cout<<(!conn.sisMember("hello", "mars"))<<std::endl;
-    cout<<(conn.scard("hello") == 1)<<std::endl;
-    cout<<((bool)conn.sadd("hello", "mars"))<<std::endl;
-    cout<<(conn.scard("hello") == 2)<<std::endl;
-    MultiBulkEnumerator result = conn.smembers("hello");
-    std::string str1;
-    std::string str2;
-    cout<<(result.next(&str1))<<std::endl;
-    cout<<(result.next(&str2))<<std::endl;
-    cout<<((str1 == "world" && str2 == "mars") || (str2 == "world" && str1 == "mars"))<<std::endl;
-    std::string randomMember = conn.srandMember("hello");
-    cout<<(randomMember == "world" || randomMember == "mars")<<std::endl;
-    cout<<((bool)conn.srem("hello", "mars"))<<std::endl;
-    cout<<(conn.scard("hello") == 1)<<std::endl;
-    cout<<((std::string)conn.spop("hello") == "world")<<std::endl;
-    cout<<(conn.scard("hello") == 0)<<std::endl;
-    conn.del("hello1");
-    cout<<((bool)conn.sadd("hello", "world"))<<std::endl;
-    cout<<(conn.scard("hello") == 1)<<std::endl;
-    cout<<((bool)conn.smove("hello", "hello1", "world"))<<std::endl;
-    cout<<(conn.scard("hello") == 0)<<std::endl;
-    cout<<(conn.scard("hello1") == 1)<<std::endl;
-}
-void testlist(Connection &conn)
-{
-	conn.del("hello");
-	cout<<(conn.lpush("hello", "c") == 1)<<std::endl;
-    cout<<(conn.lpush("hello", "d") == 2)<<std::endl;
-    cout<<(conn.rpush("hello", "b") == 3)<<std::endl;
-    cout<<(conn.rpush("hello", "a") == 4)<<std::endl;
-    cout<<(conn.llen("hello") == 4)<<std::endl;
-    MultiBulkEnumerator result = conn.lrange("hello", 1, 3);
-    std::string str;
-    cout<<(result.next(&str))<<std::endl;
-    cout<<(str == "c")<<std::endl;
-    cout<<(result.next(&str))<<std::endl;
-    cout<<(str == "b")<<std::endl;
-    cout<<(result.next(&str))<<std::endl;
-    cout<<(str == "a")<<std::endl;
-    cout<<conn.ltrim("hello", 0, 1)<<std::endl;
-    result = conn.lrange("hello", 0, 10);
-    cout<<(result.next(&str))<<std::endl;
-    cout<<(str == "d")<<std::endl;
-    cout<<(result.next(&str))<<std::endl;
-    cout<<(str == "c")<<std::endl;
-    cout<<((std::string)conn.lindex("hello", 0) == "d")<<std::endl;
-    cout<<((std::string)conn.lindex("hello", 1) == "c")<<std::endl;
-    cout<<conn.lset("hello", 1, "f")<<std::endl;
-    cout<<((std::string)conn.lindex("hello", 1) == "f")<<std::endl;
-    conn.lpush("hello", "f");
-    conn.lpush("hello", "f");
-    conn.lpush("hello", "f");
-	cout<<"................"<<std::endl;
-    cout<<(conn.lrem("hello", 2, "f") == 2)<<std::endl;
-    cout<<(conn.llen("hello") == 3)<<std::endl;
-    cout<<((std::string)conn.lpop("hello") == "f")<<std::endl;
-    cout<<(conn.llen("hello") == 2)<<std::endl;
-    conn.rpush("hello", "x");
-    cout<<((std::string)conn.rpop("hello") == "x")<<std::endl;
-    conn.rpush("hello", "z");
-    cout<<((std::string)conn.rpopLpush("hello", "hello") == "z")<<std::endl;
-
-
-}
-
-void run(string host="localhost",string arg="6379",string password="renesola")
-{
-	try
-    {
-	cout<<"redis"<<std::endl;
-	//cout<<"redis1"<<std::endl;
-    Connection conn(host, arg, password);
-	conn.select(0);
-	conn.set("hello", "world");
-    StringReply stringReply = conn.get("hello");
-	
-    cout<<stringReply.result().is_initialized()<<std::endl;
-	
-    cout<<(std::string)conn.get("hello")<<std::endl;
-	
-    cout<<((bool)conn.exists("hello"))<<std::endl;
-    cout<<((bool)conn.del("hello"))<<std::endl;
-    cout<<(!conn.exists("hello"))<<std::endl;
-    cout<<(!conn.del("hello"))<<std::endl;
-	cout<<(conn.type("hello") == String)<<std::endl;
-	
-	cout<<"///////////////////////////////////////"<<std::endl;
-
-	testlist(conn);
-	cout<<"///////////////////////////////////////"<<std::endl;
-	testset(conn);
-	cout<<"///////////////////////////////////////"<<std::endl;
-	testhash(conn);
-	cout<<"///////////////////////////////////////"<<std::endl;
-	/*testzset(conn);*/
-	 }
-    catch (std::exception& e)
-    {
-        std::cout << "FAILURE: " << e.what() << std::endl;
-       // cout <<GetStackTrace()<< std::endl;
-    }
-
-}
 
 
 std::string&   replace_all(std::string&   str,const   std::string&   old_value,const   std::string&   new_value)     
