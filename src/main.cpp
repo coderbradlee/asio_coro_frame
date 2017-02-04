@@ -11,8 +11,6 @@ int main() {
 	    {
 	        server.start();
 	    });
-
-		server.initsink->flush();
 	    server_thread.join();
 	}
 	catch(exception& e) 
