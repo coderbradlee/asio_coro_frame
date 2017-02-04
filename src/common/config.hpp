@@ -4,8 +4,7 @@
 #include <cstdarg>
 #include <iostream>
 #include <map>
-#include <boost/noncopyable.hpp>
-//using std::string;
+#include "include.hpp"
 class iconfig:boost::noncopyable
 {
 	public:
