@@ -351,7 +351,7 @@ void defaultindex(HttpServer& server)
 	}
 }
 
-void serverRedisResource(HttpServer& server,string redisHost,string redisPort,string redisPassword,string url)
+void serverRedisResource(HttpServer& server)
 {
 	try
 	{
