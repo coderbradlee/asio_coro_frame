@@ -1,5 +1,5 @@
 #include "log.h"
-extern boost::shared_ptr<iconfig> get_config;
+#include "config.hpp"
 std::map<std::string,severity_level> severitymap=
 {
   { "normal", severity_level::normal },
