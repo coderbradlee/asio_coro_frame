@@ -202,8 +202,8 @@ namespace SimpleWeb {
                 endpoint(boost::asio::ip::tcp::v4(), port), acceptor(io_service, endpoint), num_threads(num_threads), 
                 timeout_request(timeout_request), timeout_content(timeout_send_or_receive) 
 				{
-                    BOOST_LOG(slg)<<"webserver port:"<<port;
-                    BOOST_LOG(slg)<<"webserver threads:"<<num_threads;
+                    BOOST_LOG(slg::get())<<"webserver port:"<<port;
+                    BOOST_LOG(slg::get())<<"webserver threads:"<<num_threads;
 				}
         
         virtual void accept()=0;
@@ -271,7 +271,7 @@ namespace SimpleWeb {
 					{
     
 					}
-                    BOOST_LOG(slg)<<"request: "<<request->method<<" "<<request->path<<" "<<myString;
+                    BOOST_LOG(slg::get())<<"request: "<<request->method<<" "<<request->path<<" "<<myString;
 				// 	//////******************************************/////////////////
 		
                     //If content, read that as well
@@ -386,7 +386,7 @@ namespace SimpleWeb {
 					os<<myString;
 					if(!myString.empty())
 					{
-						BOOST_LOG(slg)<<"response: "<<myString;
+						BOOST_LOG(slg::get())<<"response: "<<myString;
 					}
 				///*****************************************/////////////
 

@@ -347,7 +347,7 @@ void defaultindex(HttpServer& server)
 	}
 	catch(exception& e) 
 	{
-          BOOST_LOG(slg)<<__LINE__<<": "<<e.what();
+          BOOST_LOG(slg::get())<<__LINE__<<": "<<e.what();
 	}
 }
 
@@ -362,7 +362,7 @@ void serverRedisResource(HttpServer& server)
 	}
 	catch(exception& e) 
 	{
-          BOOST_LOG(slg)<<__LINE__<<": "<<e.what();
+          BOOST_LOG(slg::get())<<__LINE__<<": "<<e.what();
 	}
 	catch(...) 
 	{
