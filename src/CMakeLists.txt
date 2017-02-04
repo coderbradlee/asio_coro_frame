@@ -3,7 +3,7 @@ add_subdirectory(common)
 
 add_subdirectory(test)
 include_directories(common)
-add_executable(redis_cluster common/config.cpp common/renesolalog.cpp main.cpp)
+add_executable(redis_cluster common/config.cpp common/log.cpp main.cpp)
 set(MAIN_LIB_LIST boost_program_options boost_filesystem boost_coroutine boost_system boost_thread pthread boost_context boost_date_time boost_log_setup boost_log redispp hiredis ssl crypto boost_regex boost_timer boost_signals boost_locale)
 
  
