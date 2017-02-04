@@ -12,7 +12,7 @@ int main() {
 		
 	    for(int i=0;i<100000;++i)
 	    {
-	    	BOOST_LOG_SEV(slg, notification)<<<<i;
+	    	BOOST_LOG_SEV(slg, notification)<<i;
 	    }
 	    std::cout << "now time elapsed:" << pass.format(6) << std::endl;
 	    initsink->flush();
