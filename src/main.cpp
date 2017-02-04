@@ -7,6 +7,14 @@ int main() {
 	{
 	    HttpServer server(get_config->m_port,get_config->m_threads);
 	    serverRedisResource(server);
+	    timer tm;
+		
+	    for(int i=0;i<100000;++i)
+	    {
+	    	BOOST_LOG(slg::get())<<i;
+	    }
+	    double duration = tm.elapsed();
+		cout << duration << endl;
 	    thread server_thread([&server]()
 	    {
 	        server.start();
