@@ -24,6 +24,8 @@ class iconfig:boost::noncopyable
 		
 		std::string m_log_name;
 		std::string m_log_level;
+		static boost::mutex m_mu;	
+		static boost::shared_ptr<iconfig> m_ps;
 };
 extern boost::shared_ptr<iconfig> get_config;
 #endif
