@@ -1,5 +1,5 @@
 #include "log.h"
-
+extern boost::shared_ptr<iconfig> get_config;
 std::map<std::string,severity_level> severitymap=
 {
   { "normal", severity_level::normal },
@@ -50,4 +50,4 @@ boost::shared_ptr< file_sink > initlog()
         return nullptr;
     }
 }
-shared_ptr< file_sink > initsink=initlog();//init log;
+boost::shared_ptr< file_sink > initsink=initlog();//init log;
