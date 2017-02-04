@@ -1,4 +1,5 @@
 #include "config.hpp"
+#include "log.h"
 #include "serverResource.hpp"
 
 int main() {

@@ -58,17 +58,6 @@ enum severity_level
     critical
 };
 
-
-
-  /*severitymap["normal"] = normal;
-  severitymap.insert(map<std::string, severity_level>::value_type("normal",normal));
-  severitymap.insert(map<std::string, severity_level>::value_type("notification",notification));
-  severitymap.insert(map<std::string, severity_level>::value_type("warning",warning));
-  severitymap.insert(map<std::string, severity_level>::value_type("error",error));
-  severitymap.insert(map<std::string, severity_level>::value_type("critical",critical));
-*/
-
-// The formatting logic for the severity level
 template< typename CharT, typename TraitsT >
 inline std::basic_ostream< CharT, TraitsT >& operator<< (
     std::basic_ostream< CharT, TraitsT >& strm, severity_level lvl)
@@ -87,17 +76,9 @@ inline std::basic_ostream< CharT, TraitsT >& operator<< (
         strm << static_cast< int >(lvl);
     return strm;
 }
-
-
-
 typedef sinks::synchronous_sink< sinks::text_file_backend > file_sink;
-BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT(test_lg, src::logger_mt)
-
-enum { LOG_RECORDS_TO_WRITE = 10000 };
-
-//boost::shared_ptr< sink_t > initlog();
 boost::shared_ptr< file_sink > initlog();
-
-
-std::string&   replace_all(std::string&   str,const   std::string&   old_value,const   std::string&   new_value);     
-std::string&   replace_all_distinct(std::string&   str,const   std::string&   old_value,const   std::string& new_value);  
+extern shared_ptr< file_sink > initsink;
+// src::severity_logger< severity_level > slg;
+// src::logger slg;
+BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT(slg, src::logger_mt)

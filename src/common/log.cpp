@@ -1,91 +1,53 @@
+#include "log.h"
 
-#include "log.hpp"
-//int kRollSize = 50*1000*1000;
-size_t kRollSize=boost::lexical_cast<int>(get_config->m_log_size)*1000*1000;
-boost::shared_ptr<muduo::AsyncLogging> g_asyncLog = nullptr;
-
-void asyncOutput(const char* msg, int len)
+std::map<std::string,severity_level> severitymap=
 {
-  g_asyncLog->append(msg, len);
-}
+  { "normal", severity_level::normal },
+  { "notification", severity_level::notification },
+  { "warning", severity_level::warning},
+  { "error", severity_level::error },
+  { "critical", severity_level::critical}
+};
 
-void bench(bool longLog)
+//boost::shared_ptr< sink_t > initlog()
+boost::shared_ptr< file_sink > initlog()
 {
-  // muduo::Logger::setOutput(asyncOutput);
+   try
+    {
+		  boost::shared_ptr< file_sink > sink(new file_sink(
+      	keywords::file_name = get_config->m_log_name+"_%Y%m%d_%5N.log",
+            keywords::rotation_size = 16*1024 * 1024 // rotation size, in characters
+            ));
 
-  // int cnt = 0;
-  // const int kBatch = 1000000;
-  // muduo::string empty = " ";
-  // muduo::string longStr(3000, 'X');
-  // longStr += " ";
-
-  // for (int t = 0; t < 1; ++t)
-  // {
-  //   muduo::Timestamp start = muduo::Timestamp::now();
-  //   for (int i = 0; i < kBatch; ++i)
-  //   {
-  //     LOG_INFO << "Hello 0123456789" << " abcdefghijklmnopqrstuvwxyz "
-  //              << (longLog ? longStr : empty)
-  //              << cnt;
-  //     ++cnt;
-  //   }
-  //   muduo::Timestamp end = muduo::Timestamp::now();
-  //   printf("%f\n", timeDifference(end, start)*1000000/kBatch);
-  //   struct timespec ts = { 0, 500*1000*1000 };
-  //   nanosleep(&ts, NULL);
-  // }
-
-    muduo::ThreadPool pool("pool");
-    pool.start(5);
-    for(int i=0;i<5;++i)
-      pool.run([](){LOG_INFO<<"info"<<" dsds";sleep(1);});
-    LOG_DEBUG<<"DEBUG";
+        // Set up where the rotated files will be stored
+        sink->locked_backend()->set_file_collector(sinks::file::make_collector(
+            keywords::target = "logs",                          // where to store rotated files
+            keywords::max_size = 16*1024 * 1024,              // maximum total size of the stored files, in bytes
+            keywords::min_free_space = 100 * 1024 * 1024        // minimum free space on the drive, in bytes
+            ));
+        sink->locked_backend()->scan_for_files();
+        sink->set_formatter
+        (
+            expr::format("%1%: [%2%] [%3%] [%4%] - %5%")
+                % expr::attr< unsigned int >("RecordID")
+				        % expr::attr< severity_level >("Severity")
+                % expr::attr< boost::posix_time::ptime >("TimeStamp")
+               // % expr::attr< boost::thread::id >("ThreadID")
+				        % expr::attr< attrs::current_thread_id::value_type >("ThreadID")
+                % expr::smessage
+        );
+		    sink->set_filter(expr::attr< severity_level >("Severity").or_default(normal) >= severitymap[get_config->m_log_level]);
+        // Add it to the core
+        logging::core::get()->add_sink(sink);
+        logging::core::get()->add_global_attribute("TimeStamp", attrs::local_clock());
+        logging::core::get()->add_global_attribute("RecordID", attrs::counter< unsigned int >());
+		    logging::core::get()->add_global_attribute("ThreadID", attrs::current_thread_id());
+        return sink;
+    }
+    catch (std::exception& e)
+    {
+        std::cout << "FAILURE: " << e.what() << std::endl;
+        return nullptr;
+    }
 }
-
-void init_log()
-{
-	try
-	{
-		size_t kOneGB = 1000*1024*1024;
-	    rlimit rl = { 1*kOneGB, 1*kOneGB };
-	    setrlimit(RLIMIT_AS, &rl);
-	
-	    muduo::Logger::setOutput(asyncOutput);
-	    if(get_config->m_log_level=="info")
-		{
-			muduo::Logger::setLogLevel(muduo::Logger::LogLevel::INFO);
-		}
-		else if(get_config->m_log_level=="debug")
-		{
-			muduo::Logger::setLogLevel(muduo::Logger::LogLevel::DEBUG);
-		}
-		else if(get_config->m_log_level=="error")
-		{
-			muduo::Logger::setLogLevel(muduo::Logger::LogLevel::ERROR);
-		}
-		else
-		{
-			muduo::Logger::setLogLevel(muduo::Logger::LogLevel::WARN);
-		}
-		
-		muduo::TimeZone beijing(8*3600, "CST");
-	  	muduo::Logger::setTimeZone(beijing);
-	  	muduo::string file_name(get_config->m_log_name.c_str());
-
-	    //cout<<get_config->m_log_name<<endl;
-	  
-	  	boost::shared_ptr<muduo::AsyncLogging> log(new muduo::AsyncLogging(file_name, kRollSize));
-	  	log->start();
-	  	g_asyncLog = log;
-
-	}
-	  catch (std::exception& e)
-	  {
-	    //cout << diagnostic_information(e) << endl;
-	    std::cout << e.what() << std::endl;
-	  }
-	  catch (...)
-	  {
-	    std::cout << "unknown error" << std::endl;
-	  }	
-}
+shared_ptr< file_sink > initsink=initlog();//init log;

@@ -78,14 +78,11 @@ namespace SimpleWeb {
                 }));
             }
             
-            void flush() {
+            void flush()
+            {
                 boost::asio::streambuf write_buffer;
                 std::ostream response(&write_buffer);
                 response << stream.rdbuf();
-				//////////////////////////////////////////
-				/*BOOST_LOG(test_lg::get())<< __LINE__<<stream.rdbuf();
-				initsinkflush();*/
-				//////////////////////////////////////////////////
                 boost::asio::async_write(*socket, write_buffer, yield);
             }
                         
@@ -146,9 +143,8 @@ namespace SimpleWeb {
             std::function<void(ServerBase<socket_type>::Response&, std::shared_ptr<ServerBase<socket_type>::Request>)> > > > > opt_resource;
         
     public:
-        void start() {
-			//LOG(slg, info) <<"tag";
-            //Copy the resources to opt_resource for more efficient request processing
+        void start() 
+        {
             opt_resource.clear();
             for(auto& res: resource) {
                 for(auto& res_method: res.second) {
@@ -191,11 +187,7 @@ namespace SimpleWeb {
             io_service.stop();
         }
 	public:
-		//shared_ptr< sink_t > initsink;
-		shared_ptr< file_sink > initsink;
-		src::severity_logger< severity_level > slg;
-		/*public:
-			friend void initsinkflush(){initsink->flush();}*/
+		
     protected:
         boost::asio::io_service io_service;
         boost::asio::ip::tcp::endpoint endpoint;
@@ -210,17 +202,8 @@ namespace SimpleWeb {
                 endpoint(boost::asio::ip::tcp::v4(), port), acceptor(io_service, endpoint), num_threads(num_threads), 
                 timeout_request(timeout_request), timeout_content(timeout_send_or_receive) 
 				{
-#ifdef DAEMON
-					if(daemon(1,1)<0)//daemon
-						exit(-1); 
-#endif
-					initsink=initlog();//init log
-					BOOST_LOG(test_lg::get())<<"webserver port:"<<port;
-					BOOST_LOG(test_lg::get())<<"webserver threads:"<<num_threads;
-					//initsink->stop();
-					initsink->flush();
-					
-					
+                    BOOST_LOG(slg)<<"webserver port:"<<port;
+                    BOOST_LOG(slg)<<"webserver threads:"<<num_threads;
 				}
         
         virtual void accept()=0;
@@ -283,17 +266,12 @@ namespace SimpleWeb {
 					//复制一份回去
 					std::iostream os(&(request->streambuf));
 					os<<myString;
-				    //BOOST_LOG_SEV(slg, notification)<<"request: "<<request->method<<" "<<request->path<<" "<<myString;
-                    //initsink->flush();
+				    
 					if(!myString.empty()||!myString.empty())
 					{
-					   //BOOST_LOG(test_lg::get())<<"request: "<<request->method<<" "<<request->path<<" "<<myString;
-					 //src::severity_logger< severity_level > slg;
-    // These two lines test filtering based on severity
     
 					}
-                    BOOST_LOG_SEV(slg, notification)<<"request: "<<request->method<<" "<<request->path<<" "<<myString;
-					initsink->flush();
+                    BOOST_LOG(slg)<<"request: "<<request->method<<" "<<request->path<<" "<<myString;
 				// 	//////******************************************/////////////////
 		
                     //If content, read that as well
@@ -325,9 +303,7 @@ namespace SimpleWeb {
         }
 
         void parse_request(std::shared_ptr<Request> request, std::istream& stream) const {
-            
-			
-			
+
 			std::string line;
 			
             getline(stream, line);
@@ -410,11 +386,8 @@ namespace SimpleWeb {
 					os<<myString;
 					if(!myString.empty())
 					{
-					   //BOOST_LOG(test_lg::get())<<"response: "<<myString;
-						//BOOST_LOG(test_lg::get())<<stream.rdbuf();
-						BOOST_LOG_SEV(slg, notification)<<"response: "<<myString;
+						BOOST_LOG(slg)<<"response: "<<myString;
 					}
-					initsink->flush();
 				///*****************************************/////////////
 
                 response.async_flush([this, socket, request, timer](const boost::system::error_code& ec) {
