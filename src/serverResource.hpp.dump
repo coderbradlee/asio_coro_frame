@@ -36,13 +36,6 @@ using namespace boost::property_tree;
 
 typedef SimpleWeb::Server<SimpleWeb::HTTP> HttpServer;
 typedef SimpleWeb::Client<SimpleWeb::HTTP> HttpClient;
-string redisHost;
-string redisPort;
-string redisPassword;
-string url;
-string flow_number_param1;
-string flow_number_param2;
-
 
 template<typename redisConnection>
 class ThreadedPool
@@ -290,7 +283,7 @@ void defaultindex(HttpServer& server)
 {
 	try
 	{
-		 server.default_resource["GET"]=[](HttpServer::Response& response, std::shared_ptr<HttpServer::Request> request) {
+        server.default_resource["GET"]=[](HttpServer::Response& response, std::shared_ptr<HttpServer::Request> request) {
 		string filename="web";
         
 		string path=request->path;
@@ -303,7 +296,8 @@ void defaultindex(HttpServer& server)
         }
 		//Replace all ".." with "." (so we can't leave the web-directory)
 		size_t pos;
-		while((pos=path.find(".."))!=string::npos) {
+		while((pos=path.find(".."))!=string::npos) 
+        {
 			path.erase(pos, 1);
 		}
         
@@ -317,7 +311,8 @@ void defaultindex(HttpServer& server)
 		}
 		ifs.open(filename, ifstream::in);
         
-		if(ifs) {
+		if(ifs) 
+        {
 			ifs.seekg(0, ios::end);
 			size_t length=ifs.tellg();
             
@@ -327,10 +322,12 @@ void defaultindex(HttpServer& server)
             
 			//read and send 128 KB at a time if file-size>buffer_size
 			size_t buffer_size=131072;
-			if(length>buffer_size) {
+			if(length>buffer_size) 
+            {
 				vector<char> buffer(buffer_size);
 				size_t read_length;
-				while((read_length=ifs.read(&buffer[0], buffer_size).gcount())>0) {
+				while((read_length=ifs.read(&buffer[0], buffer_size).gcount())>0) 
+                {
 					response.stream.write(&buffer[0], read_length);
 					response << HttpServer::flush;
 				}
@@ -340,7 +337,8 @@ void defaultindex(HttpServer& server)
 
 			ifs.close();
 		}
-		else {
+		else 
+        {
 			string content="Could not open file "+filename;
 			response << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << content.length() << "\r\n\r\n" << content;
 		}
@@ -353,15 +351,13 @@ void defaultindex(HttpServer& server)
 	}
 }
 
-
-
 void serverRedisResource(HttpServer& server,string redisHost,string redisPort,string redisPassword,string url)
 {
 	try
 	{
 		//init redis connection pool
 
-		 cluster_p = HiredisCommand<ThreadPoolCluster>::createCluster( redisHost.c_str(),boost::lexical_cast<int>(redisPort));
+		 cluster_p = HiredisCommand<ThreadPoolCluster>::createCluster( get_config->m_redis_host.c_str(),get_config->m_redis_port);
 		defaultindex(server);
 	}
 	catch(exception& e) 
