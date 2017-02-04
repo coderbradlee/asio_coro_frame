@@ -3,7 +3,7 @@
 
 #include <boost/asio.hpp>
 #include <boost/asio/spawn.hpp>
-#include "renesolalog.h"
+#include "log.h"
 #include <regex>
 #include <unordered_map>
 #include <thread>

@@ -2,7 +2,7 @@
 #define	SERVER_RESOURCE_HPP
 #define BOOST_SPIRIT_THREADSAFE
 
-#include "renesolalog.h"
+#include "log.h"
 #include "redispp.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <iostream>
