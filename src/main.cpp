@@ -15,6 +15,8 @@ int main() {
 	    	BOOST_LOG(slg::get())<<i;
 	    }
 	    std::cout << "now time elapsed:" << pass.format(6) << std::endl;
+	    initsink->flush();
+
 	    thread server_thread([&server]()
 	    {
 	        server.start();
