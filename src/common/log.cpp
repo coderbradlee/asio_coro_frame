@@ -18,7 +18,7 @@ boost::shared_ptr< file_sink > initlog()
       	keywords::file_name = get_config->m_log_name+"_%Y%m%d_%5N.log",
             keywords::rotation_size = 16*1024 * 1024 // rotation size, in characters
             ));
-
+      sink->auto_flush(true);
         // Set up where the rotated files will be stored
         sink->locked_backend()->set_file_collector(sinks::file::make_collector(
             keywords::target = "logs",                          // where to store rotated files
