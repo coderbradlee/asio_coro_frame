@@ -9,7 +9,7 @@ int main() {
 	    boost::timer::cpu_timer pass;
 		pass.start();
 		
-	    for(int i=0;i<1000000;++i)
+	    for(int i=0;i<700000;++i)
 	    {
 	    	BOOST_LOG_SEV(slg, notification)<<i;
 	    }
