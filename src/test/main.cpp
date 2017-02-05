@@ -1,19 +1,38 @@
 #include <iostream>
+#include <boost/asio/yield.hpp>
 using std::string;
 using std::cout;
 using std::endl;
-int i=1;
+class test_coro:coroutine
+{
+public:
+  void operator()()
+  {
+    reenter(this)
+    {
+      while(i<10)
+      {
+         std::cout<<i<<std::endl;
+         ++i;
+         yield;
+         std::cout<<i<<std::endl;
+         ++i;
+      }
+    }
+  }
+private:
+  int i;
+};
 int main(int argc, char* argv[])
 {
   try
   {
-    int i=i;
-    printf("%d\n", i);
-    int a[]={6,7,8,9,10};
-    int *pa=a;
-    *(pa++)+=123;
-    printf("%d,%d\n",*pa,*(++pa));
-    //sleep(10);
+    test_coro t1,t2;
+    for(;;)
+    {
+      t1();
+      t2();
+    }
   }
   catch (std::exception& e)
   {
