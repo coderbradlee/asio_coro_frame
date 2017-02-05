@@ -16,7 +16,7 @@ boost::shared_ptr< file_sink > initlog()
     {
 		  boost::shared_ptr< file_sink > sink(new file_sink(
       	keywords::file_name = get_config->m_log_name+"_%Y%m%d_%5N.log",
-            keywords::rotation_size = 16*1024 * 1024 // rotation size, in characters
+            keywords::rotation_size = 16*1024 * 1024, // rotation size, in characters
             keywords::auto_flush=get_config->m_log_auto_flush;
             ));
       // sink->auto_flush(true);
