@@ -8,6 +8,7 @@ using boost::asio::coroutine;
 class test_coro
 {
 public:
+  test_coro():i(0){}
   void operator()()
   {
     reenter(m_coro)
