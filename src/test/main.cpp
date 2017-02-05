@@ -4,6 +4,7 @@
 using std::string;
 using std::cout;
 using std::endl;
+using boost::asio::coroutine;
 class test_coro
 {
 public:
