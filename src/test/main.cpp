@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
     for(;;)
     {
       t1();
-      t2();
+      // t2();
     }
   }
   catch (std::exception& e)
