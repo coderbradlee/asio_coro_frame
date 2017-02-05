@@ -9,12 +9,12 @@ int main() {
 	    boost::timer::cpu_timer pass;
 		pass.start();
 		
-	    for(int i=0;i<100000;++i)
+	    for(int i=0;i<1000000;++i)
 	    {
 	    	BOOST_LOG_SEV(slg, notification)<<i;
 	    }
 	    std::cout << "now time elapsed:" << pass.format(6) << std::endl;
-	    //initsink->flush();
+	    
 
 	    thread server_thread([&server]()
 	    {
