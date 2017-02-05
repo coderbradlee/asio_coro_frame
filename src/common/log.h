@@ -76,7 +76,7 @@ inline std::basic_ostream< CharT, TraitsT >& operator<< (
         strm << static_cast< int >(lvl);
     return strm;
 }
-typedef sinks::asynchronous_sink< sinks::text_file_backend > file_sink;
+typedef sinks::synchronous_sink< sinks::text_file_backend > file_sink;
 boost::shared_ptr< file_sink > initlog();
 extern boost::shared_ptr< file_sink > initsink;
 extern src::severity_logger< severity_level > slg;
