@@ -23,16 +23,16 @@
 #include <boost/log/utility/setup/from_stream.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/ini_parser.hpp>
-#include <boost/log/common.hpp>
-#include <boost/log/expressions.hpp>
-
-#include <boost/log/utility/setup/file.hpp>
-#include <boost/log/utility/setup/console.hpp>
-#include <boost/log/utility/setup/common_attributes.hpp>
 
 #include <boost/log/attributes/timer.hpp>
 #include <boost/log/attributes/named_scope.hpp>
 #include <boost/log/support/date_time.hpp>
+#include <boost/log/sinks/sync_frontend.hpp>
+#include <boost/log/sinks/text_file_backend.hpp>
+
+#include <boost/log/utility/setup/file.hpp>
+#include <boost/log/utility/setup/console.hpp>
+#include <boost/log/utility/setup/common_attributes.hpp>
 
 namespace logging = boost::log;
 namespace attrs = boost::log::attributes;
