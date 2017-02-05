@@ -1,7 +1,5 @@
 #include "config.hpp"
 #include "serverResource.hpp"
-boost::shared_ptr< file_sink > initsink=initlog();//init log;
-src::severity_logger< severity_level > slg;
 int main() {
 	try
 	{

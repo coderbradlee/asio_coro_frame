@@ -79,6 +79,6 @@ inline std::basic_ostream< CharT, TraitsT >& operator<< (
 typedef sinks::synchronous_sink< sinks::text_file_backend > file_sink;
 boost::shared_ptr< file_sink > initlog();
 //extern boost::shared_ptr< file_sink > initsink;
-
+extern src::severity_logger< severity_level > slg;
 // src::logger slg;
 // BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT(slg, src::logger_mt)
