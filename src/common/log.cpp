@@ -23,7 +23,7 @@ boost::shared_ptr< file_sink > initlog()
         sink->locked_backend()->set_file_collector(sinks::file::make_collector(
             keywords::target = "logs",                          // where to store rotated files
             keywords::max_size = 16*1024 * 1024,              // maximum total size of the stored files, in bytes
-            keywords::min_free_space = 100 * 1024 * 1024,        // minimum free space on the drive, in bytes
+            keywords::min_free_space = 100 * 1024 * 1024        // minimum free space on the drive, in bytes
             // keywords::auto_flush=true
             ));
         sink->locked_backend()->scan_for_files();
