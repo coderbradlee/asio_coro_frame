@@ -4,12 +4,12 @@
 using std::string;
 using std::cout;
 using std::endl;
-class test_coro:coroutine
+class test_coro
 {
 public:
   void operator()()
   {
-    reenter(this)
+    reenter(m_coro)
     {
       while(i<10)
       {
@@ -22,6 +22,7 @@ public:
     }
   }
 private:
+  coroutine m_coro;
   int i;
 };
 int main(int argc, char* argv[])
