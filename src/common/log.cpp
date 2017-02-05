@@ -50,4 +50,3 @@ boost::shared_ptr< file_sink > initlog()
         return nullptr;
     }
 }
-boost::shared_ptr< file_sink > initsink=initlog();//init log;
