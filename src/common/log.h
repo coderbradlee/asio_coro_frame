@@ -81,4 +81,4 @@ boost::shared_ptr< file_sink > initlog();
 extern boost::shared_ptr< file_sink > initsink;
 extern src::severity_logger< severity_level > slg;
 // src::logger slg;
-// BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT(slg, src::logger_mt)
+BOOST_LOG_INLINE_GLOBAL_LOGGER_DEFAULT(slg, src::logger_mt)
