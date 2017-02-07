@@ -71,41 +71,6 @@ struct report_data
 		 	<<","<<creat_at
  			<<std::endl;
  	}
- 	std::string csv_line()
- 	{
- 		std::ostringstream stream;
-			stream<<std::setprecision(8)<<quotation_no
-		 	<<","<<account_name
-		 	<<","<<sales_company_name
-		 	<<","<<"customer_name"
-		 	<<","<<customer_countries
-		 	<<","<<receiving_countries
-		 	<<","<<"import area"
-		 	<<","<<approval_status
-		 	<<","<<"trade term"
-			<<","<<product_name_id//export as product_name_id
-			<<","<<product_name
-		 	<<","<<product_qty_pc
-			<<","<<product_qty_w
-			<<","<<currency
-			<<","<<unit_price
-			<<","<<"zhidaojia"
-			<<","<<price_total
-			<<","<<"zhidaozhenggejiage"
-			<<","<<payment_term_desc
-		 	<<","<<creat_at
-		 	
-
-		 	<<","<<sales_full_name
-			<<","<<price_condition
-			<<","<<currency
-			<<","<<price_total_currency
-			<<","<<pi_no
-			<<","<<buyers_po
-			<<","<<contract_no
-			<<"\r\n";
- 		return stream.str();
- 	}
  }; 
 struct mysql_info_
  {
@@ -121,20 +86,9 @@ public:
 	month_report(boost::shared_ptr<mysql_info_> in);
 	void start();
 private:
-	void query(const std::string& sql);
-	boost::shared_ptr<sql::ResultSet> get_res()const;
-	void insert_data();
-	void deal_with_sales_info();
-	void deal_with_customer_info();
-	void deal_with_currency_info();
-	void deal_with_payment_method_info();
-	void deal_with_product_info();
-	void deal_with_trade_term_info();
-	void deal_with_sales_country();
-	void deal_with_approved_status();
-	void deal_with_pi();
-	void write_to_csv();
-	void write_to_excel();
+	void read_from_excel();
+	void data_cleaning();
+	void write_to_mysql();
 private:
 	std::vector<boost::shared_ptr<report_data>> m_report_datas;
 	boost::shared_ptr<sql::ResultSet> m_res;
@@ -147,84 +101,92 @@ private:
 };
 class XLSXIOWriter
 {
- private:
-  xlsxiowriter handle;
- public:
+private:
+ 	xlsxiowriter handle;
+public:
 
-  /*! \brief XLSXIOWriter constructor, creates and opens .xlsx file
-   * \param  filename      path of .xlsx file to open
-   * \param  sheetname     name of worksheet
-   * \param  detectionrows number of rows to buffer in memory, zero for none, defaults to 5
-   * \sa     xlsxiowrite_open()
-   */
-  XLSXIOWriter (const char* filename, const char* sheetname = NULL, size_t detectionrows = 5);
+	XLSXIOWriter (const char* filename, const char* sheetname = NULL, size_t detectionrows = 5);
+    ~XLSXIOWriter ();
+    void SetRowHeight (size_t height = 0);
 
-  /*! \brief XLSXIOWriter destructor, closes .xlsx file
-   * \sa     xlsxiowrite_close()
-   */
-  ~XLSXIOWriter ();
+    void AddColumn (const char* name, int width = 0);
 
-  /*! \brief specify the row height to use for the current and next rows
-   * \param  height        row height (in text lines), zero for unspecified
-   * Must be called before the first call to any Add method of the current row
-   * \sa     xlsxiowrite_set_row_height()
-   */
-  void SetRowHeight (size_t height = 0);
+    void AddCellString (const char* value);
 
-  /*! \brief add a column cell
-   * \param  name          column name
-   * \param  width         column width (in characters)
-   * Only one row of column names is supported or none.
-   * Call for each column, and finish column row by calling NextRow().
-   * Must be called before any NextRow() or the AddCell methods.
-   * \sa     NextRow()
-   */
-  void AddColumn (const char* name, int width = 0);
+    void AddCellInt (long long value);
 
-  /*! \brief add a cell with string data
-   * \param  value         string value
-   * \sa     NextRow()
-   */
-  void AddCellString (const char* value);
+    void AddCellFloat (double value);
 
-  /*! \brief add a cell with integer data
-   * \param  value         integer value
-   * \sa     NextRow()
-   */
-  void AddCellInt (long long value);
+    void AddCellDateTime (time_t value);
 
-  /*! \brief add a cell with floating point data
-   * \param  value         floating point value
-   * \sa     NextRow()
-   */
-  void AddCellFloat (double value);
-
-  /*! \brief add a cell with date and time data
-   * \param  value         date and time value
-   * \sa     NextRow()
-   */
-  void AddCellDateTime (time_t value);
-
-  /*! \brief insertion operators
-   * \sa     AddCellString()
-   * \name   operator<<
-   * \{
-   */
-  XLSXIOWriter& operator << (const char* value);
-  XLSXIOWriter& operator << (const std::string& value);
-  XLSXIOWriter& operator << (int64_t value);
-  XLSXIOWriter& operator << (double value);
-  //XLSXIOWriter& operator << (time_t value);
-  /*! @} */
-
-  /*! \brief mark the end of a row (next cell will start on a new row)
-   * \sa     xlsxiowrite_next_row()
-   * \sa     AddCellString()
-   */
-  void NextRow ();
+    XLSXIOWriter& operator << (const char* value);
+    XLSXIOWriter& operator << (const std::string& value);
+    XLSXIOWriter& operator << (int64_t value);
+    XLSXIOWriter& operator << (double value);
+  
+    void NextRow ();
 };
 
+class XLSXIOReader
+{
+private:
+	struct xlsx_list_sheets_data 
+	{
+  		char* firstsheet;
+	};
+	xlsxioreader xlsxioread;
+	xlsx_list_sheets_data sheetdata;
+public:
+	XLSXIOReader(const char* filename)
+	{
+		if ((xlsxioread = xlsxioread_open(filename)) == NULL) 
+		{
+		    fprintf(stderr, "Error opening .xlsx file\n");
+		}
+		sheetdata.firstsheet = NULL;
+	}
+    void list_sheets()
+    {
+    	xlsxioread_list_sheets(xlsxioread, xlsx_list_sheets_callback, &sheetdata);
+    }
+	
+    void process_data()
+    {
+    	xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, sheet_cell_callback, sheet_row_callback, NULL);
+    }
+	//calback function for listing sheets
+	int xlsx_list_sheets_callback (const char* name, void* callbackdata)
+	{
+	  xlsx_list_sheets_data* data = (xlsx_list_sheets_data*)callbackdata;
+	  if (!data->firstsheet)
+	    data->firstsheet = strdup(name);
+	  printf(" - %s\n", name);
+	  return 0;
+	}
 
+	//calback function for end of row
+	int sheet_row_callback (size_t row, size_t maxcol, void* callbackdata)
+	{
+	  printf("\n");
+	  return 0;
+	}
+
+	//calback function for cell data
+	int sheet_cell_callback (size_t row, size_t col, const char* value, void* callbackdata)
+	{
+	  if (col > 1)
+	    printf("\t");
+	  if (value)
+	    printf("%s", value);
+	  return 0;
+	}
+	~XLSXIOReader()
+	{
+		free(sheetdata.firstsheet);
+	  	xlsxioread_close(xlsxioread);
+	}
+	  
+}
 
 
 inline XLSXIOWriter::XLSXIOWriter (const char* filename, const char* sheetname, size_t detectionrows)
@@ -291,14 +253,6 @@ inline XLSXIOWriter& XLSXIOWriter::operator << (double value)
   AddCellFloat(value);
   return *this;
 }
-
-/*
-inline XLSXIOWriter& XLSXIOWriter::operator << (time_t value)
-{
-  AddCellDateTime(value);
-  return *this;
-}
-*/
 
 inline void XLSXIOWriter::NextRow ()
 {
