@@ -156,7 +156,7 @@ public:
     	//xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, sheet_cell_callback, sheet_row_callback, NULL);
     }
 	//calback function for listing sheets
-	int xlsx_list_sheets_callback (const char* name, void* callbackdata)
+	static int xlsx_list_sheets_callback (const char* name, void* callbackdata)
 	{
 	  xlsx_list_sheets_data* data = (xlsx_list_sheets_data*)callbackdata;
 	  if (!data->firstsheet)
