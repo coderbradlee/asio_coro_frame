@@ -148,7 +148,7 @@ public:
 	}
     void list_sheets()
     {
-    	xlsxioread_list_sheets(xlsxioread, boost::bind(&XLSXIOReader::xlsx_list_sheets_callback,this), &sheetdata);
+    	xlsxioread_list_sheets(xlsxioread, xlsx_list_sheets_callback, &sheetdata);
     }
 	
     void process_data()
