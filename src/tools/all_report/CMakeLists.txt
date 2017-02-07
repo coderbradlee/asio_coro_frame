@@ -1,5 +1,5 @@
 
-include_directories(xlsxio/include)
+include_directories(../xlsxio/include)
 include_directories(../../common)
 set(PRODUCT_SRC_LIST ../../common/config.cpp ../../common/log.cpp all_month_report.cpp all_month_report_main.cpp)
 add_executable(all_month_report ${PRODUCT_SRC_LIST})

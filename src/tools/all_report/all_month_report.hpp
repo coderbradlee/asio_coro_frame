@@ -1,13 +1,13 @@
 #ifndef ALL_MONTH_REPORT_HPP
 #define	ALL_MONTH_REPORT_HPP
 #include "mysql_connection.h"
-#include "../../common/config.hpp"
+#include "config.hpp"
 #include <cppconn/driver.h>
 #include <cppconn/exception.h>
 #include <cppconn/resultset.h>
 #include <cppconn/statement.h>
 #include <cppconn/prepared_statement.h>
-#include "../../common/log.h"
+#include "log.h"
 #include <iomanip>
 #include "xlsxio_write.h"
 struct report_data
