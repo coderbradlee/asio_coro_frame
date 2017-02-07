@@ -7,7 +7,7 @@
 #include <cppconn/resultset.h>
 #include <cppconn/statement.h>
 #include <cppconn/prepared_statement.h>
-#include "../../common/log.hpp"
+#include "../../common/log.h"
 #include <iomanip>
 #include "xlsxio_write.h"
 struct report_data
