@@ -187,7 +187,7 @@ public:
 	  	xlsxioread_close(xlsxioread);
 	}
 	  
-}
+};
 
 
 inline XLSXIOWriter::XLSXIOWriter (const char* filename, const char* sheetname, size_t detectionrows)
