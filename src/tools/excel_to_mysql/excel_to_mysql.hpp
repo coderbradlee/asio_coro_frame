@@ -10,6 +10,7 @@
 #include "log.h"
 #include <iomanip>
 #include "xlsxio_write.h"
+#include "xlsxio_read.h"
 struct report_data
  {
  	std::string quotation_id;
