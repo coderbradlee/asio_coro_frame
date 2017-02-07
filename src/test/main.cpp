@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
 {
   try
   {
-    server s("127.0.0.1",8000);
+    server s("127.0.0.1","8000");
     s.run();
   }
   catch (std::exception& e)
