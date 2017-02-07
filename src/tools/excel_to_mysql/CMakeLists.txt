@@ -6,6 +6,7 @@ add_executable(excel_to_mysql ${PRODUCT_SRC_LIST})
 
 set(main_name excel_to_mysql)
 target_link_libraries(${main_name} xlsxio_write)
+target_link_libraries(${main_name} xlsxio_read)
 target_link_libraries(${main_name} boost_system)
 target_link_libraries(${main_name} ssl)
 target_link_libraries(${main_name} mysqlcppconn)
