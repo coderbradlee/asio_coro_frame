@@ -1,6 +1,6 @@
 #include <boost/program_options.hpp>
 #include "../../common/log.hpp"
-#include "all_month_report.hpp"
+#include "all_month_report.h"
 using std::string;
 using std::cout;
 using std::endl;
