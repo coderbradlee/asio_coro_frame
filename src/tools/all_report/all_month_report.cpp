@@ -34,18 +34,18 @@ void month_report::deal_with_pi()
 	}
 	catch (sql::SQLException &e) 
 	{
-	  LOG_ERROR<<"# ERR: " << e.what();
-	  LOG_ERROR<<" (MySQL error code: " << e.getErrorCode();
-	  LOG_ERROR<<", SQLState: " << e.getSQLState();
+	  BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
+	  BOOST_LOG_SEV(slg, error)<<" (MySQL error code: " << e.getErrorCode();
+	  BOOST_LOG_SEV(slg, error)<<", SQLState: " << e.getSQLState();
 
 	}
 	catch (std::exception& e)
   	{
-    	LOG_ERROR<<"# ERR: " << e.what();
+    	BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
   	}
   	catch (...)
   	{
-    	LOG_ERROR<<"unknown error ";
+    	BOOST_LOG_SEV(slg, error)<<"unknown error ";
   	}
 }
 void month_report::deal_with_sales_country()
@@ -134,18 +134,18 @@ void month_report::deal_with_sales_country()
 	}
 	catch (sql::SQLException &e) 
 	{
-	  LOG_ERROR<<"# ERR: " << e.what();
-	  LOG_ERROR<<" (MySQL error code: " << e.getErrorCode();
-	  LOG_ERROR<<", SQLState: " << e.getSQLState();
+	  BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
+	  BOOST_LOG_SEV(slg, error)<<" (MySQL error code: " << e.getErrorCode();
+	  BOOST_LOG_SEV(slg, error)<<", SQLState: " << e.getSQLState();
 
 	}
 	catch (std::exception& e)
   	{
-    	LOG_ERROR<<"# ERR: " << e.what();
+    	BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
   	}
   	catch (...)
   	{
-    	LOG_ERROR<<"unknown error ";
+    	BOOST_LOG_SEV(slg, error)<<"unknown error ";
   	}
 }
 void month_report::deal_with_approved_status()
@@ -172,18 +172,18 @@ void month_report::deal_with_approved_status()
 	}
 	catch (sql::SQLException &e) 
 	{
-	  LOG_ERROR<<"# ERR: " << e.what();
-	  LOG_ERROR<<" (MySQL error code: " << e.getErrorCode();
-	  LOG_ERROR<<", SQLState: " << e.getSQLState();
+	  BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
+	  BOOST_LOG_SEV(slg, error)<<" (MySQL error code: " << e.getErrorCode();
+	  BOOST_LOG_SEV(slg, error)<<", SQLState: " << e.getSQLState();
 
 	}
 	catch (std::exception& e)
   	{
-    	LOG_ERROR<<"# ERR: " << e.what();
+    	BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
   	}
   	catch (...)
   	{
-    	LOG_ERROR<<"unknown error ";
+    	BOOST_LOG_SEV(slg, error)<<"unknown error ";
   	}
 }
 void month_report::deal_with_trade_term_info()
@@ -213,18 +213,18 @@ void month_report::deal_with_trade_term_info()
 	}
 	catch (sql::SQLException &e) 
 	{
-	  LOG_ERROR<<"# ERR: " << e.what();
-	  LOG_ERROR<<" (MySQL error code: " << e.getErrorCode();
-	  LOG_ERROR<<", SQLState: " << e.getSQLState();
+	  BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
+	  BOOST_LOG_SEV(slg, error)<<" (MySQL error code: " << e.getErrorCode();
+	  BOOST_LOG_SEV(slg, error)<<", SQLState: " << e.getSQLState();
 
 	}
 	catch (std::exception& e)
   	{
-    	LOG_ERROR<<"# ERR: " << e.what();
+    	BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
   	}
   	catch (...)
   	{
-    	LOG_ERROR<<"unknown error ";
+    	BOOST_LOG_SEV(slg, error)<<"unknown error ";
   	}
 }
 void month_report::deal_with_product_info()
@@ -275,18 +275,18 @@ void month_report::deal_with_product_info()
 	}
 	catch (sql::SQLException &e) 
 	{
-	  LOG_ERROR<<"# ERR: " << e.what();
-	  LOG_ERROR<<" (MySQL error code: " << e.getErrorCode();
-	  LOG_ERROR<<", SQLState: " << e.getSQLState();
+	  BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
+	  BOOST_LOG_SEV(slg, error)<<" (MySQL error code: " << e.getErrorCode();
+	  BOOST_LOG_SEV(slg, error)<<", SQLState: " << e.getSQLState();
 
 	}
 	catch (std::exception& e)
   	{
-    	LOG_ERROR<<"# ERR: " << e.what();
+    	BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
   	}
   	catch (...)
   	{
-    	LOG_ERROR<<"unknown error ";
+    	BOOST_LOG_SEV(slg, error)<<"unknown error ";
   	}
 }
 void month_report::deal_with_payment_method_info()
@@ -317,18 +317,18 @@ void month_report::deal_with_payment_method_info()
 	}
 	catch (sql::SQLException &e) 
 	{
-	  LOG_ERROR<<"# ERR: " << e.what();
-	  LOG_ERROR<<" (MySQL error code: " << e.getErrorCode();
-	  LOG_ERROR<<", SQLState: " << e.getSQLState();
+	  BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
+	  BOOST_LOG_SEV(slg, error)<<" (MySQL error code: " << e.getErrorCode();
+	  BOOST_LOG_SEV(slg, error)<<", SQLState: " << e.getSQLState();
 
 	}
 	catch (std::exception& e)
   	{
-    	LOG_ERROR<<"# ERR: " << e.what();
+    	BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
   	}
   	catch (...)
   	{
-    	LOG_ERROR<<"unknown error ";
+    	BOOST_LOG_SEV(slg, error)<<"unknown error ";
   	}
 }
 void month_report::deal_with_currency_info()
@@ -355,18 +355,18 @@ void month_report::deal_with_currency_info()
 	}
 	catch (sql::SQLException &e) 
 	{
-	  LOG_ERROR<<"# ERR: " << e.what();
-	  LOG_ERROR<<" (MySQL error code: " << e.getErrorCode();
-	  LOG_ERROR<<", SQLState: " << e.getSQLState();
+	  BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
+	  BOOST_LOG_SEV(slg, error)<<" (MySQL error code: " << e.getErrorCode();
+	  BOOST_LOG_SEV(slg, error)<<", SQLState: " << e.getSQLState();
 
 	}
 	catch (std::exception& e)
   	{
-    	LOG_ERROR<<"# ERR: " << e.what();
+    	BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
   	}
   	catch (...)
   	{
-    	LOG_ERROR<<"unknown error ";
+    	BOOST_LOG_SEV(slg, error)<<"unknown error ";
   	}
 }
 void month_report::deal_with_customer_info()
@@ -434,18 +434,18 @@ void month_report::deal_with_customer_info()
 }
 	catch (sql::SQLException &e) 
 	{
-	  LOG_ERROR<<"# ERR: " << e.what();
-	  LOG_ERROR<<" (MySQL error code: " << e.getErrorCode();
-	  LOG_ERROR<<", SQLState: " << e.getSQLState();
+	  BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
+	  BOOST_LOG_SEV(slg, error)<<" (MySQL error code: " << e.getErrorCode();
+	  BOOST_LOG_SEV(slg, error)<<", SQLState: " << e.getSQLState();
 
 	}
 	catch (std::exception& e)
   	{
-    	LOG_ERROR<<"# ERR: " << e.what();
+    	BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
   	}
   	catch (...)
   	{
-    	LOG_ERROR<<"unknown error ";
+    	BOOST_LOG_SEV(slg, error)<<"unknown error ";
   	}
 }
 void month_report::deal_with_sales_info()
@@ -488,18 +488,18 @@ void month_report::deal_with_sales_info()
 	catch (sql::SQLException &e) 
 	{
 	  
-	  LOG_ERROR<<"# ERR: " << e.what();
-	  LOG_ERROR<<" (MySQL error code: " << e.getErrorCode();
-	  LOG_ERROR<<", SQLState: " << e.getSQLState();
+	  BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
+	  BOOST_LOG_SEV(slg, error)<<" (MySQL error code: " << e.getErrorCode();
+	  BOOST_LOG_SEV(slg, error)<<", SQLState: " << e.getSQLState();
 
 	}
 	catch (std::exception& e)
   	{
-    	LOG_ERROR<<"# ERR: " << e.what();
+    	BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
   	}
   	catch (...)
   	{
-    	LOG_ERROR<<"unknown error ";
+    	BOOST_LOG_SEV(slg, error)<<"unknown error ";
   	}
 }
 void month_report::insert_data()
@@ -546,18 +546,18 @@ void month_report::insert_data()
 	  //ming_log->get_log_console()->info()<< "# ERR: " << e.what();
 	  //ming_log->get_log_console()->info()<< " (MySQL error code: " << e.getErrorCode();
 	  //ming_log->get_log_console()->info()<< ", SQLState: " << e.getSQLState();
-	  LOG_ERROR<<"# ERR: " << e.what();
-	  LOG_ERROR<<" (MySQL error code: " << e.getErrorCode();
-	  LOG_ERROR<<", SQLState: " << e.getSQLState();
+	  BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
+	  BOOST_LOG_SEV(slg, error)<<" (MySQL error code: " << e.getErrorCode();
+	  BOOST_LOG_SEV(slg, error)<<", SQLState: " << e.getSQLState();
 
 	}
 	catch (std::exception& e)
   	{
-    	LOG_ERROR<<"# ERR: " << e.what();
+    	BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
   	}
   	catch (...)
   	{
-    	LOG_ERROR<<"unknown error ";
+    	BOOST_LOG_SEV(slg, error)<<"unknown error ";
   	}
 }
 void month_report::write_to_csv()
@@ -663,18 +663,18 @@ void month_report::start()
 	  //ming_log->get_log_console()->info()<< "# ERR: " << e.what();
 	  //ming_log->get_log_console()->info()<< " (MySQL error code: " << e.getErrorCode();
 	  //ming_log->get_log_console()->info()<< ", SQLState: " << e.getSQLState();
-	  LOG_ERROR<<"# ERR: " << e.what();
-	  LOG_ERROR<<" (MySQL error code: " << e.getErrorCode();
-	  LOG_ERROR<<", SQLState: " << e.getSQLState();
+	  BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
+	  BOOST_LOG_SEV(slg, error)<<" (MySQL error code: " << e.getErrorCode();
+	  BOOST_LOG_SEV(slg, error)<<", SQLState: " << e.getSQLState();
 
 	}
 	catch (std::exception& e)
   	{
-    	LOG_ERROR<<"# ERR: " << e.what();
+    	BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
   	}
   	catch (...)
   	{
-    	LOG_ERROR<<"unknown error ";
+    	BOOST_LOG_SEV(slg, error)<<"unknown error ";
   	}
 }
 void month_report::query(const std::string& query_sql)
@@ -691,9 +691,9 @@ void month_report::query(const std::string& query_sql)
 	  //ming_log->get_log_console()->info()<< "# ERR: " << e.what();
 	  //ming_log->get_log_console()->info()<< " (MySQL error code: " << e.getErrorCode();
 	  //ming_log->get_log_console()->info()<< ", SQLState: " << e.getSQLState();
-	  LOG_ERROR<<"# ERR: " << e.what();
-	  LOG_ERROR<<" (MySQL error code: " << e.getErrorCode();
-	  LOG_ERROR<<", SQLState: " << e.getSQLState();
+	  BOOST_LOG_SEV(slg, error)<<"# ERR: " << e.what();
+	  BOOST_LOG_SEV(slg, error)<<" (MySQL error code: " << e.getErrorCode();
+	  BOOST_LOG_SEV(slg, error)<<", SQLState: " << e.getSQLState();
 
 	}
 }
