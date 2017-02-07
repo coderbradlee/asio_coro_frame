@@ -1,5 +1,5 @@
 #include <boost/program_options.hpp>
-#include "../../common/log.h"
+#include "log.h"
 #include "all_month_report.hpp"
 using std::string;
 using std::cout;
