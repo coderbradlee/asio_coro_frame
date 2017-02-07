@@ -21,7 +21,7 @@ target_link_libraries(${main_name} boost_regex)
 target_link_libraries(${main_name} boost_timer) 
 target_link_libraries(${main_name} boost_signals) 
 target_link_libraries(${main_name} boost_locale)
-
+target_link_libraries(${main_name} boost_log)
 target_link_libraries(${main_name} gd)
 set_target_properties(${main_name} PROPERTIES COMPILE_FLAGS "-std=c++14")
 if(TCMALLOC_INCLUDE_DIR AND TCMALLOC_LIBRARY)
