@@ -153,7 +153,7 @@ public:
 	
     void process_data()
     {
-    	//xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, sheet_cell_callback, sheet_row_callback, NULL);
+    	xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, sheet_cell_callback, sheet_row_callback, NULL);
     }
 	//calback function for listing sheets
 	static int xlsx_list_sheets_callback (const char* name, void* callbackdata)
@@ -166,21 +166,21 @@ public:
 	}
 
 	//calback function for end of row
-	// int sheet_row_callback (size_t row, size_t maxcol, void* callbackdata)
-	// {
-	//   printf("\n");
-	//   return 0;
-	// }
+	static int sheet_row_callback (size_t row, size_t maxcol, void* callbackdata)
+	{
+	  printf("\n");
+	  return 0;
+	}
 
-	// //calback function for cell data
-	// int sheet_cell_callback (size_t row, size_t col, const char* value, void* callbackdata)
-	// {
-	//   if (col > 1)
-	//     printf("\t");
-	//   if (value)
-	//     printf("%s", value);
-	//   return 0;
-	// }
+	//calback function for cell data
+	static int sheet_cell_callback (size_t row, size_t col, const char* value, void* callbackdata)
+	{
+	  if (col > 1)
+	    printf("\t");
+	  if (value)
+	    printf("%s", value);
+	  return 0;
+	}
 	~XLSXIOReader()
 	{
 		free(sheetdata.firstsheet);
