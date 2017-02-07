@@ -24,7 +24,7 @@ public:
   }
   void do_accept()
   {
-     reenter(this)
+     reenter(m_coro)
      {
         for(;;)
         {
