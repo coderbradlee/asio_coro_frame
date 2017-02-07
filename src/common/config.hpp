@@ -27,6 +27,31 @@ class iconfig:boost::noncopyable
 		bool m_log_auto_flush;
 		static boost::mutex m_mu;	
 		static boost::shared_ptr<iconfig> m_ps;
+		///////////////////////////////////////////
+		std::string m_mysql_ip;
+		unsigned short m_mysql_port;
+		std::string m_mysql_username;
+		std::string m_mysql_password;
+		std::string m_mysql_database;
+		///////////////////
+		std::string m_mysql_eu_ip;
+		unsigned short m_mysql_eu_port;
+		std::string m_mysql_eu_username;
+		std::string m_mysql_eu_password;
+		std::string m_mysql_eu_database;
+		//////////////////
+		std::string m_mysql_js_ip;
+		unsigned short m_mysql_js_port;
+		std::string m_mysql_js_username;
+		std::string m_mysql_js_password;
+		std::string m_mysql_js_database;
+		//////////////////
+		std::string m_mysql_as_ip;
+		unsigned short m_mysql_as_port;
+		std::string m_mysql_as_username;
+		std::string m_mysql_as_password;
+		std::string m_mysql_as_database;
+
 };
 extern boost::shared_ptr<iconfig> get_config;
 #endif
