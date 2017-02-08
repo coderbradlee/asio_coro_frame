@@ -3,6 +3,7 @@
 #include <boost/asio/yield.hpp>
 #include <boost/enable_shared_from_this.hpp>  
 #include <boost/shared_ptr.hpp> 
+#include "test.hpp"
 using std::string;
 using std::cout;
 using std::endl;
@@ -61,9 +62,8 @@ private:
 int main(int argc, char* argv[])
 {
   try
-  {
-    server s("127.0.0.1","8000");
-    s.run();
+  { 
+    test();
   }
   catch (std::exception& e)
   {
