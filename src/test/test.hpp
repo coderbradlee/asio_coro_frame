@@ -11,7 +11,7 @@ using boost::asio::coroutine;
 class test_strand
 {
 public:
-  test_strand(boost::asio::io_service& m_io_service):m_strand(m_io_service),m_timer1(m_io_service),m_timer2(m_io_service)
+  test_strand(boost::asio::io_service& m_io_service):m_strand(m_io_service),m_timer1(m_io_service),m_timer2(m_io_service),m_count(0)
   {}
   ~test_strand()
   {
