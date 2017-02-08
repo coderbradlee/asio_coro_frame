@@ -5,6 +5,7 @@
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/asio/spawn.hpp>
 using std::string;
 using std::cout;
 using std::endl;
