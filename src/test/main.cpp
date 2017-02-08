@@ -27,22 +27,22 @@ public:
   }
   void do_accept()
   {
-     reenter(m_coro)
-     {
-        yield m_acceptor.async_accept(m_socket,
-            [this](boost::system::error_code ec)
-            {
-              if(!m_acceptor.is_open())
-              {
-                return;
-              }
-              if(!ec)
-              {
-                cout<<"acceptor"<<endl;
-              }
-              do_accept();
-            });     
-     }
+     // reenter(m_coro)
+     // {
+     //    yield m_acceptor.async_accept(m_socket,
+     //        [this](boost::system::error_code ec)
+     //        {
+     //          if(!m_acceptor.is_open())
+     //          {
+     //            return;
+     //          }
+     //          if(!ec)
+     //          {
+     //            cout<<"acceptor"<<endl;
+     //          }
+     //          do_accept();
+     //        });     
+     // }
   }
   
 private:
