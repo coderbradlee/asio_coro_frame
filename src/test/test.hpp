@@ -37,8 +37,8 @@ public:
     {
       cout<<"timer 2:"<<m_count<<endl;
       ++m_count;
-      m_timer1.expires_at(m_timer2.expires_at()+boost::posix_time::seconds(1));
-      m_timer1.async_wait(m_strand.wrap(boost::bind(&test_strand::print2(),this)))
+      m_timer2.expires_at(m_timer2.expires_at()+boost::posix_time::seconds(1));
+      m_timer2.async_wait(m_strand.wrap(boost::bind(&test_strand::print2(),this)))
     }
   }
 private:
@@ -50,6 +50,6 @@ private:
 };
 void test()
 {
-  test_strand t();
+  test_strand t;
   t.run();
 }
