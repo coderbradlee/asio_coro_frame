@@ -28,9 +28,7 @@ public:
   {
      reenter(m_coro)
      {
-        for(;;)
-        {
-          yield m_acceptor.async_accept(m_socket,
+        yield m_acceptor.async_accept(m_socket,
             [this](boost::system::error_code ec)
             {
               if(!m_acceptor.is_open())
@@ -42,10 +40,7 @@ public:
                 cout<<"acceptor"<<endl;
               }
               do_accept();
-            });
-
-        }
-       
+            });     
      }
   }
   
