@@ -54,7 +54,7 @@ void test()
   // auto p=boost::make_shared<test_strand>(io);
   test_strand t(io);
   boost::thread_group threads;
-  for (int i = 0; i < 3; ++i)
+  for (int i = 0; i < 1; ++i)
       threads.create_thread(boost::bind(&boost::asio::io_service::run,&io));
   io.run();//main thread
   threads.join_all();
