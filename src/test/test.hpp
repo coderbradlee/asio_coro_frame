@@ -72,6 +72,7 @@ public:
 private:
   coroutine m_coro;
   boost::asio::io_service m_io_service;
+  boost::asio::strand m_strand;
   boost::asio::ip::tcp::acceptor m_acceptor;
   boost::asio::ip::tcp::socket m_socket;
   int m_count;
