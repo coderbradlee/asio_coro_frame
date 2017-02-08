@@ -6,7 +6,7 @@ int main()
 	{
 	    // HttpServer server(get_config->m_port,get_config->m_threads);
 	    // serverRedisResource(server);
-		http::server::server s("0.0.0.0",get_config->m_port,"web");
+		http::server::server s("0.0.0.0",get_config->m_port,"web",7);
     	s.run();
 
 

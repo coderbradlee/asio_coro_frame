@@ -16,13 +16,13 @@ namespace http {
 namespace server {
 
 server::server(const std::string& address, const std::string& port,
-    const std::string& doc_root)
+    const std::string& doc_root,size_t threads)
   : io_service_(),
     signals_(io_service_),
     acceptor_(io_service_),
     connection_manager_(),
     socket_(io_service_),
-    request_handler_(doc_root)
+    request_handler_(doc_root),m_threads(threads)
 {
   // Register to handle the signals that indicate when the server should exit.
   // It is safe to register for the same signal multiple times in a program,
@@ -52,7 +52,12 @@ void server::run()
   // have finished. While the server is running, there is always at least one
   // asynchronous operation outstanding: the asynchronous accept call waiting
   // for new incoming connections.
-  io_service_.run();
+  // io_service_.run();
+  boost::thread_group threads;
+    for (int i = 0; i < m_threads; ++i)
+        threads.create_thread(boost::bind(&boost::asio::io_service::run,&io_service_));
+    io_service_.run();
+    threads.join_all();
 }
 
 void server::do_accept()
