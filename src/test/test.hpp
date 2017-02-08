@@ -12,7 +12,10 @@ using boost::asio::coroutine;
 class test_strand
 {
 public:
-  test_strand(boost::asio::io_service& m_io_service):m_strand(m_io_service),m_timer1(m_io_service),m_timer2(m_io_service),m_count(0)
+  test_strand(boost::asio::io_service& m_io_service):m_strand(m_io_service),
+  m_timer1(m_io_service, boost::posix_time::seconds(1)),
+  m_timer2(m_io_service, boost::posix_time::seconds(1)),
+  m_count(0)
   {
     m_timer1.async_wait(m_strand.wrap(boost::bind(&test_strand::print1,this)));
     m_timer2.async_wait(m_strand.wrap(boost::bind(&test_strand::print2,this)));
