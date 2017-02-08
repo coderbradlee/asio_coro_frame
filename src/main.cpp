@@ -1,6 +1,7 @@
 #include "config.hpp"
 #include "server.hpp"
-int main() {
+int main() 
+{
 	try
 	{
 	    // HttpServer server(get_config->m_port,get_config->m_threads);
@@ -8,7 +9,7 @@ int main() {
 		http::server::server s("0.0.0.0",get_config->m_port,"web");
     	s.run();
 
-    	
+
 	    boost::timer::cpu_timer pass;
 		pass.start();
 		
@@ -25,13 +26,13 @@ int main() {
 	    });
 	    server_thread.join();
 	}
-	catch(exception& e) 
+	catch(std::exception& e) 
 	{
-        cout<< e.what();
+        std::cout<< e.what()<<std::endl;
     }
 	catch(...) 
 	{
-         
+         std::cout<< "unknown error"<<std::endl;
 	}
     return 0;
 }
