@@ -43,15 +43,15 @@ public:
       });
     
   }
-  void do_some(boost::asio::yield_context yield)
+  void do_some(boost::asio::yield_context yields)
   {
     try
     {
       std::vector<char> data(128,0);
       for(;;)
       {
-        size_t len=m_socket.async_read_some(boost::asio::buffer(data),yield);
-        boost::asio::async_write(m_socket,boost::asio::buffer(data,len),yield);
+        size_t len=m_socket.async_read_some(boost::asio::buffer(data),yields);
+        boost::asio::async_write(m_socket,boost::asio::buffer(data,len),yields);
       }
     }
     catch(std::exception& e)
