@@ -64,7 +64,7 @@ void test1()
 }
 void test2()
 {
-  std::vector<int> v(1)
+  std::vector<int> v(1);
   std::vector<int>::iterator i = v.begin();
   v.clear(); // invalidates iterators
   *i = 0; // assertion!
