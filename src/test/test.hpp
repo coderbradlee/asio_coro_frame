@@ -60,7 +60,7 @@ public:
   {
     cout<<"last:"<<m_count<<endl;
   }
-  dataoid run()
+  void run()
   {
     boost::thread_group threads;
     for (int i = 0; i < 3; ++i)
