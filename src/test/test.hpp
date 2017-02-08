@@ -11,16 +11,13 @@ using boost::asio::coroutine;
 class test_strand
 {
 public:
-  test_strand():m_io_service(),m_strand(m_io_service),m_timer1(m_io_service),m_timer2(m_io_service)
+  test_strand(boost::asio::io_service& m_io_service):m_strand(m_io_service),m_timer1(m_io_service),m_timer2(m_io_service)
   {}
   ~test_strand()
   {
     cout<<"last:"<<m_count<<endl;
   }
-  void run()
-  {
-    m_io_service.run();
-  }
+  
   void print1()
   {
     if(m_count<10)
@@ -42,7 +39,6 @@ public:
     }
   }
 private:
-  boost::asio::io_service m_io_service;
   boost::asio::io_service::strand m_strand;
   boost::asio::deadline_timer m_timer1;
   boost::asio::deadline_timer m_timer2;
@@ -50,6 +46,11 @@ private:
 };
 void test()
 {
-  test_strand t;
-  t.run();
+  boost::asio::io_service io;
+  test_strand p(io);
+  boost::thread_group threads;
+  for (int i = 0; i < 3; ++i)
+      threads.create_thread(boost::bind(&boost::asio::io_service::run,&io));
+  io.run();//main thread
+  threads.join_all();
 }
