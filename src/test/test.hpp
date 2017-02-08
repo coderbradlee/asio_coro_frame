@@ -35,7 +35,7 @@ public:
         }
         if(!ec)
         {
-          boost::asio::spawn(m_strand,do_some);
+          boost::asio::spawn(m_strand,boost::bind(&test_strand::do_some,this));
         }
       });
     
@@ -44,7 +44,7 @@ public:
   {
     try
     {
-      std::vector<char> v(128,0);
+      std::vector<char> data(128,0);
       for(;;)
       {
         size_t len=m_socket.async_read_some(boost::asio::buffer(data),yield);
@@ -60,7 +60,7 @@ public:
   {
     cout<<"last:"<<m_count<<endl;
   }
-  void run()
+  dataoid run()
   {
     boost::thread_group threads;
     for (int i = 0; i < 3; ++i)
