@@ -65,8 +65,8 @@ public:
     {
       for(;;)
       {
-        yield m_socket.async_read_some(boost::asio::buffer(m_data),do_some_stackless);
-        yield boost::asio::async_write(m_socket,boost::asio::buffer(m_data,m_data.size()),do_some_stackless);
+        yield m_socket.async_read_some(boost::asio::buffer(m_data),boost::bind(&test_strand::do_some_stackless,this));
+        yield boost::asio::async_write(m_socket,boost::asio::buffer(m_data,m_data.size()),boost::bind(&test_strand::do_some_stackless,this));
       }
     }
   }
