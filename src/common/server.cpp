@@ -54,7 +54,7 @@ void server::run()
   // for new incoming connections.
   // io_service_.run();
   boost::thread_group threads;
-    for (int i = 0; i < m_threads; ++i)
+    for (size_t i = 0; i < m_threads; ++i)
         threads.create_thread(boost::bind(&boost::asio::io_service::run,&io_service_));
     io_service_.run();
     threads.join_all();
