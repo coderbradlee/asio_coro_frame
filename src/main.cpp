@@ -19,12 +19,6 @@ int main()
 	    // }
 	    std::cout << "now time elapsed:" << pass.format(6) << std::endl;
 	    // initsink->flush();
-
-	    thread server_thread([&server]()
-	    {
-	        server.start();
-	    });
-	    server_thread.join();
 	}
 	catch(std::exception& e) 
 	{
