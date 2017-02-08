@@ -4,6 +4,7 @@
 #include <boost/thread/thread.hpp>
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/make_shared.hpp>
 using std::string;
 using std::cout;
 using std::endl;
@@ -47,7 +48,7 @@ private:
 void test()
 {
   boost::asio::io_service io;
-  test_strand p(io);
+  auto p=boost::make_shared<test_strand>(new test_strand(io));
   boost::thread_group threads;
   for (int i = 0; i < 3; ++i)
       threads.create_thread(boost::bind(&boost::asio::io_service::run,&io));
