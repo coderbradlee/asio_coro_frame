@@ -13,7 +13,7 @@ using boost::asio::coroutine;
 class test_strand:public boost::enable_shared_from_this<test_strand>
 {
 public:
-  test_strand(const string& addr,const string& port):m_io_service(),m_strand(m_io_service),m_acceptor(m_io_service),m_socket(m_io_service)
+  test_strand(const string& addr,const string& port):m_io_service(),m_strand(m_io_service),m_acceptor(m_io_service),m_socket(m_io_service),m_data(1024,0)
   {
     boost::asio::ip::tcp::resolver res(m_io_service);
     boost::asio::ip::tcp::endpoint end=*res.resolve({addr,port});
@@ -35,7 +35,8 @@ public:
         }
         if(!ec)
         {
-          boost::asio::spawn(m_strand,boost::bind(&test_strand::do_some,this,_1));
+          // boost::asio::spawn(m_strand,boost::bind(&test_strand::do_some,this,_1));
+          do_some_stackless();
         }
       });
     
@@ -54,6 +55,17 @@ public:
     catch(std::exception& e)
     {
       cout<<e.what()<<endl;
+    }
+  }
+  void do_some_stackless()
+  {
+    reenter(m_coro)
+    {
+      for(;;)
+      {
+        yield m_socket->async_read_some(boost::asio::buffer(),m_coro);
+        yield boost::asio::async_write(m_socket,boost::asio::buffer(m_data,m_data.length()),m_coro)
+      }
     }
   }
   ~test_strand()
@@ -75,7 +87,7 @@ private:
   boost::asio::strand m_strand;
   boost::asio::ip::tcp::acceptor m_acceptor;
   boost::asio::ip::tcp::socket m_socket;
-  int m_count;
+  std::vector<char> m_data;
 };
 void test1()
 {
