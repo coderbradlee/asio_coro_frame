@@ -13,7 +13,10 @@ class test_strand
 {
 public:
   test_strand(boost::asio::io_service& m_io_service):m_strand(m_io_service),m_timer1(m_io_service),m_timer2(m_io_service),m_count(0)
-  {}
+  {
+    m_timer1.async_wait(m_strand.wrap(boost::bind(&test_strand::print1,this)));
+    m_timer2.async_wait(m_strand.wrap(boost::bind(&test_strand::print2,this)));
+  }
   ~test_strand()
   {
     cout<<"last:"<<m_count<<endl;
@@ -47,5 +50,11 @@ private:
 };
 void test()
 {
-  
+  boost::asio::io_service io;
+  auto p=boost::make_shared<test_strand>(io);
+  boost::thread_group threads;
+  for (int i = 0; i < 3; ++i)
+      threads.create_thread(boost::bind(&boost::asio::io_service::run,&io));
+  io.run();//main thread
+  threads.join_all();
 }
