@@ -15,7 +15,8 @@ class iconfig:boost::noncopyable
 	public:
 		boost::property_tree::ptree m_pt;
 		
-		unsigned short m_port;
+		// unsigned short m_port;
+		std::string m_port;
 		unsigned short m_threads;
 		std::string m_url;
 

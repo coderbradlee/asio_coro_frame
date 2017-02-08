@@ -16,7 +16,7 @@ boost::shared_ptr<iconfig> iconfig::get_instance(const std::string& filename)
 iconfig::iconfig(const std::string& filename)
 {			
 	boost::property_tree::ini_parser::read_ini(filename, m_pt);
-	m_port= boost::lexical_cast<unsigned short>(m_pt.get<std::string>("webserver.port"));
+	m_port= m_pt.get<std::string>("webserver.port");
 	m_threads= boost::lexical_cast<unsigned short>(m_pt.get<std::string>("webserver.threads"));
 	m_url= m_pt.get<std::string>("webserver.url");
 	m_redis_host= m_pt.get<std::string>("redis.host");
