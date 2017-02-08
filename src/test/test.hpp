@@ -72,7 +72,7 @@ public:
   }
   ~test_strand()
   {
-    cout<<"last:"<<m_count<<endl;
+    cout<<"~test_strand"<<endl;
   }
   void run()
   {
