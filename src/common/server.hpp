@@ -61,6 +61,8 @@ private:
   /// The handler for all incoming requests.
   request_handler request_handler_;
   size_t m_threads;
+  
+  boost::thread_group m_thread_group;
 };
 
 } // namespace server

@@ -53,11 +53,11 @@ void server::run()
   // asynchronous operation outstanding: the asynchronous accept call waiting
   // for new incoming connections.
   // io_service_.run();
-  boost::thread_group threads;
-    for (size_t i = 0; i < m_threads; ++i)
-        threads.create_thread(boost::bind(&boost::asio::io_service::run,&io_service_));
-    io_service_.run();
-    threads.join_all();
+  // m_thread_group.clear;
+  for (size_t i = 0; i < m_threads; ++i)
+      m_thread_group.create_thread(boost::bind(&boost::asio::io_service::run,&io_service_));
+  io_service_.run();
+  m_thread_group.join_all();
 }
 
 void server::do_accept()
