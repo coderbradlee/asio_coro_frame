@@ -51,7 +51,7 @@ private:
   boost::asio::deadline_timer m_timer2;
   int m_count;
 };
-void test()
+void test1()
 {
   boost::asio::io_service io;
   // auto p=boost::make_shared<test_strand>(io);
@@ -61,4 +61,15 @@ void test()
       threads.create_thread(boost::bind(&boost::asio::io_service::run,&io));
   io.run();//main thread
   threads.join_all();
+}
+void test2()
+{
+  std::vector<int> v(1)
+  std::vector<int>::iterator i = v.begin();
+  v.clear(); // invalidates iterators
+  *i = 0; // assertion!
+}
+void test()
+{
+  test2();
 }
