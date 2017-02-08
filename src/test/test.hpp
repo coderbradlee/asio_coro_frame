@@ -35,7 +35,7 @@ public:
         }
         if(!ec)
         {
-          boost::asio::spawn(m_strand,boost::bind(&test_strand::do_some,this));
+          boost::asio::spawn(m_strand,boost::bind(&test_strand::do_some,this,_1));
         }
       });
     
