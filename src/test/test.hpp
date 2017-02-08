@@ -47,11 +47,5 @@ private:
 };
 void test()
 {
-  boost::asio::io_service io;
-  auto p=boost::make_shared<test_strand>(io);
-  boost::thread_group threads;
-  for (int i = 0; i < 3; ++i)
-      threads.create_thread(boost::bind(&boost::asio::io_service::run,&io));
-  io.run();//main thread
-  threads.join_all();
+  
 }
