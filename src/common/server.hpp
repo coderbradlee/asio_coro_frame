@@ -13,6 +13,7 @@
 
 #include <boost/asio.hpp>
 #include <string>
+#include <boost/thread/thread.hpp>
 #include "connection.hpp"
 #include "connection_manager.hpp"
 #include "request_handler.hpp"
