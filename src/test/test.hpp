@@ -6,6 +6,8 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/asio/spawn.hpp>
+#include <boost/asio/yield.hpp>
+#include <boost/asio/coroutine.hpp>
 using std::string;
 using std::cout;
 using std::endl;
@@ -63,8 +65,8 @@ public:
     {
       for(;;)
       {
-        yield m_socket->async_read_some(boost::asio::buffer(),m_coro);
-        yield boost::asio::async_write(m_socket,boost::asio::buffer(m_data,m_data.length()),m_coro)
+        yield m_socket->async_read_some(boost::asio::buffer(m_data),*this);
+        yield boost::asio::async_write(m_socket,boost::asio::buffer(m_data,m_data.length()),*this)
       }
     }
   }
