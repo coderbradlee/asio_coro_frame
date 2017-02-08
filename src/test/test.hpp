@@ -38,7 +38,7 @@ public:
         if(!ec)
         {
           // boost::asio::spawn(m_strand,boost::bind(&test_strand::do_some,this,_1));
-          do_some_stackless();
+          do_some_stackless(ec);
         }
       });
     
@@ -59,14 +59,14 @@ public:
       cout<<e.what()<<endl;
     }
   }
-  void do_some_stackless()
+  void do_some_stackless(boost::system::error_code ec = boost::system::error_code(), std::size_t n = 0)
   {
     reenter(m_coro)
     {
       for(;;)
       {
-        yield m_socket.async_read_some(boost::asio::buffer(m_data),m_coro);
-        yield boost::asio::async_write(m_socket,boost::asio::buffer(m_data,m_data.size()),m_coro);
+        yield m_socket.async_read_some(boost::asio::buffer(m_data),do_some_stackless);
+        yield boost::asio::async_write(m_socket,boost::asio::buffer(m_data,m_data.size()),do_some_stackless);
       }
     }
   }
