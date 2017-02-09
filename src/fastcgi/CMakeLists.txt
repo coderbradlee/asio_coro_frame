@@ -53,7 +53,8 @@ configure_file(${PROJECT_SOURCE_DIR}/src/fastcgi/include/config.hpp.in ${PROJECT
 
 add_executable(helloworld.fcgi helloworld.cpp)
 add_dependencies(helloworld.fcgi fastcgipp)
-target_link_libraries(helloworld.fcgi PRIVATE libfastcgipp.a )
+set(MAIN_LIB_LIST boost_program_options boost_filesystem boost_coroutine boost_system boost_thread pthread boost_context boost_date_time boost_log_setup boost_log redispp hiredis ssl crypto boost_regex boost_timer boost_signals boost_locale libfastcgipp.a)
+target_link_libraries(helloworld.fcgi ${MAIN_LIB_LIST} )
 
 
 
