@@ -1,3 +1,3 @@
 curl -X GET http://127.0.0.1:8888/flowNo/test/tt
 
-ab -n 10000 -c 100 http://127.0.0.1:8888
+ab -n 10000 -c 100 http://127.0.0.1:8888/

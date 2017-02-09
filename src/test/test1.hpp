@@ -92,7 +92,11 @@ void test1()
           }
       }
     });
+  boost::thread_group m_thread_group;
+  for (size_t i = 0; i < 8; ++i)
+      m_thread_group.create_thread(boost::bind(&boost::asio::io_service::run,&io));
   io.run();
+  m_thread_group.join_all();
 }
 
 void test()
