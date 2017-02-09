@@ -2,3 +2,14 @@ svn\apollo\1.0\code\apollo_oversea_crm_trunck_1.3\apollo-service\src\main\java\c
 curl -X GET http://127.0.0.1:8888/flowNo/test/tt
 
 ab -n 10000 -c 100 http://127.0.0.1:8888/flowNo/
+
+1、fastcgi
+yum install spawn-fcgi
+yum install fcgi fcgi-devel
+config nginx 
+cp src/fastcgi/nginx.conf /etc/nginx/
+nginx -s reload
+
+spawn-fcgi -a 127.0.0.1 -p 8888 -f ./demo -C 25 -F 4
+
+curl -X GET 127.0.0.1/redis/
