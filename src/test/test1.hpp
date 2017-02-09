@@ -47,7 +47,7 @@ public:
         }
         catch(std::exception& e)
         {
-          cout<<e.what<< ":"<<__FILE__<<":"<<__LINE__<<endl;
+          cout<<e.what()<< ":"<<__FILE__<<":"<<__LINE__<<endl;
           m_socket.close();
           m_timer.cancel();
         }
