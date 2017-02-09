@@ -13,3 +13,5 @@ nginx -s reload
 spawn-fcgi -a 127.0.0.1 -p 8888 -f ./demo -C 25 -F 4
 
 curl -X GET 127.0.0.1/redis/
+
+spawn-fcgi -a 127.0.0.1 -p 8888 -f ./helloworld.fcgi -C 25 -F 4
