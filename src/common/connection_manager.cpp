@@ -13,7 +13,7 @@
 namespace http {
 namespace server {
 
-connection_manager::connection_manager(boost::asio::io_service io):m_strand(io)
+connection_manager::connection_manager(boost::asio::io_service& io):m_strand(io)
 {
 }
 
