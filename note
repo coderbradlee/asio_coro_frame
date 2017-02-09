@@ -17,4 +17,4 @@ curl -X GET 127.0.0.1/redis/
 spawn-fcgi -a 127.0.0.1 -p 8888 -f ./helloworld.fcgi -F 6
 6个fork
 
-ab -n 10000 -c 100 http://127.0.0.1/redis/
+ab -n 1000000 -k -r -c 100 http://127.0.0.1/redis/
