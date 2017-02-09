@@ -65,24 +65,40 @@ void server::run()
 
 void server::do_accept()
 {
-  acceptor_.async_accept(socket_,
-      [this](boost::system::error_code ec)
+  // acceptor_.async_accept(socket_,
+  //     [this](boost::system::error_code ec)
+  //     {
+  //       // Check whether the server was stopped by a signal before this
+  //       // completion handler had a chance to run.
+  //       if (!acceptor_.is_open())
+  //       {
+  //         return;
+  //       }
+
+  //       if (!ec)
+  //       {
+  //         connection_manager_.start(std::make_shared<connection>(
+  //             std::move(socket_), connection_manager_, request_handler_));
+  //       }
+
+  //       do_accept();
+  //     });
+  boost::asio::spawn(io,[&io](boost::asio::yield_context yields)
+    {
+      
+      for(;;)
       {
-        // Check whether the server was stopped by a signal before this
-        // completion handler had a chance to run.
-        if (!acceptor_.is_open())
+        boost::system::error_code ec;
+        // boost::asio::ip::tcp::socket so(io);
+        acceptor_.async_accept(socket_,yields[ec]);
+        if(!ec) 
         {
-          return;
-        }
-
-        if (!ec)
-        {
+          // boost::make_shared<session>(std::move(socket_))->go();
           connection_manager_.start(std::make_shared<connection>(
-              std::move(socket_), connection_manager_, request_handler_));
+            std::move(socket_), connection_manager_, request_handler_));
         }
-
-        do_accept();
-      });
+      }
+    });
 }
 
 void server::do_await_stop()
