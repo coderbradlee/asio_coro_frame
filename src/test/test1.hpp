@@ -27,7 +27,8 @@ public:
   void go()
   {
     cout<<"is this happend?"<< ":"<<__FILE__<<":"<<__LINE__<<endl;
-    boost::shared_ptr<session> self(shared_from_this());
+    // boost::shared_ptr<session> self(shared_from_this());
+    auto self(shared_from_this());
 
     boost::asio::spawn(m_strand,[this,self](boost::asio::yield_context yields)
       {
@@ -60,10 +61,10 @@ public:
           m_timer.async_wait(yields[ignored_ec]);
           if(m_timer.expires_from_now()<=boost::posix_time::seconds(0))
           {
-            m_socket.close();
-            // boost::system::error_code ec;
-            // m_socket.lowest_layer().shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
-            // m_socket.lowest_layer().close();
+            // m_socket.close();
+            boost::system::error_code ec;
+            m_socket.lowest_layer().shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
+            m_socket.lowest_layer().close();
           }
         }
       });
@@ -85,7 +86,11 @@ void test1()
         boost::system::error_code ec;
         boost::asio::ip::tcp::socket so(io);
         acc.async_accept(so,yields[ec]);
-        if(!ec) std::make_shared<session>(std::move(so))->go();
+        if(!ec) 
+          {
+
+            boost::make_shared<session>(std::move(so))->go();
+          }
       }
     });
   io.run();
