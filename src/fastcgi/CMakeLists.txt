@@ -30,5 +30,13 @@ add_library(fastcgipp SHARED
     src/webstreambuf.cpp
     src/request.cpp
     src/manager.cpp)
+
+set(VERSION      "3.0beta")
+set(VERSION_MAJOR 3)
+string(TIMESTAMP BUILD_TIME UTC)
+
 set_target_properties(fastcgipp PROPERTIES VERSION ${VERSION}
                                            SOVERSION ${VERSION_MAJOR})
+configure_file(
+    "include/config.hpp.in"
+    "include/fastcgi++/config.hpp" @ONLY)
