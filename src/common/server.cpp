@@ -83,7 +83,7 @@ void server::do_accept()
 
   //       do_accept();
   //     });
-  boost::asio::spawn(io,[&](boost::asio::yield_context yields)
+  boost::asio::spawn(io_service_,[&](boost::asio::yield_context yields)
     {
       
       for(;;)
