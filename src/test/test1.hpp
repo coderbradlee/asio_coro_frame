@@ -8,12 +8,13 @@
 #include <boost/asio/spawn.hpp>
 #include <boost/asio/yield.hpp>
 #include <boost/asio/coroutine.hpp>
+#include <boost/enable_shared_from_this.hpp>  
 using std::string;
 using std::cout;
 using std::endl;
 using boost::asio::coroutine;
 using boost::asio::ip::tcp;
-class session:public enable_shared_from_this<session>
+class session:public boost::enable_shared_from_this<session>
 {
 public:
   explicit session(tcp::socket so):
