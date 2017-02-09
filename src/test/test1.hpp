@@ -55,8 +55,8 @@ public:
           if(m_timer.expires_from_now()<=boost::posix_time::seconds(0))
           {
             boost::system::error_code ec;
-            m_socket->lowest_layer().shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
-            m_socket->lowest_layer().close();
+            m_socket.lowest_layer().shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
+            m_socket.lowest_layer().close();
           }
         }
       });
