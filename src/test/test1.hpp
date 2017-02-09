@@ -94,5 +94,6 @@ void test1()
 
 void test()
 {
+  cout<<"is this happend?"<< ":"<<__FILE__<<":"<<__LINE__<<endl;
   test1();
 }

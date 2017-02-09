@@ -13,8 +13,8 @@ int main(int argc, char* argv[])
 {
   try
   { 
+    cout<<"is this happend?"<< ":"<<__FILE__<<":"<<__LINE__<<endl;
     test();
-
   }
   catch (std::exception& e)
   {
