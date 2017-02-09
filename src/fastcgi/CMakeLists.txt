@@ -17,9 +17,7 @@ set(SYSTEM "LINUX")
 
 include_directories(include)
 # Our configuration 
-configure_file(
-    "include/config.hpp.in"
-    "fastcgi++/config.hpp" @ONLY)
+configure_file("include/config.hpp.in"@ONLY)
 
 # The shared library itself
 add_library(fastcgipp SHARED
