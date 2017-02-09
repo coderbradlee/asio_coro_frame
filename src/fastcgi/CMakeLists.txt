@@ -30,7 +30,7 @@ add_library(fastcgipp SHARED
     src/webstreambuf.cpp
     src/request.cpp
     src/manager.cpp)
-add_library(fastcgipp-static STATIC
+add_library(fastcgipp STATIC
 	src/log.cpp
 	src/http.cpp
 	src/protocol.cpp
@@ -40,7 +40,7 @@ add_library(fastcgipp-static STATIC
 	src/webstreambuf.cpp
 	src/request.cpp
 	src/manager.cpp)
-        
+
 set(VERSION      "3.0beta")
 set(VERSION_MAJOR 3)
 string(TIMESTAMP BUILD_TIME UTC)
