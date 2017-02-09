@@ -5,7 +5,8 @@ int main()
 {
 	try
 	{
-	    HttpServer server(get_config->m_port,get_config->m_threads);
+		unsigned short port=boost::lexical_cast<unsigned short>(get_config->m_port);
+	    HttpServer server(port,get_config->m_threads);
 	    serverRedisResource(server);
 		thread server_thread([&server](){
 	        //Start server
