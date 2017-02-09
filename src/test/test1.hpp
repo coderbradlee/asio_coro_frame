@@ -34,9 +34,9 @@ public:
       {
         try
         {
-          // std::vector<char> data(128,0);
+          std::vector<char> data(128,0);
           // char data[128]={0};
-          char data[128];
+          // char data[128];
           cout<<"is this happend?"<< ":"<<__FILE__<<":"<<__LINE__<<endl;
           for(;;)
           {
@@ -47,7 +47,7 @@ public:
         }
         catch(std::exception& e)
         {
-          cout<<"is this happend?"<< ":"<<__FILE__<<":"<<__LINE__<<endl;
+          cout<<e.what<< ":"<<__FILE__<<":"<<__LINE__<<endl;
           m_socket.close();
           m_timer.cancel();
         }
@@ -88,7 +88,6 @@ void test1()
         acc.async_accept(so,yields[ec]);
         if(!ec) 
           {
-
             boost::make_shared<session>(std::move(so))->go();
           }
       }
