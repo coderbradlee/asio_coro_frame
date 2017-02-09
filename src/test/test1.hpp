@@ -26,7 +26,7 @@ public:
   }
   void go()
   {
-    cout<<"is this happend?"<<endl;
+    cout<<"is this happend?"<< ":"<<__FILE__<<":"<<__LINE__<<endl;
     auto self(shared_from_this());
 
     boost::asio::spawn(m_strand,[this,self](boost::asio::yield_context yields)
@@ -54,6 +54,7 @@ public:
       {
         while(m_socket.is_open())
         {
+          cout<<"is this happend?"<< ":"<<__FILE__<<":"<<__LINE__<<endl;
           boost::system::error_code ignored_ec;
           m_timer.async_wait(yields[ignored_ec]);
           if(m_timer.expires_from_now()<=boost::posix_time::seconds(0))
@@ -81,6 +82,7 @@ void test1()
       boost::asio::ip::tcp::acceptor acc(io,boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(),8888));
       for(;;)
       {
+        cout<<"is this happend?"<< ":"<<__FILE__<<":"<<__LINE__<<endl;
         boost::system::error_code ec;
         boost::asio::ip::tcp::socket so(io);
         acc.async_accept(so,yields[ec]);

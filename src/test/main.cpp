@@ -19,11 +19,11 @@ int main(int argc, char* argv[])
   catch (std::exception& e)
   {
     //cout << diagnostic_information(e) << endl;
-    cout << e.what() << endl;
+    cout << e.what() << ":"<<__FILE__<<":"<<__LINE__<<endl;
   }
   catch (...)
   {
-    cout << "unknown error" << endl;
+    cout << "unknown error"<< ":"<<__FILE__<<":"<<__LINE__<<endl;
   }
   return 0;
 }
