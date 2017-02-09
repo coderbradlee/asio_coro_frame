@@ -30,7 +30,17 @@ add_library(fastcgipp SHARED
     src/webstreambuf.cpp
     src/request.cpp
     src/manager.cpp)
-
+add_library(fastcgipp-static STATIC
+	src/log.cpp
+	src/http.cpp
+	src/protocol.cpp
+	src/sockets.cpp
+	src/transceiver.cpp
+	src/fcgistreambuf.cpp
+	src/webstreambuf.cpp
+	src/request.cpp
+	src/manager.cpp)
+        
 set(VERSION      "3.0beta")
 set(VERSION_MAJOR 3)
 string(TIMESTAMP BUILD_TIME UTC)
@@ -43,7 +53,7 @@ configure_file(${PROJECT_SOURCE_DIR}/src/fastcgi/include/config.hpp.in ${PROJECT
 
 add_executable(helloworld.fcgi helloworld.cpp)
 add_dependencies(helloworld.fcgi fastcgipp)
-target_link_libraries(helloworld.fcgi PRIVATE libredispp.a)
+target_link_libraries(helloworld.fcgi PRIVATE libfastcgipp.a )
 
 
 
