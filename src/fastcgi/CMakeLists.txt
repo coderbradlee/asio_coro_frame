@@ -38,5 +38,5 @@ string(TIMESTAMP BUILD_TIME UTC)
 set_target_properties(fastcgipp PROPERTIES VERSION ${VERSION}
                                            SOVERSION ${VERSION_MAJOR})
 configure_file(
-    "include/config.hpp.in"
-    "include/fastcgi++/config.hpp" @ONLY)
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/config.hpp.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/include/fastcgi++/config.hpp" @ONLY)
