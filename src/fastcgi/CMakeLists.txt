@@ -20,16 +20,16 @@ include_directories(include)
 #configure_file("include/config.hpp.in"  "include/fastcgi++/config.hpp" COPYONLY)
 
 # The shared library itself
-add_library(fastcgipp SHARED
-    src/log.cpp
-    src/http.cpp
-    src/protocol.cpp
-    src/sockets.cpp
-    src/transceiver.cpp
-    src/fcgistreambuf.cpp
-    src/webstreambuf.cpp
-    src/request.cpp
-    src/manager.cpp)
+#add_library(fastcgipp SHARED
+ #   src/log.cpp
+  #  src/http.cpp
+   # src/protocol.cpp
+   # src/sockets.cpp
+   # src/transceiver.cpp
+   # src/fcgistreambuf.cpp
+   # src/webstreambuf.cpp
+   # src/request.cpp
+   # src/manager.cpp)
 add_library(fastcgipp STATIC
 	src/log.cpp
 	src/http.cpp
