@@ -38,4 +38,4 @@ string(TIMESTAMP BUILD_TIME UTC)
 set_target_properties(fastcgipp PROPERTIES VERSION ${VERSION}
                                            SOVERSION ${VERSION_MAJOR})
 
-configure_file(${PROJECT_SOURCE_DIR}/src/fastcgi/include/config.hpp.in ${PROJECT_BINARY_DIR}/src/fastcgi/include/fastcgi++/config.hpp @ONLY)
+configure_file(${PROJECT_SOURCE_DIR}/src/fastcgi/include/config.hpp.in ${PROJECT_SOURCE_DIR}/src/fastcgi/include/fastcgi++/config.hpp @ONLY)
