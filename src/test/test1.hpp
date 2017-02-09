@@ -1,0 +1,88 @@
+#pragma once 
+#include <iostream>
+#include <boost/asio.hpp>
+#include <boost/thread/thread.hpp>
+#include <boost/bind.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/make_shared.hpp>
+#include <boost/asio/spawn.hpp>
+#include <boost/asio/yield.hpp>
+#include <boost/asio/coroutine.hpp>
+using std::string;
+using std::cout;
+using std::endl;
+using boost::asio::coroutine;
+using boost::asio::ip::tcp;
+class session:public enable_shared_from_this<session>
+{
+public:
+  explicit session(tcp::socket so):
+  m_socket(std::move(so)),
+  m_timer(m_socket.get_io_service()),
+  m_strand(m_socket.get_io_service())
+  {
+
+  }
+  void go()
+  {
+    auto self(shared_from_this());
+
+    boost::asio::spawn(m_strand,[this,self](boost::asio::yield_context yields)
+      {
+        try
+        {
+          std::vector<char> data(128,0);
+          for(;;)
+          {
+            m_timer.expires_from_now(std::chrono::seconds(10));
+            size_t n=m_socket.async_read_some(boost::asio::buffer(data),yields);
+            boost::asio::async_write(m_socket,boost::asio::buffer(data,n),yields);
+          }
+        }
+        catch(std::exception& e)
+        {
+          m_socket.close();
+          m_timer.cancel();
+        }
+      });
+    boost::asio::spawn(m_strand,[this,self](boost::asio::yield_context yields)
+      {
+        while(m_socket.is_open())
+        {
+          boost::system::error_code ignored_ec;
+          m_timer.async_wait(yields[ignored_ec]);
+          if(m_timer.expires_from_now()<=std::chrono::seconds(0))
+          {
+            m_socket.close();
+          }
+        }
+      });
+  }
+  ~session(){;}
+private:
+  tcp::socket m_socket;
+  boost::asio::steady_timer m_timer;
+  boost::asio::io_service::strand m_strand;
+};
+void test1()
+{
+  
+  boost::asio::io_service io;
+  boost::asio::spawn(io,[&io](boost::asio::yield_context yields)
+    {
+      boost::asio::ip::tcp::acceptor acc(io,boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(),80));
+      for(;;)
+      {
+        boost::system::error_code ec;
+        boost::asio::ip::tcp::socket so(io);
+        acc.async_accept(so,yields[ec]);
+        if(!ec) std::make_shared<session>(std::move(so))->go();
+      }
+    });
+  io.run();
+}
+
+void test()
+{
+  test1();
+}

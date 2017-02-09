@@ -39,7 +39,10 @@ server::server(const std::string& address, const std::string& port,
   boost::asio::ip::tcp::resolver resolver(io_service_);
   boost::asio::ip::tcp::endpoint endpoint = *resolver.resolve({address, port});
   acceptor_.open(endpoint.protocol());
+  // boost::asio::ip::tcp::no_delay option(true);
+  //                   socket->set_option(option);
   acceptor_.set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
+  acceptor_.set_option(boost::asio::ip::tcp::no_delay(true));
   acceptor_.bind(endpoint);
   acceptor_.listen();
 
