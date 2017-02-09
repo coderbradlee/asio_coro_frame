@@ -36,7 +36,7 @@ public:
           // std::vector<char> data(128,0);
           // char data[128]={0};
           char data[128];
-
+          cout<<"is this happend?"<< ":"<<__FILE__<<":"<<__LINE__<<endl;
           for(;;)
           {
             m_timer.expires_from_now(boost::posix_time::seconds(10));
@@ -46,6 +46,7 @@ public:
         }
         catch(std::exception& e)
         {
+          cout<<"is this happend?"<< ":"<<__FILE__<<":"<<__LINE__<<endl;
           m_socket.close();
           m_timer.cancel();
         }
@@ -75,14 +76,12 @@ private:
 };
 void test1()
 {
-  cout<<"is this happend?"<< ":"<<__FILE__<<":"<<__LINE__<<endl;
   boost::asio::io_service io;
   boost::asio::spawn(io,[&io](boost::asio::yield_context yields)
     {
       boost::asio::ip::tcp::acceptor acc(io,boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(),8888));
       for(;;)
       {
-        cout<<"is this happend?"<< ":"<<__FILE__<<":"<<__LINE__<<endl;
         boost::system::error_code ec;
         boost::asio::ip::tcp::socket so(io);
         acc.async_accept(so,yields[ec]);
@@ -94,6 +93,5 @@ void test1()
 
 void test()
 {
-  cout<<"is this happend?"<< ":"<<__FILE__<<":"<<__LINE__<<endl;
   test1();
 }
