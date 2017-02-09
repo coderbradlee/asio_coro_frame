@@ -35,7 +35,7 @@ public:
           std::vector<char> data(128,0);
           for(;;)
           {
-            m_timer.expires_from_now(std::chrono::seconds(10));
+            m_timer.expires_from_now(boost::posix_time::seconds(10));
             size_t n=m_socket.async_read_some(boost::asio::buffer(data),yields);
             boost::asio::async_write(m_socket,boost::asio::buffer(data,n),yields);
           }
@@ -52,9 +52,11 @@ public:
         {
           boost::system::error_code ignored_ec;
           m_timer.async_wait(yields[ignored_ec]);
-          if(m_timer.expires_from_now()<=std::chrono::seconds(0))
+          if(m_timer.expires_from_now()<=boost::posix_time::seconds(0))
           {
-            m_socket.close();
+            boost::system::error_code ec;
+            m_socket->lowest_layer().shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
+            m_socket->lowest_layer().close();
           }
         }
       });
@@ -62,7 +64,7 @@ public:
   ~session(){;}
 private:
   tcp::socket m_socket;
-  boost::asio::steady_timer m_timer;
+  boost::asio::deadline_timer m_timer;
   boost::asio::io_service::strand m_strand;
 };
 void test1()
