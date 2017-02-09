@@ -20,7 +20,7 @@ server::server(const std::string& address, const std::string& port,
   : io_service_(),
     signals_(io_service_),
     acceptor_(io_service_),
-    connection_manager_(),
+    connection_manager_(io_service_),
     socket_(io_service_),
     request_handler_(doc_root),m_threads(threads)
 {
