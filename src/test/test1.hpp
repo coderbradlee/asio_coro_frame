@@ -26,6 +26,7 @@ public:
   }
   void go()
   {
+    cout<<"is this happend?"<<endl;
     auto self(shared_from_this());
 
     boost::asio::spawn(m_strand,[this,self](boost::asio::yield_context yields)
@@ -35,7 +36,7 @@ public:
           // std::vector<char> data(128,0);
           // char data[128]={0};
           char data[128];
-          cout<<"is this happend?"<<endl;
+
           for(;;)
           {
             m_timer.expires_from_now(boost::posix_time::seconds(10));
