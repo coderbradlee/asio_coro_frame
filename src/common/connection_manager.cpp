@@ -13,41 +13,27 @@
 namespace http {
 namespace server {
 
-connection_manager::connection_manager(boost::asio::io_service& io):m_strand(io)
+connection_manager::connection_manager()
 {
 }
 
 void connection_manager::start(connection_ptr c)
 {
-	m_strand.wrap([&]()
-		{
-		  connections_.insert(c);
-		  c->start();
-		}
-	);
+  connections_.insert(c);
+  c->start();
 }
 
 void connection_manager::stop(connection_ptr c)
 {
-	m_strand.wrap([&]()
-		{
-		  connections_.erase(c);
-  		  c->stop();
-		}
-	);
-  
+  connections_.erase(c);
+  c->stop();
 }
 
 void connection_manager::stop_all()
 {
-  
-  m_strand.wrap([&]()
-		{
-		  	for (auto c: connections_)
-    		c->stop();
-  			connections_.clear();
-		}
-	);
+  for (auto c: connections_)
+    c->stop();
+  connections_.clear();
 }
 
 } // namespace server

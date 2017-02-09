@@ -57,48 +57,48 @@ void server::run()
   // for new incoming connections.
   // io_service_.run();
   // m_thread_group.clear;
-  for (size_t i = 0; i < m_threads; ++i)
-      m_thread_group.create_thread(boost::bind(&boost::asio::io_service::run,&io_service_));
+  // for (size_t i = 0; i < m_threads; ++i)
+  //     m_thread_group.create_thread(boost::bind(&boost::asio::io_service::run,&io_service_));
   io_service_.run();
-  m_thread_group.join_all();
+  // m_thread_group.join_all();
 }
 
 void server::do_accept()
 {
-  // acceptor_.async_accept(socket_,
-  //     [this](boost::system::error_code ec)
-  //     {
-  //       // Check whether the server was stopped by a signal before this
-  //       // completion handler had a chance to run.
-  //       if (!acceptor_.is_open())
-  //       {
-  //         return;
-  //       }
-
-  //       if (!ec)
-  //       {
-  //         connection_manager_.start(std::make_shared<connection>(
-  //             std::move(socket_), connection_manager_, request_handler_));
-  //       }
-
-  //       do_accept();
-  //     });
-  boost::asio::spawn(io_service_,[&](boost::asio::yield_context yields)
-    {
-      
-      for(;;)
+  acceptor_.async_accept(socket_,
+      [this](boost::system::error_code ec)
       {
-        boost::system::error_code ec;
-        // boost::asio::ip::tcp::socket so(io);
-        acceptor_.async_accept(socket_,yields[ec]);
-        if(!ec) 
+        // Check whether the server was stopped by a signal before this
+        // completion handler had a chance to run.
+        if (!acceptor_.is_open())
         {
-          // boost::make_shared<session>(std::move(socket_))->go();
-          connection_manager_.start(std::make_shared<connection>(
-            std::move(socket_), connection_manager_, request_handler_));
+          return;
         }
-      }
-    });
+
+        if (!ec)
+        {
+          connection_manager_.start(std::make_shared<connection>(
+              std::move(socket_), connection_manager_, request_handler_));
+        }
+
+        do_accept();
+      });
+  // boost::asio::spawn(io_service_,[&](boost::asio::yield_context yields)
+  //   {
+      
+  //     for(;;)
+  //     {
+  //       boost::system::error_code ec;
+  //       // boost::asio::ip::tcp::socket so(io);
+  //       acceptor_.async_accept(socket_,yields[ec]);
+  //       if(!ec) 
+  //       {
+  //         // boost::make_shared<session>(std::move(socket_))->go();
+  //         connection_manager_.start(std::make_shared<connection>(
+  //           std::move(socket_), connection_manager_, request_handler_));
+  //       }
+  //     }
+  //   });
 }
 
 void server::do_await_stop()
