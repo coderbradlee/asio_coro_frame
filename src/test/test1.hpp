@@ -75,7 +75,7 @@ private:
 };
 void test1()
 {
-  
+  cout<<"is this happend?"<< ":"<<__FILE__<<":"<<__LINE__<<endl;
   boost::asio::io_service io;
   boost::asio::spawn(io,[&io](boost::asio::yield_context yields)
     {
