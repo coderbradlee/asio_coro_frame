@@ -27,7 +27,7 @@ public:
   void go()
   {
     cout<<"is this happend?"<< ":"<<__FILE__<<":"<<__LINE__<<endl;
-    boost::shared_ptr<session> self(boost::shared_prt<session>(shared_from_this()));
+    boost::shared_ptr<session> self(boost::shared_ptr<session>(shared_from_this()));
 
     boost::asio::spawn(m_strand,[this,self](boost::asio::yield_context yields)
       {
