@@ -1,3 +1,4 @@
+svn\apollo\1.0\code\apollo_oversea_crm_trunck_1.3\apollo-service\src\main\java\com\renesola\apollo\service
 curl -X GET http://127.0.0.1:8888/flowNo/test/tt
 
-ab -n 10000 -c 100 http://127.0.0.1:8888/
+ab -n 10000 -c 100 http://127.0.0.1:8888/flowNo/
