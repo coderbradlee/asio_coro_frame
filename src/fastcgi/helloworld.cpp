@@ -13,24 +13,24 @@ class HelloWorld: public Fastcgipp::Request<wchar_t>
         //! [HTTP header]
 
         //! [Output]
-        out <<
-L"<!DOCTYPE html>\n"
-L"<html>"
-    L"<head>"
-        L"<meta charset='utf-8' />"
-        L"<title>fastcgi++: Hello World</title>"
-    L"</head>"
-    L"<body>"
-        L"<p>"
-            L"English: Hello World<br>"
-            L"Russian: Привет мир<br>"
-            L"Greek: Γεια σας κόσμο<br>"
-            L"Chinese: 世界您好<br>"
-            L"Japanese: 今日は世界<br>"
-            L"Runic English?: ᚺᛖᛚᛟ ᚹᛟᛉᛚᛞ<br>"
-        L"</p>"
-    L"</body>"
-L"</html>";
+//         out <<
+// L"<!DOCTYPE html>\n"
+// L"<html>"
+//     L"<head>"
+//         L"<meta charset='utf-8' />"
+//         L"<title>fastcgi++: Hello World</title>"
+//     L"</head>"
+//     L"<body>"
+//         L"<p>"
+//             L"English: Hello World<br>"
+//             L"Russian: Привет мир<br>"
+//             L"Greek: Γεια σας κόσμο<br>"
+//             L"Chinese: 世界您好<br>"
+//             L"Japanese: 今日は世界<br>"
+//             L"Runic English?: ᚺᛖᛚᛟ ᚹᛟᛉᛚᛞ<br>"
+//         L"</p>"
+//     L"</body>"
+// L"</html>";
         //! [Output]
 
         //! [Return]
