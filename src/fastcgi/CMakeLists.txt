@@ -42,7 +42,8 @@ configure_file(${PROJECT_SOURCE_DIR}/src/fastcgi/include/config.hpp.in ${PROJECT
 
 
 add_executable(helloworld.fcgi helloworld.cpp)
-target_link_libraries(helloworld.fcgi fastcgipp)
+add_dependencies(helloworld.fcgi fastcgipp)
+target_link_libraries(helloworld.fcgi PRIVATE fastcgipp)
 
 
 
