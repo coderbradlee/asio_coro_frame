@@ -200,3 +200,5 @@ private:
 };
 
 typedef Cluster<redisContext, ThreadedPool<redisContext> > ThreadPoolCluster;
+
+#endif
