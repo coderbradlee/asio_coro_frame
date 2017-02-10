@@ -1,9 +1,0 @@
-#ifndef FASTCGIPP_CONFIG
-#define FASTCGIPP_CONFIG
-
-#define FASTCGIPP_VERSION "3.0beta"
-#define FASTCGIPP_LINUX
-#define FASTCGIPP_BUILD_TIME "11"
-#define FASTCGIPP_LOG_LEVEL 1
-
-#endif

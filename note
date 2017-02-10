@@ -3,6 +3,9 @@ tag rmfastcgi++
 移除复杂的fastcgi++的接口，使用自己写的简单的接口
 
 
+
+
+
 svn\apollo\1.0\code\apollo_oversea_crm_trunck_1.3\apollo-service\src\main\java\com\renesola\apollo\service
 curl -X GET http://127.0.0.1:8888/flowNo/test/tt
 
@@ -22,10 +25,10 @@ curl -X GET 127.0.0.1/redis/
 spawn-fcgi -a 127.0.0.1 -p 8888 -f ./helloworld.fcgi -F 6
 6个fork
 
-spawn-fcgi -a 127.0.0.1 -p 8888 -f ./helloworld.fcgi
-spawn-fcgi -a 127.0.0.1 -p 8889 -f ./helloworld.fcgi
-spawn-fcgi -a 127.0.0.1 -p 8890 -f ./helloworld.fcgi
-spawn-fcgi -a 127.0.0.1 -p 8891 -f ./helloworld.fcgi
+spawn-fcgi -a 127.0.0.1 -p 8888 -f ./redis.fcgi
+spawn-fcgi -a 127.0.0.1 -p 8889 -f ./redis.fcgi
+spawn-fcgi -a 127.0.0.1 -p 8890 -f ./redis.fcgi
+spawn-fcgi -a 127.0.0.1 -p 8891 -f ./redis.fcgi
 
 
 
