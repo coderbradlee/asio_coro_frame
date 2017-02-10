@@ -57,7 +57,7 @@ void cgi_strand::do_some(boost::asio::yield_context yields)
 	  cout<<e.what()<<endl;
 	}
 }
-void cgi_strand::do_some_stackless(boost::system::error_code ec = boost::system::error_code(), std::size_t n = 0)
+void cgi_strand::do_some_stackless(boost::system::error_code ec, std::size_t n)
 {
 	reenter(m_coro)
 	{
