@@ -7,9 +7,9 @@ void doit()
     FCGX_InitRequest( &request, 0, 0 );
 
     int num_bytes_written;
+	string served_contents="ming served_contents";
 
-    const char *served_contents_cstr = served_contents.c_str();
-    int served_contents_number_of_bytes = served_contents.length();
+    int len = served_contents.length();
 
     for(;;)
     {
@@ -24,8 +24,8 @@ void doit()
             "\r\n"
         );
 
-        num_bytes_written = FCGX_PutStr( served_contents_cstr, served_contents_number_of_bytes, request.out );
-        if( num_bytes_written != served_contents_number_of_bytes || num_bytes_written == -1 )
+        num_bytes_written = FCGX_PutStr( served_contents.c_str(), len, request.out );
+        if( num_bytes_written != len || num_bytes_written == -1 )
         {
             break;
         }
