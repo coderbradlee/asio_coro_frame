@@ -1,24 +1,12 @@
 #include "config.hpp"
-#include "fastcgi_resource.h"
+#include "fastcgi.h"
 
 int main(int argc, char* argv[])
 {
   try
   {
-    unsigned short port=boost::lexical_cast<unsigned short>(get_config->m_port);
-    HttpServer server(port,get_config->m_threads);
-    serverRedisResource(server);
-    boost::thread server_thread([&server]()
-    {
-          server.start();
-    });
-
-    boost::timer::cpu_timer pass;
-    pass.start();
-    
-    std::cout << "now time elapsed:" << pass.format(6) << std::endl;
-    
-    server_thread.join();
+    cgi_strand t("127.0.0.1","8000");
+    t.run();
   }
   catch(std::exception& e) 
   {
