@@ -35,3 +35,5 @@ spawn-fcgi -a 127.0.0.1 -p 8891 -f ./redis.fcgi
 ab -n 1000000 -k -r -c 100 http://127.0.0.1/redis/
 ./weighttp -n 500000 -c 100 -t 2 -k 127.0.0.1/
 ./weighttp -n 500000 -c 100 -t 2 -k 172.18.100.85/redis/
+
+curl -u test:test -X GET http://127.0.0.1:8688/exchange_rate/?source=USD\&target=JPY\&time=2017-02-10\&database=js

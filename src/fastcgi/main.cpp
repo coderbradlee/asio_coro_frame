@@ -5,13 +5,14 @@ int main(int argc, char* argv[])
 {
   try
   {
-    FCGX_Init();
+    redis_api r;
+    r.run();
     // boost::thread_group m_thread_group;
     // for (size_t i = 0; i < 8; ++i)
     //     m_thread_group.create_thread(boost::bind(doit));
     
     // m_thread_group.join_all();
-    doit();
+    // doit();
   }
   catch(std::exception& e) 
   {
