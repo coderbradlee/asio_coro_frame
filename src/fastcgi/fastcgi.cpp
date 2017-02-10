@@ -1,8 +1,4 @@
 #include "fastcgi.h"
-
-#ifndef FASTCGI_HPP
-#define FASTCGI_HPP
-
 #include <iostream>
 #include <boost/asio.hpp>
 #include <boost/thread/thread.hpp>
