@@ -1,3 +1,8 @@
+2017.02.10
+tag rmfastcgi++
+移除复杂的fastcgi++的接口，使用自己写的简单的接口
+
+
 svn\apollo\1.0\code\apollo_oversea_crm_trunck_1.3\apollo-service\src\main\java\com\renesola\apollo\service
 curl -X GET http://127.0.0.1:8888/flowNo/test/tt
 
