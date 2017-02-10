@@ -1,3 +1,4 @@
+#include "config.hpp"
 #include "fastcgi_resource.h"
 
 int main(int argc, char* argv[])
