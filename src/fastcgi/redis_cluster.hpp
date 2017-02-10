@@ -1,7 +1,7 @@
 #ifndef REDIS_CLUSTER_HPP
 #define REDIS_CLUSTER_HPP
 #define BOOST_SPIRIT_THREADSAFE
-
+#include "include.hpp"
 #include "redispp.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <iostream>

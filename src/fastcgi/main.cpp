@@ -1,5 +1,6 @@
 #include "config.hpp"
-#include "fastcgi.h"
+
+#include "fastcgi.hpp"
 
 int main(int argc, char* argv[])
 {

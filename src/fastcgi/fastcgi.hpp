@@ -9,6 +9,7 @@
 #include <fstream>
 #include <iostream>
 #include <cstdlib>
+#include "config.hpp"
 #include "fcgi_config.h"
 #include "fcgiapp.h"
 #include "redis_cluster.hpp"
