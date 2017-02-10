@@ -8,8 +8,8 @@ void doit()
 
     int num_bytes_written;
 
-    const char *served_contents_cstr = served_contents->c_str();
-    int served_contents_number_of_bytes = served_contents->length();
+    const char *served_contents_cstr = served_contents.c_str();
+    int served_contents_number_of_bytes = served_contents.length();
 
     for(;;)
     {
