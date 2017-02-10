@@ -3,10 +3,12 @@
 
 int main(int argc, char* argv[])
 {
-  unsigned short port=boost::lexical_cast<unsigned short>(get_config->m_port);
-      HttpServer server(port,get_config->m_threads);
+  try
+  {
+    unsigned short port=boost::lexical_cast<unsigned short>(get_config->m_port);
+    HttpServer server(port,get_config->m_threads);
     serverRedisResource(server);
-    thread server_thread([&server]()
+    boost::thread server_thread([&server]()
     {
           server.start();
     });
@@ -17,4 +19,14 @@ int main(int argc, char* argv[])
     std::cout << "now time elapsed:" << pass.format(6) << std::endl;
     
     server_thread.join();
+  }
+  catch(std::exception& e) 
+  {
+        std::cout<< e.what()<<std::endl;
+  }
+  catch(...) 
+  {
+         std::cout<< "unknown error"<<std::endl;
+  }
+    return 0;
 }
