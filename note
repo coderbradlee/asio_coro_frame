@@ -17,5 +17,12 @@ curl -X GET 127.0.0.1/redis/
 spawn-fcgi -a 127.0.0.1 -p 8888 -f ./helloworld.fcgi -F 6
 6个fork
 
+spawn-fcgi -a 127.0.0.1 -p 8888 -f ./helloworld.fcgi
+spawn-fcgi -a 127.0.0.1 -p 8889 -f ./helloworld.fcgi
+spawn-fcgi -a 127.0.0.1 -p 8890 -f ./helloworld.fcgi
+spawn-fcgi -a 127.0.0.1 -p 8891 -f ./helloworld.fcgi
+
+
+
 ab -n 1000000 -k -r -c 100 http://127.0.0.1/redis/
 ./weighttp -n 500000 -c 100 -t 2 -k 127.0.0.1/
