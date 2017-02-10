@@ -10,8 +10,8 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 #include <boost/lexical_cast.hpp>
-//#include <queue>
-//#include <thread>
+#include <queue>
+#include <thread>
 #include <condition_variable>
 #include <assert.h>
 
