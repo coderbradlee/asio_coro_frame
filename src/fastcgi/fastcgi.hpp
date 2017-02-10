@@ -21,7 +21,7 @@ public:
     {
         FCGX_Init();
         FCGX_InitRequest( &m_request, 0, 0 );
-        m_cluster_p = HiredisCommand<ThreadPoolCluster>::createCluster(get_config->m_redis_host.c_str(),get_config->m_redis_port);
+        //m_cluster_p = HiredisCommand<ThreadPoolCluster>::createCluster(get_config->m_redis_host.c_str(),get_config->m_redis_port);
     }
     void run()
     {
