@@ -23,5 +23,5 @@ private:
 
 
 void start_report();
-
+time_t StringToDatetime(const char *str);
 #endif
