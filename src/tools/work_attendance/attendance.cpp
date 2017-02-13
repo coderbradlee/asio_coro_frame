@@ -74,16 +74,16 @@ void start_report()
 time_t StringToDatetime(const char *str)  
 {  
     tm tm_;  
-    int year, month, day, hour=0, minute=0,second=0;  
+    int year, month, day, hour=8, minute=0,second=0;  
     sscanf(str,"%d-%d-%d", &year, &month, &day);  
     std::cout<<year<<":"<<month<<":"<<day<<std::endl;
     tm_.tm_year  = year-1900;  
     tm_.tm_mon   = month-1;  
     tm_.tm_mday  = day;  
-    tm_.tm_hour  = hour;  
-    tm_.tm_min   = minute;  
-    tm_.tm_sec   = second;  
-    tm_.tm_isdst = 0;  
+    // tm_.tm_hour  = hour;  
+    // tm_.tm_min   = minute;  
+    // tm_.tm_sec   = second;  
+    // tm_.tm_isdst = 0;  
   
     time_t t_ = mktime(&tm_); //已经减了8个时区  
     return t_; //秒时间  
