@@ -33,7 +33,26 @@ void month_report::data_cleaning()
 }
 void month_report::write_to_excel()
 {
-
+    m_writer->SetRowHeight(1);
+  	std::vector<std::string> v
+  	{	
+		"部门班组","工号","姓名","日期","出勤时间"	
+  	};
+  
+  	for(const auto& i:v)
+  	{
+    	m_writer->AddColumn(i.c_str());
+  	}
+  	m_writer->NextRow();
+  
+  	for(const auto& i:*m_data)
+	{
+		*xlsxfile<<x->group;
+	 	*xlsxfile<<x->id;
+	 	*xlsxfile<<x->name;
+	 	*xlsxfile<<(x->dates).substr(0,(x->dates).size()-1);
+		m_writer->NextRow();
+	}); 
 }
 void start_report()
 {
