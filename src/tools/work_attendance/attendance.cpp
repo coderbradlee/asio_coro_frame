@@ -37,8 +37,9 @@ void month_report::write_to_excel()
 }
 void start_report()
 {
-	boost::shared_ptr<month_report> report(new month_report(from,to));
 	std::string from="before.xlsx";
 	std::string to="after.xlsx";
+	boost::shared_ptr<month_report> report(new month_report(from,to));
+	
 	report->start();
 }
