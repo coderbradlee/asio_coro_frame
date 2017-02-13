@@ -9,6 +9,11 @@ int main(int argc, char* argv[])
 {
   try
   {
+    const char* v1="test1";
+    std::string vs1=v1;
+    const char* v2="test2";
+    vs1=v2;
+    std::cout<<vs1<<std::endl;
     start_report();
     sleep(10);
   }
