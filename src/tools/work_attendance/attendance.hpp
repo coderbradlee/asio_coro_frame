@@ -188,7 +188,7 @@ public:
 		  // }
 		  return 0;
     	},
-    	[&m_row_data](long unsigned int row, long unsigned int maxcol, void* callbackdata)->int
+    	[&](long unsigned int row, long unsigned int maxcol, void* callbackdata)->int
     	{
     		if(m_row_data!=nullptr)
     		{
