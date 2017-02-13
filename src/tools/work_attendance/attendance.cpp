@@ -36,7 +36,7 @@ void month_report::write_to_excel()
     m_writer->SetRowHeight(1);
   	std::vector<std::string> v
   	{	
-		"部门班组","工号","姓名","日期","出勤时间"	
+		"group","id","name","dates","on_duty"	
   	};
   
   	for(const auto& i:v)
