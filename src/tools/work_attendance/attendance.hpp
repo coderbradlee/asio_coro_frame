@@ -102,7 +102,7 @@ private:
 	std::shared_ptr<std::vector<std::shared_ptr<report_data>>> m_data;
 
 public:
-	XLSXIOReader(const char* filename):m_row_data(std::make_shared<report_data>)
+	XLSXIOReader(const char* filename):m_row_data(std::make_shared<report_data>())
 	{
 		if ((xlsxioread = xlsxioread_open(filename)) == NULL) 
 		{
