@@ -56,7 +56,7 @@ void month_report::write_to_excel()
 	 	temp_date+=" 00:00:00";
 	 	std::cout<<temp_date<<std::endl;
 	 	time_t tt=StringToDatetime(temp_date.c_str());
-	 	xlsxiowrite_add_cell_datetime(*m_writer, tt);//
+	 	xlsxiowrite_add_cell_datetime(handle, tt);//
 	 	// *m_writer<<tt;
 	 	// *m_writer<<temp_date;
 		m_writer->NextRow();
