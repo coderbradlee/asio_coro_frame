@@ -45,7 +45,7 @@ void month_report::write_to_excel()
   	}
   	m_writer->NextRow();
   
-  	for(const auto& i:*m_data)
+  	for(const auto& x:*m_data)
 	{
 		*m_writer<<x->group;
 	 	*m_writer<<x->id;
