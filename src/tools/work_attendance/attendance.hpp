@@ -115,15 +115,15 @@ public:
 	}
     void list_sheets()
     {
-    	xlsxioread_list_sheets(xlsxioread, xlsx_list_sheets_callback, &sheetdata);
+    	xlsxioread_list_sheets(xlsxioread, boost::bind(&XLSXIOReader::xlsx_list_sheets_callback,this,_1,_2), &sheetdata);
     }
 	
     void process_data()
     {
-    	xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, sheet_cell_callback, sheet_row_callback, NULL);
+    	xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, boost::bind(&XLSXIOReader::sheet_cell_callback,this,_1,_2,_3,_4), boost::bind(&XLSXIOReader::sheet_row_callback,this,_1,_2,_3), NULL);
     }
 	//calback function for listing sheets
-	static int xlsx_list_sheets_callback (const char* name, void* callbackdata)
+	int xlsx_list_sheets_callback (const char* name, void* callbackdata)
 	{
 	  xlsx_list_sheets_data* data = (xlsx_list_sheets_data*)callbackdata;
 	  if (!data->firstsheet)
@@ -133,7 +133,7 @@ public:
 	}
 
 	//calback function for end of row
-	static int sheet_row_callback (size_t row, size_t maxcol, void* callbackdata)
+	int sheet_row_callback (size_t row, size_t maxcol, void* callbackdata)
 	{
 		if(m_row_data!=nullptr)
 		{
@@ -146,7 +146,7 @@ public:
 	}
 
 	//calback function for cell data
-	static int sheet_cell_callback (size_t row, size_t col, const char* value, void* callbackdata)
+	int sheet_cell_callback (size_t row, size_t col, const char* value, void* callbackdata)
 	{
 	  // if (col > 1)
 	  //   printf("\t");
