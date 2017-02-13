@@ -134,7 +134,7 @@ public:
     	//read data
   		// xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, sheet_cell_callback, sheet_row_callback, NULL);
     	xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, 
-    		[&m_row_data,this](long unsigned int row, long unsigned int col, const char* value, void* callbackdata)->int
+    		[this](long unsigned int row, long unsigned int col, const char* value, void* callbackdata)->int
     	{
     		if(m_row_data!=nullptr)
 		  	{
