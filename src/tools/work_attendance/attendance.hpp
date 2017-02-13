@@ -134,67 +134,67 @@ public:
     	//read data
   		// xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, sheet_cell_callback, sheet_row_callback, NULL);
     	xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, 
-    		[this](long unsigned int row, long unsigned int col, const char* value, void* callbackdata)->int
+    		[&](long unsigned int row, long unsigned int col, const char* value, void* callbackdata)->int
     	{
-    		if(m_row_data!=nullptr)
-		  	{
-			  	switch(col)
-			  	{
-			  		case 1:
-			  			m_row_data->group=value;
-			  			break;
-			  		case 2:
-			  			m_row_data->number=value;
-			  			break;
-			  		case 3:
-			  			m_row_data->id=value;
-			  			break;
-			  		case 4:
-			  			m_row_data->name=value;
-			  			break;
-			  		case 5:
-			  			m_row_data->dates=value;
-			  			break;
-			  		case 6:
-			  			m_row_data->on_duty=value;
-			  			break;
-			  		case 7:
-			  			m_row_data->on_duty_desc=value;
-			  			break;
-			  		case 8:
-			  			m_row_data->off_duty=value;
-			  			break;
-			  		case 9:
-			  			m_row_data->off_duty_desc=value;
-			  			break;
-			  		case 10:
-			  			m_row_data->come_late=value;
-			  			break;
-			  		case 11:
-			  			m_row_data->leave_early=value;
-			  			break;
-			  		case 12:
-			  			m_row_data->extra_work=value;
-			  			break;
-			  		case 13:
-			  			m_row_data->away_from_work=value;
-			  			break;
-			  		case 14:
-			  			m_row_data->without_clock_in=value;
-			  			break;
-			  		default:
-			  			break;
-			  	}
-		  }
+    // 		if(m_row_data!=nullptr)
+		  // 	{
+			 //  	switch(col)
+			 //  	{
+			 //  		case 1:
+			 //  			m_row_data->group=value;
+			 //  			break;
+			 //  		case 2:
+			 //  			m_row_data->number=value;
+			 //  			break;
+			 //  		case 3:
+			 //  			m_row_data->id=value;
+			 //  			break;
+			 //  		case 4:
+			 //  			m_row_data->name=value;
+			 //  			break;
+			 //  		case 5:
+			 //  			m_row_data->dates=value;
+			 //  			break;
+			 //  		case 6:
+			 //  			m_row_data->on_duty=value;
+			 //  			break;
+			 //  		case 7:
+			 //  			m_row_data->on_duty_desc=value;
+			 //  			break;
+			 //  		case 8:
+			 //  			m_row_data->off_duty=value;
+			 //  			break;
+			 //  		case 9:
+			 //  			m_row_data->off_duty_desc=value;
+			 //  			break;
+			 //  		case 10:
+			 //  			m_row_data->come_late=value;
+			 //  			break;
+			 //  		case 11:
+			 //  			m_row_data->leave_early=value;
+			 //  			break;
+			 //  		case 12:
+			 //  			m_row_data->extra_work=value;
+			 //  			break;
+			 //  		case 13:
+			 //  			m_row_data->away_from_work=value;
+			 //  			break;
+			 //  		case 14:
+			 //  			m_row_data->without_clock_in=value;
+			 //  			break;
+			 //  		default:
+			 //  			break;
+			 //  	}
+		  // }
 		  return 0;
     	},
     	[&](long unsigned int row, long unsigned int maxcol, void* callbackdata)->int
     	{
-    		// if(m_row_data!=nullptr)
-    		// {
-    		// 	m_data->push_back(m_row_data);
-    		// 	m_row_data=std::make_shared<report_data>();
-    		// }
+    		if(this->m_row_data!=nullptr)
+    		{
+    			this->m_data->push_back(m_row_data);
+    			this->m_row_data=std::make_shared<report_data>();
+    		}
     		return 0;
     	}, NULL);
     }
