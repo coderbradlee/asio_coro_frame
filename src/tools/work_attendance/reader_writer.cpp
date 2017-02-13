@@ -29,39 +29,33 @@ void XLSXIOReader::list_sheets()
 int XLSXIOReader::cell_callback(long unsigned int row, long unsigned int col, const char* value, void* callbackdata)
 {
 	if(m_row_data!=nullptr)
-  	{
+  	{	
+  		if(value==NULL)
+  			value="";
 	  	switch(col)
 	  	{
 	  		case 1:
-	  			std::cout<<value<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
 	  			m_row_data->group=value;
 	  			break;
 	  		case 2:
-	  			std::cout<<value<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
 	  			m_row_data->number=value;
 	  			break;
 	  		case 3:
-	  			std::cout<<value<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
 	  			m_row_data->id=value;
 	  			break;
 	  		case 4:
-	  			std::cout<<value<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
 	  			m_row_data->name=value;
 	  			break;
 	  		case 5:
-	  			std::cout<<value<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
 	  			m_row_data->dates=value;
 	  			break;
 	  		case 6:
-	  			std::cout<<value<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
 	  			m_row_data->on_duty=value;
 	  			break;
 	  		case 7:
-	  			std::cout<<value<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
 	  			m_row_data->on_duty_desc=value;
 	  			break;
 	  		case 8:
-	  			std::cout<<value<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
 	  			m_row_data->off_duty=value;
 	  			break;
 	  		case 9:
