@@ -23,7 +23,6 @@ struct report_data
 class month_report
 {
 public:
-	month_report();
 	void start(const std::string& from,const std::string& to);
 private:
 	void read_from_excel();
