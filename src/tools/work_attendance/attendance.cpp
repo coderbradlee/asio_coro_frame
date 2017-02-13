@@ -76,6 +76,7 @@ time_t StringToDatetime(const char *str)
     tm tm_;  
     int year, month, day, hour=0, minute=0,second=0;  
     sscanf(str,"%d-%d-%d", &year, &month, &day);  
+    std::cout<<year<<":"<<month<<":"<<day<<std::endl;
     tm_.tm_year  = year-1900;  
     tm_.tm_mon   = month-1;  
     tm_.tm_mday  = day;  
