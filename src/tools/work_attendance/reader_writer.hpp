@@ -62,7 +62,6 @@ public:
 	static int cell_callback(long unsigned int row, long unsigned int col, const char* value, void* callbackdata);
 	static int row_callback(long unsigned int row, long unsigned int maxcol, void* callbackdata);
     void process_data();
-	std::shared_ptr<std::vector<std::shared_ptr<report_data>>> get_data();
 	~XLSXIOReader();
 	  
 };
