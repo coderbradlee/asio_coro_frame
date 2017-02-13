@@ -122,8 +122,8 @@ public:
 	}
 	  
 };
-XLSXIOReader::m_row_data=std::make_shared<report_data>();
-XLSXIOReader::m_data=std::make_shared<std::vector<std::shared_ptr<report_data>>>();
+std::shared_ptr<report_data> XLSXIOReader::m_row_data=std::make_shared<report_data>();
+std::shared_ptr<std::vector<std::shared_ptr<report_data>>> XLSXIOReader::m_data=std::make_shared<std::vector<std::shared_ptr<report_data>>>();
 
 class XLSXIOWriter
 {
