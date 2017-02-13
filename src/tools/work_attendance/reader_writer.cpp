@@ -31,53 +31,50 @@ int XLSXIOReader::cell_callback(long unsigned int row, long unsigned int col, co
 	if(m_row_data!=nullptr)
   	{	
   		// std::cout<<value<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
-  		if(!value)
-		{
-			std::cout<<value<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
-		}
+  		std::string temp(value);
 	  	switch(col)
 	  	{
 	  		case 1:
-	  			m_row_data->group=value;
+	  			m_row_data->group=temp;
 	  			break;
 	  		case 2:
-	  			m_row_data->number=value;
+	  			m_row_data->number=temp;
 	  			break;
 	  		case 3:
-	  			m_row_data->id=value;
+	  			m_row_data->id=temp;
 	  			break;
 	  		case 4:
-	  			m_row_data->name=value;
+	  			m_row_data->name=temp;
 	  			break;
 	  		case 5:
-	  			m_row_data->dates=value;
+	  			m_row_data->dates=temp;
 	  			break;
 	  		case 6:
-	  			m_row_data->on_duty=value;
+	  			m_row_data->on_duty=temp;
 	  			break;
 	  		case 7:
-	  			m_row_data->on_duty_desc=value;
+	  			m_row_data->on_duty_desc=temp;
 	  			break;
 	  		case 8:
-	  			m_row_data->off_duty=value;
+	  			m_row_data->off_duty=temp;
 	  			break;
 	  		case 9:
-	  			m_row_data->off_duty_desc=value;
+	  			m_row_data->off_duty_desc=temp;
 	  			break;
 	  		case 10:
-	  			m_row_data->come_late=value;
+	  			m_row_data->come_late=temp;
 	  			break;
 	  		case 11:
-	  			m_row_data->leave_early=value;
+	  			m_row_data->leave_early=temp;
 	  			break;
 	  		case 12:
-	  			m_row_data->extra_work=value;
+	  			m_row_data->extra_work=temp;
 	  			break;
 	  		case 13:
-	  			m_row_data->away_from_work=value;
+	  			m_row_data->away_from_work=temp;
 	  			break;
 	  		case 14:
-	  			m_row_data->without_clock_in=value;
+	  			m_row_data->without_clock_in=temp;
 	  			break;
 	  		default:
 	  			break;
