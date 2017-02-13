@@ -30,6 +30,7 @@ int XLSXIOReader::cell_callback(long unsigned int row, long unsigned int col, co
 {
 	if(m_row_data!=nullptr)
   	{	
+  		std::cout<<value<<std::endl;
   		if(value==NULL)
   			value="";
 	  	switch(col)
