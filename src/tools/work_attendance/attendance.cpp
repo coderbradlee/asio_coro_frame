@@ -71,14 +71,14 @@ void month_report::write_two_line(const std::string& group,const std::string& id
 	*m_writer<<name;
 	*m_writer<<tt;
 	*m_writer<<on_duty;
-	*m_writer<<0;
+	*m_writer<<"0";
 	 m_writer->NextRow();
 	*m_writer<<group;
 	*m_writer<<id;
 	*m_writer<<name;
 	*m_writer<<tt;
 	*m_writer<<off_duty;
-	*m_writer<<1;
+	*m_writer<<"1";
 }
 void start_report()
 {
