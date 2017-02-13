@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ATTENDANCE_HPP
+#define	ATTENDANCE_HPP
 #include "config.hpp"
 #include "log.h"
 #include <iomanip>
@@ -278,3 +279,5 @@ inline void XLSXIOWriter::NextRow ()
 }
 
 void start_report();
+
+#endif
