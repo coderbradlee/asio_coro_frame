@@ -31,12 +31,12 @@ int XLSXIOReader::cell_callback(long unsigned int row, long unsigned int col, co
 	if(m_row_data!=nullptr)
   	{	
   		// std::cout<<value<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
-  		if(value==nullptr)
+  		if(value!="")
   		{	
   			std::cout<<value<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
   			value="";
   		}
-  		else if(value=="")
+  		else
   		{
 			std::cout<<value<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
   		}
