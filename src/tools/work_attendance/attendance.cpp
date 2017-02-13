@@ -24,7 +24,7 @@ void month_report::read_from_excel()
 {
 	m_reader->list_sheets();
 	m_reader->process_data();
-	m_data=reads.get_data();
+	m_data=m_reader.get_data();
 	print_get_data(); 
 }
 void month_report::data_cleaning()
