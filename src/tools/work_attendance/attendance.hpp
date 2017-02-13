@@ -121,7 +121,7 @@ public:
 	
     void process_data()
     {
-    	xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, std::bind(&XLSXIOReader::sheet_cell_callback,this,_1,_2,_3), std::bind(&XLSXIOReader::sheet_row_callback,this,_1,_2), NULL);
+    	xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, std::bind(&XLSXIOReader::sheet_cell_callback,this,_1), std::bind(&XLSXIOReader::sheet_row_callback,this,_1), NULL);
     }
 	//calback function for listing sheets
 	int xlsx_list_sheets_callback (const char* name, void* callbackdata)
