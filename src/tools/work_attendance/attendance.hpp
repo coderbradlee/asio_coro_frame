@@ -3,7 +3,6 @@
 
 #include "reader_writer.hpp"
 
-
 class month_report
 {
 public:

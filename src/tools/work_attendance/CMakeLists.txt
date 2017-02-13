@@ -1,7 +1,7 @@
 
 include_directories(../xlsxio/include)
 include_directories(../../common)
-set(PRODUCT_SRC_LIST ../../common/config.cpp ../../common/log.cpp attendance.cpp main.cpp)
+set(PRODUCT_SRC_LIST ../../common/config.cpp ../../common/log.cpp reader_writer.cpp attendance.cpp main.cpp)
 add_executable(attendance ${PRODUCT_SRC_LIST})
 
 set(main_name attendance)
