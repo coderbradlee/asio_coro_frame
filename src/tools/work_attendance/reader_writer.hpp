@@ -90,7 +90,7 @@ public:
     XLSXIOWriter& operator << (const std::string& value);
     XLSXIOWriter& operator << (int64_t value);
     XLSXIOWriter& operator << (double value);
-  
+    XLSXIOWriter& operator << (time_t value);
     void NextRow ();
 };
 inline XLSXIOWriter::XLSXIOWriter (const char* filename, const char* sheetname, size_t detectionrows)
@@ -157,7 +157,11 @@ inline XLSXIOWriter& XLSXIOWriter::operator << (double value)
   AddCellFloat(value);
   return *this;
 }
-
+inline XLSXIOWriter& XLSXIOWriter::operator << (time_t value)
+{
+  AddCellDateTime(value);
+  return *this;
+}
 inline void XLSXIOWriter::NextRow ()
 {
   xlsxiowrite_next_row(handle);
