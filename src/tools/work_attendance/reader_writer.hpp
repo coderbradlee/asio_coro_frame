@@ -88,7 +88,7 @@ public:
 
     XLSXIOWriter& operator << (const char* value);
     XLSXIOWriter& operator << (const std::string& value);
-    XLSXIOWriter& operator << (int64_t value);
+    // XLSXIOWriter& operator << (int64_t value);
     XLSXIOWriter& operator << (double value);
     XLSXIOWriter& operator << (time_t value);
     void NextRow ();
@@ -146,11 +146,11 @@ inline XLSXIOWriter& XLSXIOWriter::operator << (const std::string& value)
   return *this;
 }
 
-inline XLSXIOWriter& XLSXIOWriter::operator << (int64_t value)
-{
-  AddCellInt(value);
-  return *this;
-}
+// inline XLSXIOWriter& XLSXIOWriter::operator << (int64_t value)
+// {
+//   AddCellInt(value);
+//   return *this;
+// }
 
 inline XLSXIOWriter& XLSXIOWriter::operator << (double value)
 {
