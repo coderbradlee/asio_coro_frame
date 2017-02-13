@@ -4,6 +4,8 @@
 #include <iomanip>
 #include "xlsxio_write.h"
 #include "xlsxio_read.h"
+class XLSXIOWriter;
+class XLSXIOReader;
 struct report_data
  {
  	std::string group;

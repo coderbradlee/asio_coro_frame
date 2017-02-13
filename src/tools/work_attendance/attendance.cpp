@@ -15,10 +15,10 @@ void month_report::start()
 }
 void month_report::print_get_data()
 {
-	for(const auto& i:*m_data)
-	{
-		i->print();
-	}
+	// for(const auto& i:*m_data)
+	// {
+	// 	i->print();
+	// }
 }
 void month_report::read_from_excel()
 {
@@ -37,8 +37,8 @@ void month_report::write_to_excel()
 }
 void start_report()
 {
-	boost::shared_ptr<month_report> report(new month_report());
+	boost::shared_ptr<month_report> report(new month_report(from,to));
 	std::string from="before.xlsx";
 	std::string to="after.xlsx";
-	report->start(from,to);
+	report->start();
 }
