@@ -6,32 +6,59 @@
 #include "xlsxio_read.h"
 struct report_data
  {
- 	std::string quotation_id;
- 	std::string quotation_detail_id;
- 	std::string quotation_no;
- 	std::string country_id;
- 	std::string owner_sales_sys_account_id;
- 	std::string sales_employee_id;
- 	
+ 	std::string group;
+ 	std::string number;
+ 	std::string id;
+ 	std::string name;
+ 	std::string dates;
+ 	std::string on_duty;
+ 	std::string on_duty_desc;
+ 	std::string off_duty;
+ 	std::string off_duty_desc;
+ 	std::string come_late;
+ 	std::string leave_early;
+ 	std::string extra_work;
+ 	std::string away_from_work;
+ 	std::string without_clock_in;
+  	
  	void print()
  	{
- 		std::cout
- 			<<std::endl;
+ 		std::cout<<
+ 		group<<","<<
+	 	number<<","<<
+	 	id<<","<<
+	 	name<<","<<
+	 	dates<<","<<
+	 	on_duty<<","<<
+	 	on_duty_desc<<","<<
+	 	off_duty<<","<<
+	 	off_duty_desc<<","<<
+	 	come_late<<","<<
+	 	leave_early<<","<<
+	 	extra_work<<","<<
+	 	away_from_work<<","<<
+	 	without_clock_in
+ 		<<std::endl;
  	}
  }; 
 
 class month_report
 {
 public:
+	month_report(const std::string& from,const std::string& to);
 	void start(const std::string& from,const std::string& to);
 private:
 	void read_from_excel();
 	void data_cleaning();
 	void write_to_excel();
+	void print_get_data();
+
 private:
-	std::vector<boost::shared_ptr<report_data>> m_report_datas;
 	std::string m_from;
 	std::string m_to;
+	std::shared_ptr<XLSXIOReader> m_reader;
+	std::shared_ptr<XLSXIOWriter> m_writer;
+	std::shared_ptr<std::vector<std::shared_ptr<report_data>>> m_data;
 };
 class XLSXIOWriter
 {
@@ -70,14 +97,21 @@ private:
 	};
 	xlsxioreader xlsxioread;
 	xlsx_list_sheets_data sheetdata;
+	std::shared_ptr<report_data> m_row_data;
+	std::shared_ptr<std::vector<std::shared_ptr<report_data>>> m_data;
+
 public:
-	XLSXIOReader(const char* filename)
+	XLSXIOReader(const char* filename):m_row_data(std::make_shared<report_data>)
 	{
 		if ((xlsxioread = xlsxioread_open(filename)) == NULL) 
 		{
 		    fprintf(stderr, "Error opening .xlsx file\n");
 		}
 		sheetdata.firstsheet = NULL;
+	}
+	std::shared_ptr<std::vector<std::shared_ptr<report_data>>> get_data()
+	{
+		return m_data;
 	}
     void list_sheets()
     {
@@ -101,17 +135,74 @@ public:
 	//calback function for end of row
 	static int sheet_row_callback (size_t row, size_t maxcol, void* callbackdata)
 	{
-	  printf("\n");
+		if(m_row_data!=nullptr)
+		{
+			m_data->push_back(m_row_data);
+			m_row_data=std::make_shared<report_data>();
+		}
+		
+	  // printf("\n");
 	  return 0;
 	}
 
 	//calback function for cell data
 	static int sheet_cell_callback (size_t row, size_t col, const char* value, void* callbackdata)
 	{
-	  if (col > 1)
-	    printf("\t");
-	  if (value)
-	    printf("%s", value);
+	  // if (col > 1)
+	  //   printf("\t");
+	  // if (value)
+	  //   printf("%d:%s",col, value);
+	  if(m_row_data!=nullptr)
+	  {
+	  	switch(col)
+	  	{
+	  		case 1:
+	  			m_row_data->group=value;
+	  			break;
+	  		case 2:
+	  			m_row_data->number=value;
+	  			break;
+	  		case 3:
+	  			m_row_data->id=value;
+	  			break;
+	  		case 4:
+	  			m_row_data->name=value;
+	  			break;
+	  		case 5:
+	  			m_row_data->dates=value;
+	  			break;
+	  		case 6:
+	  			m_row_data->on_duty=value;
+	  			break;
+	  		case 7:
+	  			m_row_data->on_duty_desc=value;
+	  			break;
+	  		case 8:
+	  			m_row_data->off_duty=value;
+	  			break;
+	  		case 9:
+	  			m_row_data->off_duty_desc=value;
+	  			break;
+	  		case 10:
+	  			m_row_data->come_late=value;
+	  			break;
+	  		case 11:
+	  			m_row_data->leave_early=value;
+	  			break;
+	  		case 12:
+	  			m_row_data->extra_work=value;
+	  			break;
+	  		case 13:
+	  			m_row_data->away_from_work=value;
+	  			break;
+	  		case 14:
+	  			m_row_data->without_clock_in=value;
+	  			break;
+	  		default:
+	  			break;
+	  	}
+	 	
+	  }
 	  return 0;
 	}
 	~XLSXIOReader()
