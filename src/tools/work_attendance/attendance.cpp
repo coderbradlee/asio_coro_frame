@@ -47,11 +47,13 @@ void month_report::write_to_excel()
   
   	for(const auto& x:*m_data)
 	{
-		std::cout<<x->group<<std::endl;
+		// std::cout<<x->group<<std::endl;//
 		*m_writer<<x->group;
 	 	*m_writer<<x->id;
 	 	*m_writer<<x->name;
-	 	// *m_writer<<(x->dates).substr(0,(x->dates).size()-1);
+	 	std::string temp_date=(x->dates).substr(0,(x->dates).size()-1);
+	 	std::cout<<temp_date<<endl;
+	 	// *m_writer<<;
 		m_writer->NextRow();
 	} 
 	m_writer->NextRow();
