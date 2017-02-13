@@ -37,18 +37,23 @@ int XLSXIOReader::cell_callback(long unsigned int row, long unsigned int col, co
 	  			m_row_data->group=value;
 	  			break;
 	  		case 2:
+	  			std::cout<<value<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
 	  			m_row_data->number=value;
 	  			break;
 	  		case 3:
+	  			std::cout<<value<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
 	  			m_row_data->id=value;
 	  			break;
 	  		case 4:
+	  			std::cout<<value<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
 	  			m_row_data->name=value;
 	  			break;
 	  		case 5:
+	  			std::cout<<value<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
 	  			m_row_data->dates=value;
 	  			break;
 	  		case 6:
+	  			std::cout<<value<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
 	  			m_row_data->on_duty=value;
 	  			break;
 	  		case 7:
