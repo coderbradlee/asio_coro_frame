@@ -25,11 +25,11 @@ void month_report::read_from_excel()
 	m_reader->list_sheets();
 	m_reader->process_data();
 	m_data=m_reader->get_data();
-	print_get_data(); 
+	// print_get_data(); 
 }
 void month_report::data_cleaning()
 {
-	
+		
 }
 void month_report::write_to_excel()
 {
@@ -47,6 +47,7 @@ void month_report::write_to_excel()
   
   	for(const auto& x:*m_data)
 	{
+		std::cout<<x->group<<std::endl;
 		*m_writer<<x->group;
 	 	*m_writer<<x->id;
 	 	*m_writer<<x->name;
