@@ -74,7 +74,7 @@ void start_report()
 time_t StringToDatetime(const char *str)  
 {  
     tm tm_;  
-    int year, month, day, hour=0, minute=0,second=0;  
+    int year, month, day, hour=0, minute=0,second=0s;  
     sscanf(str,"%d-%d-%d", &year, &month, &day);  
     tm_.tm_year  = year-1900;  
     tm_.tm_mon   = month-1;  
