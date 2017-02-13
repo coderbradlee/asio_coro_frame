@@ -15,12 +15,7 @@ struct report_data
  	
  	void print()
  	{
- 		std::cout<<quotation_id
- 			<<","<<quotation_detail_id
- 			<<","<<quotation_no
-		 	<<","<<account_name
-		 	<<","<<approval_status
-		 	<<","<<sales_full_name
+ 		std::cout
  			<<std::endl;
  	}
  }; 
