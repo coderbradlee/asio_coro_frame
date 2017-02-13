@@ -31,8 +31,8 @@ private:
 	void write_to_excel();
 private:
 	std::vector<boost::shared_ptr<report_data>> m_report_datas;
-	std::string from;
-	std::string to;
+	std::string m_from;
+	std::string m_to;
 };
 class XLSXIOWriter
 {
