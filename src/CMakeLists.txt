@@ -7,6 +7,7 @@ add_subdirectory(tools/excel_to_mysql)
 include_directories(common)
 include_directories(common/server)
 add_subdirectory(fastcgi)
+add_subdirectory(work_attendance)
 #add_executable(redis_cluster 
 #	common/config.cpp 
 #	common/log.cpp 
