@@ -1,10 +1,9 @@
 #include <boost/program_options.hpp>
 #include "log.h"
-#include "excel_to_mysql.hpp"
+#include "attendance.hpp"
 using std::string;
 using std::cout;
 using std::endl;
-void start_inspector_thread();
 
 int main(int argc, char* argv[])
 {
