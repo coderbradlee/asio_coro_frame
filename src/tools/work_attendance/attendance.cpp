@@ -49,19 +49,36 @@ void month_report::write_to_excel()
 	{
 		// std::cout<<x->group<<std::endl;//
 		auto x=(*m_data)[i];
-		*m_writer<<x->group;
-	 	*m_writer<<x->id;
-	 	*m_writer<<x->name;
+		// *m_writer<<x->group;
+	 // 	*m_writer<<x->id;
+	 // 	*m_writer<<x->name;
 	 	std::string temp_date=(x->dates).substr(0,(x->dates).size()-1);
 	 	// temp_date+=" 00:00:00";
-	 	std::cout<<temp_date<<std::endl;
+	 	// std::cout<<temp_date<<std::endl;
 	 	time_t tt=StringToDatetime(temp_date.c_str());
 	 	// xlsxiowrite_add_cell_datetime(handle, tt);//
-	 	*m_writer<<tt;
+	 	// *m_writer<<tt;
 	 	// *m_writer<<temp_date;
+	 	write_two_line(x->group,x->id,x->name,tt,x->on_duty,x->off_duty);
 		m_writer->NextRow();
 	} 
 	m_writer->NextRow();
+}
+void month_report::write_two_line(const string& group,const string& id,const string& name,time_t tt,const string& on_duty,const string& off_duty)
+{
+	*m_writer<<group;
+	*m_writer<<id;
+	*m_writer<<name;
+	*m_writer<<tt;
+	*m_writer<<on_duty;
+	*m_writer<<0;
+	 m_writer->NextRow();
+	*m_writer<<group;
+	*m_writer<<id;
+	*m_writer<<name;
+	*m_writer<<tt;
+	*m_writer<<off_duty;
+	*m_writer<<1;
 }
 void start_report()
 {
