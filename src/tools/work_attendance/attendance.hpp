@@ -133,7 +133,7 @@ public:
     	//read data
   		// xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, sheet_cell_callback, sheet_row_callback, NULL);
     	xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, 
-    		[&](size_t row, size_t col, const char* value, void* callbackdata)->int
+    		[&](long unsigned int row, long unsigned int col, const char* value, void* callbackdata)->int
     	{
     		if(m_row_data!=nullptr)
 		  	{
@@ -187,17 +187,7 @@ public:
 		  }
 		  return 0;
     	},
-    	[&](size_t row, size_t maxcol, void* callbackdata)->int
-    	{
-			if(m_row_data!=nullptr)
-			{
-				m_data->push_back(m_row_data);
-				m_row_data=std::make_shared<report_data>();
-			}
-			
-		  	// printf("\n");
-		 	return 0;
-    	}, NULL);
+    	, NULL);
     }
 	
 	~XLSXIOReader()
