@@ -127,34 +127,83 @@ public:
 			  	return 0;
     		}, &sheetdata);
     }
-	//calback function for listing sheets
-	int xlsx_list_sheets_callback (const char* name, void* callbackdata)
-	{
-	  xlsx_list_sheets_data* data = (xlsx_list_sheets_data*)callbackdata;
-	  if (!data->firstsheet)
-	    data->firstsheet = strdup(name);
-	  printf(" - %s\n", name);
-	  return 0;
-	}
+	
     void process_data()
     {
     	//read data
   		// xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, sheet_cell_callback, sheet_row_callback, NULL);
-    	xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, boost::bind(&XLSXIOReader::sheet_cell_callback,this,_1,_2,_3,_4), boost::bind(&XLSXIOReader::sheet_row_callback,this,_1,_2,_3), NULL);
+    	xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, [&](size_t row, size_t col, const char* value, void* callbackdata)->int
+    	{
+    		if(m_row_data!=nullptr)
+		  	{
+			  	switch(col)
+			  	{
+			  		case 1:
+			  			m_row_data->group=value;
+			  			break;
+			  		case 2:
+			  			m_row_data->number=value;
+			  			break;
+			  		case 3:
+			  			m_row_data->id=value;
+			  			break;
+			  		case 4:
+			  			m_row_data->name=value;
+			  			break;
+			  		case 5:
+			  			m_row_data->dates=value;
+			  			break;
+			  		case 6:
+			  			m_row_data->on_duty=value;
+			  			break;
+			  		case 7:
+			  			m_row_data->on_duty_desc=value;
+			  			break;
+			  		case 8:
+			  			m_row_data->off_duty=value;
+			  			break;
+			  		case 9:
+			  			m_row_data->off_duty_desc=value;
+			  			break;
+			  		case 10:
+			  			m_row_data->come_late=value;
+			  			break;
+			  		case 11:
+			  			m_row_data->leave_early=value;
+			  			break;
+			  		case 12:
+			  			m_row_data->extra_work=value;
+			  			break;
+			  		case 13:
+			  			m_row_data->away_from_work=value;
+			  			break;
+			  		case 14:
+			  			m_row_data->without_clock_in=value;
+			  			break;
+			  		default:
+			  			break;
+			  	}
+		  }
+		  return 0;
+    	},
+    	[&](size_t row, size_t maxcol, void* callbackdata)
+    	{
+			if(m_row_data!=nullptr)
+			{
+				m_data->push_back(m_row_data);
+				m_row_data=std::make_shared<report_data>();
+			}
+			
+		  	// printf("\n");
+		 	return 0;
+    	}, NULL);
     }
 	
 
 	//calback function for end of row
 	int sheet_row_callback (size_t row, size_t maxcol, void* callbackdata)
 	{
-		if(m_row_data!=nullptr)
-		{
-			m_data->push_back(m_row_data);
-			m_row_data=std::make_shared<report_data>();
-		}
 		
-	  // printf("\n");
-	  return 0;
 	}
 
 	//calback function for cell data
@@ -164,58 +213,7 @@ public:
 	  //   printf("\t");
 	  // if (value)
 	  //   printf("%d:%s",col, value);
-	  if(m_row_data!=nullptr)
-	  {
-	  	switch(col)
-	  	{
-	  		case 1:
-	  			m_row_data->group=value;
-	  			break;
-	  		case 2:
-	  			m_row_data->number=value;
-	  			break;
-	  		case 3:
-	  			m_row_data->id=value;
-	  			break;
-	  		case 4:
-	  			m_row_data->name=value;
-	  			break;
-	  		case 5:
-	  			m_row_data->dates=value;
-	  			break;
-	  		case 6:
-	  			m_row_data->on_duty=value;
-	  			break;
-	  		case 7:
-	  			m_row_data->on_duty_desc=value;
-	  			break;
-	  		case 8:
-	  			m_row_data->off_duty=value;
-	  			break;
-	  		case 9:
-	  			m_row_data->off_duty_desc=value;
-	  			break;
-	  		case 10:
-	  			m_row_data->come_late=value;
-	  			break;
-	  		case 11:
-	  			m_row_data->leave_early=value;
-	  			break;
-	  		case 12:
-	  			m_row_data->extra_work=value;
-	  			break;
-	  		case 13:
-	  			m_row_data->away_from_work=value;
-	  			break;
-	  		case 14:
-	  			m_row_data->without_clock_in=value;
-	  			break;
-	  		default:
-	  			break;
-	  	}
-	 	
-	  }
-	  return 0;
+	  
 	}
 	~XLSXIOReader()
 	{
