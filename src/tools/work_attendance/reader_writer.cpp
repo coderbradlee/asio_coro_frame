@@ -26,7 +26,7 @@ void XLSXIOReader::list_sheets()
 		  	return 0;
 		}, &sheetdata);
 }
-static int XLSXIOReader::cell_callback(long unsigned int row, long unsigned int col, const char* value, void* callbackdata)
+int XLSXIOReader::cell_callback(long unsigned int row, long unsigned int col, const char* value, void* callbackdata)
 {
 	if(m_row_data!=nullptr)
   	{
@@ -80,7 +80,7 @@ static int XLSXIOReader::cell_callback(long unsigned int row, long unsigned int 
   }
   return 0;
 }
-static int XLSXIOReader::row_callback(long unsigned int row, long unsigned int maxcol, void* callbackdata)
+int XLSXIOReader::row_callback(long unsigned int row, long unsigned int maxcol, void* callbackdata)
 {
 	if(m_row_data!=nullptr)
 	{
