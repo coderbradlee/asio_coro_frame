@@ -1,6 +1,6 @@
 #include "attendance.hpp"
 
-void month_report::start(cosnt std::string& from,cosnt std::string& to)
+void month_report::start(const std::string& from,const std::string& to)
 {
 	read_from_excel();
 	data_cleaning();

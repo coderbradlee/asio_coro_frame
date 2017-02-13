@@ -24,7 +24,7 @@ class month_report
 {
 public:
 	month_report();
-	void start(const std::string& from,cosnt std::string& to);
+	void start(const std::string& from,const std::string& to);
 private:
 	void read_from_excel();
 	void data_cleaning();
