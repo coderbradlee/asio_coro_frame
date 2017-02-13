@@ -45,7 +45,7 @@ void month_report::write_to_excel()
   	}
   	m_writer->NextRow();
   
-  	for(int i=1;i<(*m_data).size();++i)
+  	for(size_t i=1;i<(*m_data).size();++i)
 	{
 		// std::cout<<x->group<<std::endl;//
 		auto x=(*m_data)[i];
