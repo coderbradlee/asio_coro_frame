@@ -53,7 +53,7 @@ void month_report::write_to_excel()
 	 	*m_writer<<x->id;
 	 	*m_writer<<x->name;
 	 	std::string temp_date=(x->dates).substr(0,(x->dates).size()-1);
-	 	temp_date+=" 00:00:00";
+	 	// temp_date+=" 00:00:00";
 	 	std::cout<<temp_date<<std::endl;
 	 	time_t tt=StringToDatetime(temp_date.c_str());
 	 	// xlsxiowrite_add_cell_datetime(handle, tt);//
@@ -74,15 +74,15 @@ void start_report()
 time_t StringToDatetime(const char *str)  
 {  
     tm tm_;  
-    int year, month, day, hour, minute,second;  
-    sscanf(str,"%d-%d-%d %d:%d:%d", &year, &month, &day, &hour, &minute, &second);  
+    int year, month, day;//, hour, minute,second;  
+    sscanf(str,"%d-%d-%d", &year, &month, &day);  
     tm_.tm_year  = year-1900;  
     tm_.tm_mon   = month-1;  
     tm_.tm_mday  = day;  
-    tm_.tm_hour  = hour;  
-    tm_.tm_min   = minute;  
-    tm_.tm_sec   = second;  
-    tm_.tm_isdst = 0;  
+    // tm_.tm_hour  = hour;  
+    // tm_.tm_min   = minute;  
+    // tm_.tm_sec   = second;  
+    // tm_.tm_isdst = 0;  
   
     time_t t_ = mktime(&tm_); //已经减了8个时区  
     return t_; //秒时间  
