@@ -188,13 +188,13 @@ public:
 		  // }
 		  return 0;
     	},
-    	[&](long unsigned int row, long unsigned int maxcol, void* callbackdata)->int
+    	[&m_row_data](long unsigned int row, long unsigned int maxcol, void* callbackdata)->int
     	{
-    		// if(m_row_data!=nullptr)
-    		// {
-    		// 	m_data->push_back(m_row_data);
-    		// 	m_row_data=std::make_shared<report_data>();
-    		// }
+    		if(m_row_data!=nullptr)
+    		{
+    			m_data->push_back(m_row_data);
+    			m_row_data=std::make_shared<report_data>();
+    		}
     		return 0;
     	}, NULL);
     }
