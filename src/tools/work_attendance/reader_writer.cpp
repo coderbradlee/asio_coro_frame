@@ -34,12 +34,12 @@ int XLSXIOReader::cell_callback(long unsigned int row, long unsigned int col, co
   		if(value!=NULL)
   		{
   			temp=value;
-  			std::cout<<temp<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
+  			// std::cout<<temp<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
   		}
   		else
   		{
   			temp="";
-			std::cout<<temp<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
+			// std::cout<<temp<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
   		}
   		
 	  	switch(col)
@@ -97,7 +97,7 @@ int XLSXIOReader::row_callback(long unsigned int row, long unsigned int maxcol, 
 	if(m_row_data!=nullptr)
 	{
 		m_data->push_back(m_row_data);
-		m_row_data->print();
+		// m_row_data->print();
 		m_row_data=std::shared_ptr<report_data>(new report_data());
 	}
 	else
