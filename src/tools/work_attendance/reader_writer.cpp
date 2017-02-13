@@ -119,10 +119,6 @@ XLSXIOReader::~XLSXIOReader()
 	free(sheetdata.firstsheet);
   	xlsxioread_close(xlsxioread);
 }
-  
-std::shared_ptr<std::vector<std::shared_ptr<report_data>>> XLSXIOReader::get_data()
-{
-	return m_data;
-}
+
 std::shared_ptr<report_data> XLSXIOReader::m_row_data=std::shared_ptr<report_data>(new report_data());
 std::shared_ptr<std::vector<std::shared_ptr<report_data>>> XLSXIOReader::m_data=std::shared_ptr<std::vector<std::shared_ptr<report_data>>>(new std::vector<std::shared_ptr<report_data>>());
