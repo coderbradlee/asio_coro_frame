@@ -103,5 +103,5 @@ configure_file(${PROJECT_SOURCE_DIR}/src/config.ini  ${PROJECT_BINARY_DIR}/bin/c
 #configure_file(${PROJECT_SOURCE_DIR}/lib/libredispp.a  ${PROJECT_BINARY_DIR}/lib/libredispp.a COPYONLY)
 configure_file(${PROJECT_SOURCE_DIR}/src/mexic_price.xlsx ${PROJECT_BINARY_DIR}/bin/mexic_price.xlsx COPYONLY)
 configure_file(${PROJECT_SOURCE_DIR}/web/index.html ${PROJECT_BINARY_DIR}/bin/web/index.html COPYONLY)
-configure_file(${PROJECT_SOURCE_DIR}/src/tools/work_attendance/before.xls ${PROJECT_BINARY_DIR}/bin/before.xls COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/src/tools/work_attendance/before.xlsx ${PROJECT_BINARY_DIR}/bin/before.xlsx COPYONLY)
 file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/bin/logs)
