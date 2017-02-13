@@ -87,12 +87,12 @@ int XLSXIOReader::row_callback(long unsigned int row, long unsigned int maxcol, 
 	{
 		m_data->push_back(m_row_data);
 		std::cout<<m_row_data<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
-		m_row_data=std::make_shared<report_data>();
+		m_row_data=std::shared_ptr<report_data>(new report_data());
 		std::cout<<m_row_data<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
 	}
 	else
 	{
-		m_row_data=std::make_shared<report_data>();
+		m_row_data=std::shared_ptr<report_data>(new report_data());
 		std::cout<<m_row_data<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
 	}
 	return 0;
@@ -111,5 +111,5 @@ XLSXIOReader::~XLSXIOReader()
 }
   
 
-std::shared_ptr<report_data> XLSXIOReader::m_row_data=std::make_shared<report_data>();
+std::shared_ptr<report_data> XLSXIOReader::m_row_data=std::shared_ptr<report_data>(new report_data());
 std::shared_ptr<std::vector<std::shared_ptr<report_data>>> XLSXIOReader::m_data=std::shared_ptr<std::vector<std::shared_ptr<report_data>>>(new std::vector<std::shared_ptr<report_data>>());
