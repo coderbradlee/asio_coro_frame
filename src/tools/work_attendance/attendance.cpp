@@ -11,7 +11,7 @@ void month_report::start(const std::string& from,const std::string& to)
 
 void month_report::read_from_excel()
 {
-	XLSXIOReader reads(m_from);
+	XLSXIOReader reads(m_from.c_str());
 	reads.list_sheets();
 	reads.process_data();
 }
