@@ -86,7 +86,9 @@ int XLSXIOReader::row_callback(long unsigned int row, long unsigned int maxcol, 
 	if(m_row_data!=nullptr)
 	{
 		m_data->push_back(m_row_data);
+		std::cout<<m_row_data<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
 		m_row_data=std::make_shared<report_data>();
+		std::cout<<m_row_data<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
 	}
 	return 0;
 }
