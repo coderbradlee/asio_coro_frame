@@ -186,8 +186,7 @@ public:
 			  	}
 		  }
 		  return 0;
-    	},
-    	, NULL);
+    	},NULL);
     }
 	
 	~XLSXIOReader()
