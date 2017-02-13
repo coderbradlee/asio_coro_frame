@@ -116,12 +116,12 @@ public:
 	}
     void list_sheets()
     {
-    	xlsxioread_list_sheets(xlsxioread, std::bind(&XLSXIOReader::xlsx_list_sheets_callback,this,_1), &sheetdata);
+    	xlsxioread_list_sheets(xlsxioread, boost::bind(&XLSXIOReader::xlsx_list_sheets_callback,this,_1), &sheetdata);
     }
 	
     void process_data()
     {
-    	xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, std::bind(&XLSXIOReader::sheet_cell_callback,this,_1), std::bind(&XLSXIOReader::sheet_row_callback,this,_1), NULL);
+    	xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, boost::bind(&XLSXIOReader::sheet_cell_callback,this,_1), boost::bind(&XLSXIOReader::sheet_row_callback,this,_1), NULL);
     }
 	//calback function for listing sheets
 	int xlsx_list_sheets_callback (const char* name, void* callbackdata)
