@@ -52,7 +52,7 @@ void month_report::write_to_excel()
 	 	*m_writer<<x->name;
 	 	*m_writer<<(x->dates).substr(0,(x->dates).size()-1);
 		m_writer->NextRow();
-	}); 
+	} 
 }
 void start_report()
 {
