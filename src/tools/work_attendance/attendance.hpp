@@ -118,7 +118,14 @@ public:
     {
     	// xlsxioread_list_sheets(xlsxioread, xlsx_list_sheets_callback, &sheetdata);
     	// xlsxioread_list_sheets(xlsxioread, boost::bind(&XLSXIOReader::xlsx_list_sheets_callback,this,_1,_2), &sheetdata);
-    	xlsxioread_list_sheets(xlsxioread, [&](const char* name, void* callbackdata)->int{}, &sheetdata);
+    	xlsxioread_list_sheets(xlsxioread, [&](const char* name, void* callbackdata)->int
+    		{
+    			xlsx_list_sheets_data* data = (xlsx_list_sheets_data*)callbackdata;
+			  	if (!data->firstsheet)
+			    	data->firstsheet = strdup(name);
+			  	printf(" - %s\n", name);
+			  	return 0;
+    		}, &sheetdata);
     }
 	//calback function for listing sheets
 	int xlsx_list_sheets_callback (const char* name, void* callbackdata)
