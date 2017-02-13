@@ -30,10 +30,11 @@ int XLSXIOReader::cell_callback(long unsigned int row, long unsigned int col, co
 {
 	if(m_row_data!=nullptr)
   	{
+  		std::cout<<col<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
 	  	switch(col)
 	  	{
 	  		case 1:
-	  			std::cout<<value<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
+	  			
 	  			m_row_data->group=value;
 	  			break;
 	  		case 2:
