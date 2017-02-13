@@ -90,12 +90,17 @@ int XLSXIOReader::row_callback(long unsigned int row, long unsigned int maxcol, 
 		m_row_data=std::make_shared<report_data>();
 		std::cout<<m_row_data<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
 	}
+	else
+	{
+		m_row_data=std::make_shared<report_data>();
+		std::cout<<m_row_data<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
+	}
 	return 0;
 }
 void XLSXIOReader::process_data()
 {
 	//read data
-		xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, cell_callback,row_callback, NULL);
+	xlsxioread_process(xlsxioread, sheetdata.firstsheet, XLSXIOREAD_SKIP_EMPTY_ROWS, cell_callback,row_callback, NULL);
 	
 }
 
