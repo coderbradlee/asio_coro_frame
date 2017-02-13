@@ -52,6 +52,7 @@ int XLSXIOReader::cell_callback(long unsigned int row, long unsigned int col, co
 	  			m_row_data->on_duty=value;
 	  			break;
 	  		case 7:
+	  			std::cout<<value<<":"<<__FILE__<<":"<<__LINE__<<std::endl;
 	  			m_row_data->on_duty_desc=value;
 	  			break;
 	  		case 8:
