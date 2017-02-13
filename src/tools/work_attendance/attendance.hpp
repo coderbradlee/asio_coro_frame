@@ -13,7 +13,7 @@ private:
 	void data_cleaning();
 	void write_to_excel();
 	void print_get_data();
-	void write_two_line(const string& group,const string& id,const string& name,time_t tt,const string& on_duty,const string& off_duty);
+	void write_two_line(const std::string& group,const std::string& id,const std::string& name,time_t tt,const std::string& on_duty,const std::string& off_duty);
 private:
 	std::string m_from;
 	std::string m_to;

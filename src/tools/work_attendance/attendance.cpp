@@ -64,7 +64,7 @@ void month_report::write_to_excel()
 	} 
 	m_writer->NextRow();
 }
-void month_report::write_two_line(const string& group,const string& id,const string& name,time_t tt,const string& on_duty,const string& off_duty)
+void month_report::write_two_line(const std::string& group,const std::string& id,const std::string& name,time_t tt,const std::string& on_duty,const std::string& off_duty)
 {
 	*m_writer<<group;
 	*m_writer<<id;
