@@ -19,6 +19,7 @@ public:
     explicit pdf_api();
     void run();
     void do_convert();
+    std::string get_request_uri();
     ~pdf_api();
 private:
     FCGX_Request m_request;

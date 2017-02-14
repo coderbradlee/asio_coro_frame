@@ -13,7 +13,7 @@ void pdf_api::run()
         
         if (rc < 0)
             continue;
-
+        std::cout<<get_request_uri()<<std::endl;
         FCGX_FPrintF( m_request.out,
             "Content-Type: application/xml; charset=UTF-8\r\n"
             "Content-Encoding: gzip\r\n"
@@ -32,6 +32,10 @@ void pdf_api::run()
 void pdf_api::do_convert()
 {
     m_test="ming";
+}
+std::string get_request_uri()
+{
+    return FCGX_GetParam("REQUEST_URI", m_request.envp);
 }
 pdf_api::~pdf_api()
 {
