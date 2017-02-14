@@ -45,6 +45,8 @@ boost::shared_ptr< file_sink > initlog()
         logging::core::get()->add_global_attribute("TimeStamp", attrs::local_clock());
         logging::core::get()->add_global_attribute("RecordID", attrs::counter< unsigned int >());
 		    logging::core::get()->add_global_attribute("ThreadID", attrs::current_thread_id());
+        logging::core::get()->add_global_attribute("ProcessName", attrs::current_process_name());
+        logging::core::get()->add_global_attribute("LineID", attrs::counter< unsigned int >());
         return sink;
     }
     catch (std::exception& e)
