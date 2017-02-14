@@ -1,12 +1,11 @@
-#include "fastcgi.hpp"
+#include "pdf.hpp"
 
-redis_api::redis_api()
+pdf_api::pdf_api()
 {
     FCGX_Init();
     FCGX_InitRequest( &m_request, 0, 0 );
-    //m_cluster_p = HiredisCommand<ThreadPoolCluster>::createCluster(get_config->m_redis_host.c_str(),get_config->m_redis_port);
 }
-void redis_api::run()
+void pdf_api::run()
 {
     for(;;)
     {
@@ -20,7 +19,7 @@ void redis_api::run()
             "Content-Encoding: gzip\r\n"
             "\r\n"
         );
-        do_redis_read();
+        do_convert();
         int num_bytes_written = FCGX_PutStr( m_test.c_str(), m_test.length(), m_request.out );
         if( num_bytes_written != m_test.length() || num_bytes_written == -1 )
         {
@@ -30,11 +29,10 @@ void redis_api::run()
         FCGX_Finish_r( &m_request );
     }
 }
-void redis_api::do_redis_read()
+void pdf_api::do_convert()
 {
     m_test="ming";
 }
-redis_api::~redis_api()
+pdf_api::~pdf_api()
 {
-    delete m_cluster_p;
 }
