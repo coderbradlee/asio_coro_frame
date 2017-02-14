@@ -13,7 +13,7 @@ void pdf_api::run()
         
         if (rc < 0)
             continue;
-        std::cout<<get_request_uri()<<std::endl;
+        BOOST_LOG_SEV(slg, notification)<<get_request_uri();
         FCGX_FPrintF( m_request.out,
             "Content-Type: application/xml; charset=UTF-8\r\n"
             "Content-Encoding: gzip\r\n"

@@ -10,6 +10,7 @@
 #include <iostream>
 #include <cstdlib>
 #include "config.hpp"
+#include "log.h"
 #include "fcgi_config.h"
 #include "fcgiapp.h"
 
