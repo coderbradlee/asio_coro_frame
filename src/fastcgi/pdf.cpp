@@ -20,7 +20,7 @@ void pdf_api::run()
             "\r\n"
         );
         do_convert();
-        int num_bytes_written = FCGX_PutStr( m_test.c_str(), m_test.length(), m_request.out );
+        size_t num_bytes_written = FCGX_PutStr( m_test.c_str(), m_test.length(), m_request.out );
         if( num_bytes_written != m_test.length() || num_bytes_written == -1 )
         {
             break;
