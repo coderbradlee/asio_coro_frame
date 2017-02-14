@@ -14,6 +14,7 @@ void pdf_api::run()
         if (rc < 0)
             continue;
         BOOST_LOG_SEV(slg, notification)<<get_request_uri();
+        initsink->flush();
         FCGX_FPrintF( m_request.out,
             "Content-Type: application/xml; charset=UTF-8\r\n"
             "Content-Encoding: gzip\r\n"
