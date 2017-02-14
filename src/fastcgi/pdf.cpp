@@ -33,7 +33,7 @@ void pdf_api::do_convert()
 {
     m_test="ming";
 }
-std::string get_request_uri()
+std::string pdf_api::get_request_uri()
 {
     return FCGX_GetParam("REQUEST_URI", m_request.envp);
 }
