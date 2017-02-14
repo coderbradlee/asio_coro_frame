@@ -51,6 +51,9 @@ iconfig::iconfig(const std::string& filename)
 	m_mysql_as_username = m_pt.get<std::string>("mysql_as.username");
 	m_mysql_as_password = m_pt.get<std::string>("mysql_as.password");
 	m_mysql_as_database = m_pt.get<std::string>("mysql_as.database");
+	////////////////////////////////////////////////////////////////
+	m_attendance_from=m_pt.get<std::string>("attendance.from");
+	m_attendance_to=m_pt.get<std::string>("attendance.to");
 }
 	
 boost::shared_ptr<iconfig> iconfig::m_ps = nullptr;

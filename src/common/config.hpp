@@ -52,7 +52,9 @@ class iconfig:boost::noncopyable
 		std::string m_mysql_as_username;
 		std::string m_mysql_as_password;
 		std::string m_mysql_as_database;
-
+		///////////////////////
+		std::string m_attendance_from;
+		std::string m_attendance_to;
 };
 extern boost::shared_ptr<iconfig> get_config;
 #endif

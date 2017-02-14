@@ -82,8 +82,8 @@ void month_report::write_two_line(const std::string& group,const std::string& id
 }
 void start_report()
 {
-	std::string from="before.xlsx";
-	std::string to="after.xlsx";
+	std::string from=get_config->m_attendance_from;
+	std::string to=get_config->m_attendance_to;
 	boost::shared_ptr<month_report> report(new month_report(from,to));
 	
 	report->start();
