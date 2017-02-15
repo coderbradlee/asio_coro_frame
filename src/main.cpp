@@ -5,13 +5,15 @@ int main()
 {
 	try
 	{
+		boost::timer::cpu_timer pass;
+		pass.start();
 		for(int i=0;i<900000;++i)
 	    {
 	    	BOOST_LOG_SEV(slg, notification)<<i;
 	    }
 	    std::cout << "now time elapsed:" << pass.format(6) << std::endl;
 	    initsink->flush();
-		
+
 		unsigned short port=boost::lexical_cast<unsigned short>(get_config->m_port);
 	    HttpServer server(port,get_config->m_threads);
 	    serverRedisResource(server);
@@ -20,10 +22,6 @@ int main()
 	        server.start();
 	    });
 
-	    boost::timer::cpu_timer pass;
-		pass.start();
-		
-	    
 	    server_thread.join();
 	}
 	catch(std::exception& e) 
