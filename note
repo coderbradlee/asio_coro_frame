@@ -1,3 +1,15 @@
+/////////////////////////////////////////////
+MYSQL_TYPE_JSON错误：
+
+Changes in MySQL Connector/C++ 1.1.7 (2016-01-20)
+
+To build Connector/C++ from source, you must use either a General Availability version of MySQL 5.7 (5.7.9 or higher) or Connector/C 6.1.8 or higher.
+
+https://dev.mysql.com/doc/relnotes/connector-cpp/en/news-1-1-7.html
+清理原来的libmysqlclient.so，下载并安装mysql-connector-c-6.1.9-src.tar
+//////////////////////////////////////////////////////////////////
+
+
 spawn-fcgi -a 127.0.0.1 -p 8888 -f ./all.fcgi
 spawn-fcgi -a 127.0.0.1 -p 8889 -f ./all.fcgi
 spawn-fcgi -a 127.0.0.1 -p 8890 -f ./all.fcgi
