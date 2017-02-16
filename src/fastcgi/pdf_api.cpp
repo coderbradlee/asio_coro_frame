@@ -16,8 +16,6 @@ void pdf_api::run(FCGX_Request request)
     int num_bytes_written = FCGX_PutStr( m_test.c_str(), m_test.length(), request.out );
     if( num_bytes_written != (int)m_test.length() || num_bytes_written == -1 )
     {
-        FCGX_Finish_r( &request );
-        break;
     }
 
     FCGX_Finish_r( &request );
