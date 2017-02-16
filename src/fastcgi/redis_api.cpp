@@ -8,11 +8,11 @@ redis_api::redis_api()
 }
 void redis_api::run(FCGX_Request& request)
 {
-    FCGX_FPrintF( request.out,
-        "Content-Type: application/xml; charset=UTF-8\r\n"
-        "Content-Encoding: gzip\r\n"
-        "\r\n"
-    );
+    // FCGX_FPrintF( request.out,
+    //     "Content-Type: application/xml; charset=UTF-8\r\n"
+    //     "Content-Encoding: gzip\r\n"
+    //     "\r\n"
+    // );
     do_redis_read();
     int num_bytes_written = FCGX_PutStr( m_test.c_str(), m_test.length(), request.out );
     if( num_bytes_written != m_test.length() || num_bytes_written == -1 )
