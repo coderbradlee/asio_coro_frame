@@ -40,13 +40,17 @@ void router::run()
         // str1.compare(str2) != 0
         if(uri.compare("/redis/")==0)
         {
-            redis_api r;
-            r.run(m_request);
+            // redis_api r;
+            // r.run(m_request);
+            string temp="redis fake";
+            FCGX_PutStr( temp.c_str(), temp.length(), m_request.out );
         }
         else if(uri.compare("/pdf/")==0)
         {
-            pdf_api p;
-            p.run(m_request);
+            // pdf_api p;
+            // p.run(m_request);
+            string temp="pdf fake";
+            FCGX_PutStr( temp.c_str(), temp.length(), m_request.out );
         }
         FCGX_Finish_r( &m_request );
     }
