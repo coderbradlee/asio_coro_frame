@@ -1,5 +1,5 @@
-#ifndef FASTCGI_HPP
-#define FASTCGI_HPP
+#ifndef REDIS_API_HPP
+#define REDIS_API_HPP
 #include <pthread.h>
 #include <sys/types.h>
 #include <string>
@@ -27,6 +27,5 @@ private:
     std::vector<char> m_data;
     std::string m_test;
 };
-
 
 #endif  /* SERVER_HTTP_HPP */
