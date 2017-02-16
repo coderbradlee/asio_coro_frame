@@ -15,10 +15,10 @@ void router::run()
         if (rc < 0)
             continue;
 
-        // FCGX_FPrintF( m_request.out,
-        //     "Content-Type: application/xml; charset=UTF-8\r\n"
-        //     "Content-Encoding: gzip\r\n"
-        //     "\r\n");
+        FCGX_FPrintF( m_request.out,
+            "Content-Type: application/xml; charset=UTF-8\r\n"
+            "Content-Encoding: gzip\r\n"
+            "\r\n");
         std::string uri; 
         uri = FCGX_GetParam("REQUEST_URI", m_request.envp);
         std::cout<<uri<<std::endl;
@@ -50,6 +50,11 @@ void router::run()
             // pdf_api p;
             // p.run(m_request);
             string temp="pdf fake";
+            FCGX_PutStr( temp.c_str(), temp.length(), m_request.out );
+        }
+        else
+        {
+            string temp="other fake";
             FCGX_PutStr( temp.c_str(), temp.length(), m_request.out );
         }
         FCGX_Finish_r( &m_request );
