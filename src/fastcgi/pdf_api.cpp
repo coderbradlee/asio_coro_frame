@@ -18,7 +18,7 @@ void pdf_api::run(FCGX_Request& request)
     {
     }
 
-    FCGX_Finish_r( &request );
+    // FCGX_Finish_r( &request );
 
 }
 void pdf_api::do_convert()

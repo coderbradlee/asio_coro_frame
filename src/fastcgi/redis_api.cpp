@@ -20,7 +20,7 @@ void redis_api::run(FCGX_Request& request)
         
     }
 
-    FCGX_Finish_r( &request );
+    // FCGX_Finish_r( &request );
 
 }
 void redis_api::do_redis_read()
