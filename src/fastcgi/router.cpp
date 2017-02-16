@@ -21,7 +21,7 @@ void router::run()
             "\r\n");
         std::string uri; 
         uri = FCGX_GetParam("REQUEST_URI", m_request.envp);
-        std::cout<<uri<<std::endl;
+        // std::cout<<uri<<std::endl;
         // int num_bytes_written = FCGX_PutStr( m_test.c_str(), m_test.length(), m_request.out );
         // if( num_bytes_written != m_test.length() || num_bytes_written == -1 )
         // {
@@ -38,19 +38,19 @@ void router::run()
         // 
         FCGX_PutStr( uri.c_str(), uri.length(), m_request.out );
         // str1.compare(str2) != 0
-        if(uri.compare("/redis/")==0)
+        if(uri.compare("/redis")==0)
         {
-            // redis_api r;
-            // r.run(m_request);
-            string temp="redis fake";
-            FCGX_PutStr( temp.c_str(), temp.length(), m_request.out );
+            redis_api r;
+            r.run(m_request);
+            // string temp="redis fake";
+            // FCGX_PutStr( temp.c_str(), temp.length(), m_request.out );
         }
-        else if(uri.compare("/pdf/")==0)
+        else if(uri.compare("/pdf")==0)
         {
-            // pdf_api p;
-            // p.run(m_request);
-            string temp="pdf fake";
-            FCGX_PutStr( temp.c_str(), temp.length(), m_request.out );
+            pdf_api p;
+            p.run(m_request);
+            // string temp="pdf fake";
+            // FCGX_PutStr( temp.c_str(), temp.length(), m_request.out );
         }
         else
         {
