@@ -1,6 +1,4 @@
 #include "config.hpp"
-#include "redis_api.hpp"
-#include "pdf_api.hpp"
 #include "router.hpp"
 int main(int argc, char* argv[])
 {

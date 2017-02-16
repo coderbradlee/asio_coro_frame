@@ -12,7 +12,8 @@
 #include "config.hpp"
 #include "fcgi_config.h"
 #include "fcgiapp.h"
-
+#include "redis_api.hpp"
+#include "pdf_api.hpp"
 class router
 {
 public:
