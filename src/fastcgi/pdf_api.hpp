@@ -20,11 +20,9 @@ public:
     explicit pdf_api();
     void run(FCGX_Request& m_request);
     void do_convert();
-    std::string get_request_uri();
+    // std::string get_request_uri();
     ~pdf_api();
 private:
-    FCGX_Request m_request;
-    std::vector<char> m_data;
     std::string m_test;
 };
 class pdf_impl

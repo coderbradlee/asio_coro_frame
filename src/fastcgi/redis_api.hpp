@@ -23,8 +23,6 @@ public:
     ~redis_api();
 private:
     ThreadPoolCluster::ptr_t m_cluster_p;
-    FCGX_Request m_request;
-    std::vector<char> m_data;
     std::string m_test;
 };
 

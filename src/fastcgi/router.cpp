@@ -36,7 +36,7 @@ void router::run()
 
         // m_thread_group.join_all();
         // 
-        FCGX_PutStr( uri.c_str(), uri.length(), m_request.out );
+        // FCGX_PutStr( uri.c_str(), uri.length(), m_request.out );
         // str1.compare(str2) != 0
         if(uri.compare("/redis")==0)
         {

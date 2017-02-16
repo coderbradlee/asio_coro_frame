@@ -2,8 +2,6 @@
 
 pdf_api::pdf_api()
 {
-    FCGX_Init();
-    FCGX_InitRequest( &m_request, 0, 0 );
 }
 void pdf_api::run(FCGX_Request& request)
 {
@@ -26,10 +24,10 @@ void pdf_api::do_convert()
     pdf_impl::convert();
     m_test="pdf ok";
 }
-std::string pdf_api::get_request_uri()
-{
-    return FCGX_GetParam("REQUEST_URI", m_request.envp);
-}
+// std::string pdf_api::get_request_uri()
+// {
+//     return FCGX_GetParam("REQUEST_URI", m_request.envp);
+// }
 pdf_api::~pdf_api()
 {
 }

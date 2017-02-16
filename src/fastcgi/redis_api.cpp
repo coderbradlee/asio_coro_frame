@@ -2,8 +2,6 @@
 
 redis_api::redis_api()
 {
-    FCGX_Init();
-    FCGX_InitRequest( &m_request, 0, 0 );
     //m_cluster_p = HiredisCommand<ThreadPoolCluster>::createCluster(get_config->m_redis_host.c_str(),get_config->m_redis_port);
 }
 void redis_api::run(FCGX_Request& request)
@@ -29,5 +27,5 @@ void redis_api::do_redis_read()
 }
 redis_api::~redis_api()
 {
-    delete m_cluster_p;
+    // delete m_cluster_p;
 }
