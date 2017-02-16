@@ -24,7 +24,7 @@ void pdf_api::run(FCGX_Request& request)
 void pdf_api::do_convert()
 {
     pdf_impl::convert();
-    m_test="ok";
+    m_test="pdf ok";
 }
 std::string pdf_api::get_request_uri()
 {

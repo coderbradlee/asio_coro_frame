@@ -25,7 +25,7 @@ void redis_api::run(FCGX_Request& request)
 }
 void redis_api::do_redis_read()
 {
-    m_test="ming";
+    m_test="redis_api";
 }
 redis_api::~redis_api()
 {
