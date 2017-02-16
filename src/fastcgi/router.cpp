@@ -44,7 +44,7 @@ void router::run()
             r.run(m_request);
             // string temp="redis fake";
             // FCGX_PutStr( temp.c_str(), temp.length(), m_request.out );
-            continue;
+            // continue;
         }
         else if(uri.compare("/pdf")==0)
         {
@@ -52,7 +52,7 @@ void router::run()
             p.run(m_request);
             // string temp="pdf fake";
             // FCGX_PutStr( temp.c_str(), temp.length(), m_request.out );
-            continue;
+            // continue;
         }
         else
         {
