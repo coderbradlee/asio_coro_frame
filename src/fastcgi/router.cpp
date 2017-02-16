@@ -40,7 +40,7 @@ void router::run()
         if(uri=="/redis/")
         {
             redis_api r;
-            thread r_thread([&r =m_request]()
+            std::thread r_thread([&r =m_request]()
             {
                 r.run(m_request);
             });
@@ -49,7 +49,7 @@ void router::run()
         else if(uri=="/pdf/")
         {
             pdf_api p;
-            thread p_thread([&p =m_request]()
+            std::thread p_thread([&p =m_request]()
             {
                 p.run(m_request);
             });
