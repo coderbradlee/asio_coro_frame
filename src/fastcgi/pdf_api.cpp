@@ -5,7 +5,7 @@ pdf_api::pdf_api()
     FCGX_Init();
     FCGX_InitRequest( &m_request, 0, 0 );
 }
-void pdf_api::run(FCGX_Request request)
+void pdf_api::run(FCGX_Request& request)
 {
     FCGX_FPrintF( request.out,
         "Content-Type: application/xml; charset=UTF-8\r\n"
