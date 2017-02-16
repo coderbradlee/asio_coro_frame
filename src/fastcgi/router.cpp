@@ -15,11 +15,10 @@ void router::run()
         if (rc < 0)
             continue;
 
-        FCGX_FPrintF( m_request.out,
-            "Content-Type: application/xml; charset=UTF-8\r\n"
-            "Content-Encoding: gzip\r\n"
-            "\r\n"
-        );
+        // FCGX_FPrintF( m_request.out,
+        //     "Content-Type: application/xml; charset=UTF-8\r\n"
+        //     "Content-Encoding: gzip\r\n"
+        //     "\r\n");
         std::string uri; 
         uri = FCGX_GetParam("REQUEST_URI", m_request.envp);
         std::cout<<uri<<std::endl;
@@ -37,12 +36,14 @@ void router::run()
 
         // m_thread_group.join_all();
         // 
-        if(uri=="/redis/")
+        FCGX_PutStr( uri.c_str(), uri.length(), m_request.out );
+        str1.compare(str2) != 0
+        if(uri.compare("/redis/")==0)
         {
             redis_api r;
             r.run(m_request);
         }
-        else if(uri=="/pdf/")
+        else if(uri.compare("/pdf/")==0)
         {
             pdf_api p;
             p.run(m_request);
