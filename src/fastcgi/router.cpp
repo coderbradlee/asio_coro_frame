@@ -36,24 +36,17 @@ void router::run()
         // }
 
         // m_thread_group.join_all();
-        // FCGX_Finish_r( &m_request );
+        // 
         if(uri=="/redis/")
         {
             redis_api r;
-            std::thread r_thread([this, &r]()
-            {
-                r.run(m_request);
-            });
-            r_thread.join();
+            r.run(m_request);
         }
         else if(uri=="/pdf/")
         {
             pdf_api p;
-            std::thread p_thread([this, &p]()
-            {
-                p.run(m_request);
-            });
-            p_thread.join();
+            p.run(m_request);
         }
+        FCGX_Finish_r( &m_request );
     }
 }
