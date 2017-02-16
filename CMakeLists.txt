@@ -106,6 +106,6 @@ configure_file(${PROJECT_SOURCE_DIR}/web/index.html ${PROJECT_BINARY_DIR}/bin/we
 configure_file(${PROJECT_SOURCE_DIR}/src/tools/work_attendance/before.xlsx ${PROJECT_BINARY_DIR}/bin/before.xlsx COPYONLY)
 
 configure_file(${PROJECT_SOURCE_DIR}/src/fastcgi/wkhtmltox/libwkhtmltox.so ${PROJECT_BINARY_DIR}/lib/libwkhtmltox.so COPYONLY)
-configure_file(${PROJECT_SOURCE_DIR}/src/fastcgi/test.html ${PROJECT_BINARY_DIR}/bin/test.html COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/src/fastcgi/wkhtmltox/test.html ${PROJECT_BINARY_DIR}/bin/test.html COPYONLY)
 
 file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/bin/logs)
