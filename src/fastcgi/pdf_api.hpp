@@ -18,7 +18,7 @@ class pdf_api
 {
 public:
     explicit pdf_api();
-    void run();
+    void run(FCGX_Request m_request);
     void do_convert();
     std::string get_request_uri();
     ~pdf_api();

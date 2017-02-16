@@ -5,31 +5,23 @@ pdf_api::pdf_api()
     FCGX_Init();
     FCGX_InitRequest( &m_request, 0, 0 );
 }
-void pdf_api::run()
+void pdf_api::run(FCGX_Request request)
 {
-    for(;;)
+    FCGX_FPrintF( request.out,
+        "Content-Type: application/xml; charset=UTF-8\r\n"
+        "Content-Encoding: gzip\r\n"
+        "\r\n"
+    );
+    do_convert();
+    int num_bytes_written = FCGX_PutStr( m_test.c_str(), m_test.length(), request.out );
+    if( num_bytes_written != (int)m_test.length() || num_bytes_written == -1 )
     {
-        int rc = FCGX_Accept_r( &m_request );
-        
-        if (rc < 0)
-            continue;
-        BOOST_LOG_SEV(slg, notification)<<get_request_uri();
-        initsink->flush();
-        FCGX_FPrintF( m_request.out,
-            "Content-Type: application/xml; charset=UTF-8\r\n"
-            "Content-Encoding: gzip\r\n"
-            "\r\n"
-        );
-        do_convert();
-        int num_bytes_written = FCGX_PutStr( m_test.c_str(), m_test.length(), m_request.out );
-        if( num_bytes_written != (int)m_test.length() || num_bytes_written == -1 )
-        {
-            FCGX_Finish_r( &m_request );
-            break;
-        }
-
-        FCGX_Finish_r( &m_request );
+        FCGX_Finish_r( &request );
+        break;
     }
+
+    FCGX_Finish_r( &request );
+
 }
 void pdf_api::do_convert()
 {

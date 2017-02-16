@@ -18,7 +18,7 @@ class redis_api
 {
 public:
     explicit redis_api();
-    void run();
+    void run(FCGX_Request m_request);
     void do_redis_read();
     ~redis_api();
 private:
