@@ -2,7 +2,7 @@
 #define PDF_HPP
 #include <pthread.h>
 #include <sys/types.h>
-#include <string>
+#include <std::string>
 #include <set>
 #include <vector>
 #include <exception>
@@ -19,7 +19,7 @@ class pdf_api
 public:
     explicit pdf_api();
     void run(FCGX_Request& m_request);
-    void do_convert(string src,string dst);
+    void do_convert(std::string src,std::string dst);
     // std::string get_request_uri();
     ~pdf_api();
     void get_request_content(const FCGX_Request & request);
@@ -56,7 +56,7 @@ public:
 	{
 		fprintf(stderr, "Warning: %s\n", msg);
 	}
-	static void convert(string src,string dst);
+	static void convert(std::string src,std::string dst);
 	~pdf_impl();
 	
 };

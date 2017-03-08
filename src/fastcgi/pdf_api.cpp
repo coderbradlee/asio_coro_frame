@@ -1,5 +1,5 @@
 #include "pdf_api.hpp"
-
+#include "fifo_map.hpp"
 pdf_api::pdf_api()
 {
 }
@@ -36,7 +36,7 @@ void pdf_api::get_request_content(const FCGX_Request & request)
     // so use gcount() instead of eof()...
     do cin.ignore(1024); while (cin.gcount() == 1024);
 
-    m_content=string(content_buffer, content_length);
+    m_content=std::string(content_buffer, content_length);
 }
 void pdf_api::run(FCGX_Request& request)
 {
@@ -60,7 +60,7 @@ void pdf_api::run(FCGX_Request& request)
     FCGX_Finish_r( &request );
 
 }
-void pdf_api::do_convert(string src,string dst)
+void pdf_api::do_convert(std::string src,std::string dst)
 {
     bool success=pdf_impl::convert(src,dst);
     if(success)
@@ -72,14 +72,14 @@ void pdf_api::do_convert(string src,string dst)
         m_response="failed";
     }
 }
-// std::string pdf_api::get_request_uri()
+// std::std::string pdf_api::get_request_uri()
 // {
 //     return FCGX_GetParam("REQUEST_URI", m_request.envp);
 // }
 pdf_api::~pdf_api()
 {
 }
-bool pdf_impl::convert(string src,string dst)
+bool pdf_impl::convert(std::string src,std::string dst)
 {
     wkhtmltopdf_global_settings * gs;
     wkhtmltopdf_object_settings * os;
