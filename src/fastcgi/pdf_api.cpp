@@ -11,12 +11,12 @@ void pdf_api::get_request_content(const FCGX_Request & request)
     std::string content_length_str= FCGX_GetParam("CONTENT_LENGTH", request.envp);
     unsigned long content_length = 0;
     content_length=boost::lexical_cast<unsigned long>(content_length_str);
-    if (content_length_str) 
+    if (content_length_str!="") 
     {
-        content_length = strtol(content_length_str,
-                                &content_length_str,
-                                10);
-        BOOST_LOG_SEV(slg, notification)<<__LINE__<<":content_length:"<<*content_length_str;
+        // content_length = strtol(content_length_str,
+        //                         &content_length_str,
+        //                         10);
+        BOOST_LOG_SEV(slg, notification)<<__LINE__<<":content_length:"<<content_length_str;
     } 
     else 
     {
