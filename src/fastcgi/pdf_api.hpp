@@ -56,7 +56,7 @@ public:
 	{
 		fprintf(stderr, "Warning: %s\n", msg);
 	}
-	static void convert(std::string src,std::string dst);
+	static bool convert(std::string src,std::string dst);
 	~pdf_impl();
 	
 };
