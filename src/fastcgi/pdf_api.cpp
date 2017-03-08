@@ -1,5 +1,6 @@
 #include "pdf_api.hpp"
 #include "fifo_map.hpp"
+#include <stdio.h>
 pdf_api::pdf_api()
 {
 }
@@ -14,11 +15,6 @@ void pdf_api::get_request_content(const FCGX_Request & request)
         content_length = strtol(content_length_str,
                                 &content_length_str,
                                 10);
-
-        if (content_length > STDIN_MAX) 
-        {
-            content_length = STDIN_MAX;
-        }
     } 
     else 
     {
