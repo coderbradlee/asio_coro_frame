@@ -37,20 +37,28 @@ void pdf_api::run(FCGX_Request& request)
     //     "Content-Encoding: gzip\r\n"
     //     "\r\n"
     // );
-    get_request_content(request);
-    BOOST_LOG_SEV(slg, notification)<<__LINE__<<":content:"<<m_content;
-    const auto& j = nlohmann_map::json::parse(m_content);
- 
-    const auto& src = j["src"];
-    const auto& dst = j["dst"];
-
-    do_convert(src,dst);
-    int num_bytes_written = FCGX_PutStr( m_response.c_str(), m_response.length(), request.out );
-    if( num_bytes_written != (int)m_response.length() || num_bytes_written == -1 )
+    try
     {
-    }
+        get_request_content(request);
+        BOOST_LOG_SEV(slg, notification)<<__LINE__<<":content:"<<m_content;
+        const auto& j = nlohmann_map::json::parse(m_content);
+     
+        const auto& src = j["src"];
+        const auto& dst = j["dst"];
 
-    FCGX_Finish_r( &request );
+        do_convert(src,dst);
+        int num_bytes_written = FCGX_PutStr( m_response.c_str(), m_response.length(), request.out );
+        if( num_bytes_written != (int)m_response.length() || num_bytes_written == -1 )
+        {
+            BOOST_LOG_SEV(slg, error)<<__LINE__<<":write content:"<<num_bytes_written;
+        }
+
+        FCGX_Finish_r( &request );
+    }
+    catch(std::exception& e)
+    {
+        BOOST_LOG_SEV(slg, error)<<__LINE__<<"json:"<<e.what();
+    }
 
 }
 void pdf_api::do_convert(std::string src,std::string dst)
