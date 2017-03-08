@@ -8,7 +8,7 @@ void pdf_api::get_request_content(const FCGX_Request & request)
 {
     char * content_length_str = FCGX_GetParam("CONTENT_LENGTH",
                                                request.envp);
-    unsigned long content_length = STDIN_MAX;
+    unsigned long content_length = 0;
 
     if (content_length_str) 
     {
