@@ -41,7 +41,7 @@ void pdf_api::run(FCGX_Request& request)
     //     "Content-Encoding: gzip\r\n"
     //     "\r\n"
     // );
-    get_request_content(request)
+    get_request_content(request);
     const auto& j = nlohmann_map::json::parse(m_content);
  
     const auto& src = j["src"];
