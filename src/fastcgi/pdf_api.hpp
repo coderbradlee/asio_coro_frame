@@ -2,7 +2,7 @@
 #define PDF_HPP
 #include <pthread.h>
 #include <sys/types.h>
-#include <std::string>
+#include <string>
 #include <set>
 #include <vector>
 #include <exception>
