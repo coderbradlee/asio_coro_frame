@@ -8,6 +8,7 @@ void pdf_api::get_request_content(const FCGX_Request & request)
 {
     char * content_length_str = FCGX_GetParam("CONTENT_LENGTH",
                                                request.envp);
+    BOOST_LOG_SEV(slg, notification)<<__LINE__<<":content_length:"<<*content_length_str;
     unsigned long content_length = 0;
 
     if (content_length_str) 
@@ -21,7 +22,7 @@ void pdf_api::get_request_content(const FCGX_Request & request)
         // Do not read from stdin if CONTENT_LENGTH is missing
         content_length = 0;
     }
-    BOOST_LOG_SEV(slg, notification)<<__LINE__<<"content_length:"<<content_length;
+
     std::shared_ptr<char> content_buffer(new char[content_length]);
     std::cin.read(content_buffer.get(), content_length);
     content_length = std::cin.gcount();
@@ -43,7 +44,7 @@ void pdf_api::run(FCGX_Request& request)
     //     "\r\n"
     // );
     get_request_content(request);
-    BOOST_LOG_SEV(slg, notification)<<__LINE__<<"content:"<<m_content;
+    BOOST_LOG_SEV(slg, notification)<<__LINE__<<":content:"<<m_content;
     const auto& j = nlohmann_map::json::parse(m_content);
  
     const auto& src = j["src"];
