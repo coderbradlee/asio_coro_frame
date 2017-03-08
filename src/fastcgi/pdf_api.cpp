@@ -52,8 +52,8 @@ void pdf_api::run(FCGX_Request& request)
     const auto& dst = j["dst"];
 
     do_convert(src,dst);
-    int num_bytes_written = FCGX_PutStr( m_test.c_str(), m_test.length(), request.out );
-    if( num_bytes_written != (int)m_test.length() || num_bytes_written == -1 )
+    int num_bytes_written = FCGX_PutStr( m_response.c_str(), m_response.length(), request.out );
+    if( num_bytes_written != (int)m_response.length() || num_bytes_written == -1 )
     {
     }
 
@@ -62,8 +62,15 @@ void pdf_api::run(FCGX_Request& request)
 }
 void pdf_api::do_convert(string src,string dst)
 {
-    pdf_impl::convert(src,dst);
-    m_test="pdf ok";
+    bool success=pdf_impl::convert(src,dst);
+    if(success)
+    {
+        m_response="ok";
+    }
+    else
+    {
+        m_response="failed";
+    }
 }
 // std::string pdf_api::get_request_uri()
 // {
