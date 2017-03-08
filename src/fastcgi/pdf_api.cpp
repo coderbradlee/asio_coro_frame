@@ -14,14 +14,13 @@ void pdf_api::get_request_content(const FCGX_Request & request)
     if (content_length_str!="") 
     {
         content_length=boost::lexical_cast<unsigned long>(content_length_str);
-        BOOST_LOG_SEV(slg, notification)<<__LINE__<<":content_length:"<<content_length_str;
     } 
     else 
     {
         // Do not read from stdin if CONTENT_LENGTH is missing
         content_length = 0;
     }
-
+    BOOST_LOG_SEV(slg, notification)<<__LINE__<<":content_length:"<<content_length;
     std::shared_ptr<char> content_buffer(new char[content_length]);
     std::cin.read(content_buffer.get(), content_length);
     content_length = std::cin.gcount();
