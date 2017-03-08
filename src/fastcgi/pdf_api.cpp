@@ -23,7 +23,7 @@ void pdf_api::get_request_content(const FCGX_Request & request)
     BOOST_LOG_SEV(slg, notification)<<__LINE__<<":content_length:"<<content_length;
     std::shared_ptr<char> content_buffer(new char[content_length]);
     // request.in.read(content_buffer.get(), content_length);
-    read_len= FCGX_GetStr(content_buffer.get(), content_length, request.in);
+    int read_len= FCGX_GetStr(content_buffer.get(), content_length, request.in);
     if(read_len!=content_length)
     {
         BOOST_LOG_SEV(slg, notification)<<__LINE__<<":read_length:"<<read_len;
