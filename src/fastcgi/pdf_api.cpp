@@ -32,7 +32,7 @@ void pdf_api::get_request_content(const FCGX_Request & request)
     // so use gcount() instead of eof()...
     do std::cin.ignore(1024); while (std::cin.gcount() == 1024);
 
-    m_content=std::string(content_buffer);
+    m_content=content_buffer;
 }
 void pdf_api::run(FCGX_Request& request)
 {
