@@ -9,11 +9,11 @@ void pdf_api::get_request_content(const FCGX_Request & request)
     // char * content_length_str = FCGX_GetParam("CONTENT_LENGTH",
     //                                            request.envp);
     std::string content_length_str= FCGX_GetParam("CONTENT_LENGTH", request.envp);
-    unsigned long content_length = 0;
+    int content_length = 0;
     
     if (content_length_str!="") 
     {
-        content_length=boost::lexical_cast<unsigned long>(content_length_str);
+        content_length=boost::lexical_cast<int>(content_length_str);
     } 
     else 
     {
@@ -26,7 +26,7 @@ void pdf_api::get_request_content(const FCGX_Request & request)
     int read_len= FCGX_GetStr(content_buffer.get(), content_length, request.in);
     if(read_len!=content_length)
     {
-        BOOST_LOG_SEV(slg, notification)<<__LINE__<<":read_length:"<<read_len;
+        BOOST_LOG_SEV(slg, error)<<__LINE__<<":read_length:"<<read_len;
     }
     m_content=content_buffer.get();
 }
