@@ -22,16 +22,12 @@ void pdf_api::get_request_content(const FCGX_Request & request)
     }
     BOOST_LOG_SEV(slg, notification)<<__LINE__<<":content_length:"<<content_length;
     std::shared_ptr<char> content_buffer(new char[content_length]);
-    std::cin.read(content_buffer.get(), content_length);
-    content_length = std::cin.gcount();
-
-    // Chew up any remaining stdin - this shouldn't be necessary
-    // but is because mod_fastcgi doesn't handle it correctly.
-
-    // ignore() doesn't set the eof bit in some versions of glibc++
-    // so use gcount() instead of eof()...
-    do std::cin.ignore(1024); while (std::cin.gcount() == 1024);
-
+    // request.in.read(content_buffer.get(), content_length);
+    read_len= FCGX_GetStr(content_buffer.get(), content_length, request.in);
+    if(read_len!=content_length)
+    {
+        BOOST_LOG_SEV(slg, notification)<<__LINE__<<":read_length:"<<read_len;
+    }
     m_content=content_buffer.get();
 }
 void pdf_api::run(FCGX_Request& request)
