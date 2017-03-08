@@ -3,6 +3,41 @@
 pdf_api::pdf_api()
 {
 }
+void pdf_api::get_request_content(const FCGX_Request & request) 
+{
+    char * content_length_str = FCGX_GetParam("CONTENT_LENGTH",
+                                               request.envp);
+    unsigned long content_length = STDIN_MAX;
+
+    if (content_length_str) 
+    {
+        content_length = strtol(content_length_str,
+                                &content_length_str,
+                                10);
+
+        if (content_length > STDIN_MAX) 
+        {
+            content_length = STDIN_MAX;
+        }
+    } 
+    else 
+    {
+        // Do not read from stdin if CONTENT_LENGTH is missing
+        content_length = 0;
+    }
+    boost::shared_ptr<char> content_buffer(new char[content_length]);
+    cin.read(content_buffer, content_length);
+    content_length = cin.gcount();
+
+    // Chew up any remaining stdin - this shouldn't be necessary
+    // but is because mod_fastcgi doesn't handle it correctly.
+
+    // ignore() doesn't set the eof bit in some versions of glibc++
+    // so use gcount() instead of eof()...
+    do cin.ignore(1024); while (cin.gcount() == 1024);
+
+    m_content=string(content_buffer, content_length);
+}
 void pdf_api::run(FCGX_Request& request)
 {
     // FCGX_FPrintF( request.out,
@@ -10,7 +45,13 @@ void pdf_api::run(FCGX_Request& request)
     //     "Content-Encoding: gzip\r\n"
     //     "\r\n"
     // );
-    do_convert();
+    get_request_content(request)
+    const auto& j = nlohmann_map::json::parse(m_content);
+ 
+    const auto& src = j["src"];
+    const auto& dst = j["dst"];
+
+    do_convert(src,dst);
     int num_bytes_written = FCGX_PutStr( m_test.c_str(), m_test.length(), request.out );
     if( num_bytes_written != (int)m_test.length() || num_bytes_written == -1 )
     {
@@ -19,9 +60,9 @@ void pdf_api::run(FCGX_Request& request)
     FCGX_Finish_r( &request );
 
 }
-void pdf_api::do_convert()
+void pdf_api::do_convert(string src,string dst)
 {
-    pdf_impl::convert();
+    pdf_impl::convert(src,dst);
     m_test="pdf ok";
 }
 // std::string pdf_api::get_request_uri()
@@ -31,7 +72,7 @@ void pdf_api::do_convert()
 pdf_api::~pdf_api()
 {
 }
-void pdf_impl::convert()
+bool pdf_impl::convert(string src,string dst)
 {
     wkhtmltopdf_global_settings * gs;
     wkhtmltopdf_object_settings * os;
@@ -47,7 +88,7 @@ void pdf_impl::convert()
      */
     gs = wkhtmltopdf_create_global_settings();
     /* We want the result to be storred in the file called test.pdf */
-    wkhtmltopdf_set_global_setting(gs, "out", "test.pdf");
+    wkhtmltopdf_set_global_setting(gs, "out", dst);
 
     // wkhtmltopdf_set_global_setting(gs, "load.cookieJar", "myjar.jar");
     /*
@@ -57,7 +98,7 @@ void pdf_impl::convert()
      */
     os = wkhtmltopdf_create_object_settings();
     /* We want to convert to convert the qstring documentation page */
-    wkhtmltopdf_set_object_setting(os, "page", "test.html");
+    wkhtmltopdf_set_object_setting(os, "page", src);
 
     /* Create the actual converter object used to convert the pages */
     c = wkhtmltopdf_create_converter(gs);
@@ -82,8 +123,12 @@ void pdf_impl::convert()
     wkhtmltopdf_add_object(c, os, NULL);
 
     /* Perform the actual conversion */
+    bool ret=true;
     if (!wkhtmltopdf_convert(c))
+    { 
         fprintf(stderr, "Conversion failed!");
+        ret=false;
+    }
 
     /* Output possible http error code encountered */
     printf("httpErrorCode: %d\n", wkhtmltopdf_http_error_code(c));
@@ -93,4 +138,5 @@ void pdf_impl::convert()
 
     /* We will no longer be needing wkhtmltopdf funcionality */
     wkhtmltopdf_deinit();
+    return ret;
 }

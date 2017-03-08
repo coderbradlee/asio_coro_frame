@@ -22,8 +22,9 @@ public:
     void do_convert();
     // std::string get_request_uri();
     ~pdf_api();
+    void get_request_content(const FCGX_Request & request);
 private:
-    std::string m_test;
+    std::string m_content;
 };
 class pdf_impl
 {
