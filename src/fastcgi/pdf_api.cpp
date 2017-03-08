@@ -21,7 +21,7 @@ void pdf_api::get_request_content(const FCGX_Request & request)
         // Do not read from stdin if CONTENT_LENGTH is missing
         content_length = 0;
     }
-    boost::shared_ptr<char> content_buffer(new char[content_length]);
+    std::shared_ptr<char> content_buffer(new char[content_length]);
     std::cin.read(content_buffer.get(), content_length);
     content_length = std::cin.gcount();
 
