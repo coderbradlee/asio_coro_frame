@@ -91,7 +91,7 @@ bool pdf_impl::convert(std::string src,std::string dst)
      */
     gs = wkhtmltopdf_create_global_settings();
     /* We want the result to be storred in the file called test.pdf */
-    wkhtmltopdf_set_global_setting(gs, "out", dst);
+    wkhtmltopdf_set_global_setting(gs, "out", dst.c_str());
 
     // wkhtmltopdf_set_global_setting(gs, "load.cookieJar", "myjar.jar");
     /*
@@ -101,7 +101,7 @@ bool pdf_impl::convert(std::string src,std::string dst)
      */
     os = wkhtmltopdf_create_object_settings();
     /* We want to convert to convert the qstring documentation page */
-    wkhtmltopdf_set_object_setting(os, "page", src);
+    wkhtmltopdf_set_object_setting(os, "page", src.c_str());
 
     /* Create the actual converter object used to convert the pages */
     c = wkhtmltopdf_create_converter(gs);
