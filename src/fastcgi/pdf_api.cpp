@@ -47,19 +47,20 @@ void pdf_api::run(FCGX_Request& request)
         const auto& dst = j["dst"];
 
         do_convert(src,dst);
-        int num_bytes_written = FCGX_PutStr( m_response.c_str(), m_response.length(), request.out );
-        if( num_bytes_written != (int)m_response.length() || num_bytes_written == -1 )
-        {
-            BOOST_LOG_SEV(slg, error)<<__LINE__<<":write content:"<<num_bytes_written;
-        }
-
-        FCGX_Finish_r( &request );
     }
     catch(std::exception& e)
     {
         BOOST_LOG_SEV(slg, error)<<__LINE__<<"json:"<<e.what();
+        m_response="failed";
     }
 
+    int num_bytes_written = FCGX_PutStr( m_response.c_str(), m_response.length(), request.out );
+    if( num_bytes_written != (int)m_response.length() || num_bytes_written == -1 )
+    {
+        BOOST_LOG_SEV(slg, error)<<__LINE__<<":write content:"<<num_bytes_written;
+    }
+
+    FCGX_Finish_r( &request );
 }
 void pdf_api::do_convert(std::string src,std::string dst)
 {
