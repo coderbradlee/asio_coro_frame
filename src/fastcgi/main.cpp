@@ -1,5 +1,6 @@
 #include "config.hpp"
 #include "router.hpp"
+#include "log.h"
 int main(int argc, char* argv[])
 {
   try

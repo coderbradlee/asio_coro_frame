@@ -42,6 +42,7 @@ void pdf_api::run(FCGX_Request& request)
     //     "\r\n"
     // );
     get_request_content(request);
+    BOOST_LOG_SEV(slg, notification)<<__LINE__<<": "<<request;
     const auto& j = nlohmann_map::json::parse(m_content);
  
     const auto& src = j["src"];
