@@ -134,16 +134,16 @@ bool pdf_impl::convert(std::string src,std::string dst)
     /* Perform the actual conversion */
     bool ret=true;
     int temp=wkhtmltopdf_convert(c);
+    BOOST_LOG_SEV(slg, severity_level::error)<<__LINE__<<":status:"<<temp;
     if (!temp)
-    { 
-        BOOST_LOG_SEV(slg, severity_level::error)<<__LINE__<<":"<<temp;
+    {   
         fprintf(stderr, "Conversion failed!");
         ret=false;
     }
 
     /* Output possible http error code encountered */
     printf("httpErrorCode: %d\n", wkhtmltopdf_http_error_code(c));
-    BOOST_LOG_SEV(slg, severity_level::error)<<__LINE__<<":"<<wkhtmltopdf_http_error_code(c);
+    BOOST_LOG_SEV(slg, severity_level::error)<<__LINE__<<":Got error code:"<<wkhtmltopdf_http_error_code(c);
     /* Destroy the converter object since we are done with it */
     wkhtmltopdf_destroy_converter(c);
 
