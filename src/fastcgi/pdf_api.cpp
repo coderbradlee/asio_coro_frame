@@ -97,17 +97,17 @@ bool pdf_impl::convert(std::string src,std::string dst)
     {
         // printf("normal termination, exit status = %d\n", WEXITSTATUS(status)); //取得cmdstring执行结果
         ret=true;
-        BOOST_LOG_SEV(slg, error)<<":cmd :exit status =1"<<":"<<__FILE__<<":"<<__LINE__;
+        BOOST_LOG_SEV(slg, severity_level::error)<<":cmd :exit status =1"<<":"<<__FILE__<<":"<<__LINE__;
     }
     else if(WIFSIGNALED(status))
     {
         // printf("abnormal termination,signal number =%d\n", WTERMSIG(status)); //如果cmdstring被信号中断，取得信号值
-        BOOST_LOG_SEV(slg, error)<<":term signal number  =2"<<":"<<__FILE__<<":"<<__LINE__;
+        BOOST_LOG_SEV(slg, severity_level::error)<<":term signal number  =2"<<":"<<__FILE__<<":"<<__LINE__;
     }
     else if(WIFSTOPPED(status))
     {
         // printf("process stopped, signal number =%d\n", WSTOPSIG(status)); //如果cmdstring被信号暂停执行，取得信号值
-        BOOST_LOG_SEV(slg, error)<<":stop signal number  =3"<<":"<<__FILE__<<":"<<__LINE__;
+        BOOST_LOG_SEV(slg, severity_level::error)<<":stop signal number  =3"<<":"<<__FILE__<<":"<<__LINE__;
     }
     // wkhtmltopdf_global_settings * gs;
     // wkhtmltopdf_object_settings * os;
