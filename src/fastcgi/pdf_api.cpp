@@ -1,7 +1,6 @@
 #include "pdf_api.hpp"
 #include "json_map.hpp"
 #include <stdio.h>
-#include <string>
 pdf_api::pdf_api()
 {
 }
@@ -85,7 +84,7 @@ pdf_api::~pdf_api()
 bool pdf_impl::convert(std::string src,std::string dst)
 {
     bool ret=false;
-    string cmdstring="/usr/local/wkhtmltox/bin/wkhtmltopdf "+src+" "+dst;
+    std::string cmdstring="/usr/local/wkhtmltox/bin/wkhtmltopdf "+src+" "+dst;
     
     int status = system(cmdstring.c_str());
     if(status < 0)
