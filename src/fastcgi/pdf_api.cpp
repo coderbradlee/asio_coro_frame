@@ -83,71 +83,93 @@ pdf_api::~pdf_api()
 }
 bool pdf_impl::convert(std::string src,std::string dst)
 {
-    wkhtmltopdf_global_settings * gs;
-    wkhtmltopdf_object_settings * os;
-    wkhtmltopdf_converter * c;
-
-    /* Init wkhtmltopdf in graphics less mode */
-    wkhtmltopdf_init(false);
-
-    /*
-     * Create a global settings object used to store options that are not
-     * related to input objects, note that control of this object is parsed to
-     * the converter later, which is then responsible for freeing it
-     */
-    gs = wkhtmltopdf_create_global_settings();
-    /* We want the result to be storred in the file called test.pdf */
-    wkhtmltopdf_set_global_setting(gs, "out", dst.c_str());
-
-    // wkhtmltopdf_set_global_setting(gs, "load.cookieJar", "myjar.jar");
-    /*
-     * Create a input object settings object that is used to store settings
-     * related to a input object, note again that control of this object is parsed to
-     * the converter later, which is then responsible for freeing it
-     */
-    os = wkhtmltopdf_create_object_settings();
-    /* We want to convert to convert the qstring documentation page */
-    wkhtmltopdf_set_object_setting(os, "page", src.c_str());
-    wkhtmltopdf_set_object_setting(os, "load.blockLocalFileAccess","false");
-    /* Create the actual converter object used to convert the pages */
-    c = wkhtmltopdf_create_converter(gs);
-
-    /* Call the progress_changed function when progress changes */
-    wkhtmltopdf_set_progress_changed_callback(c, pdf_impl::progress_changed);
-
-    /* Call the phase _changed function when the phase changes */
-    wkhtmltopdf_set_phase_changed_callback(c, pdf_impl::phase_changed);
-
-    /* Call the error function when an error occurs */
-    wkhtmltopdf_set_error_callback(c, pdf_impl::error);
-
-    /* Call the warning function when a warning is issued */
-    wkhtmltopdf_set_warning_callback(c, pdf_impl::warning);
-
-    /*
-     * Add the the settings object describing the qstring documentation page
-     * to the list of pages to convert. Objects are converted in the order in which
-     * they are added
-     */
-    wkhtmltopdf_add_object(c, os, NULL);
-
-    /* Perform the actual conversion */
-    bool ret=true;
-    int temp=wkhtmltopdf_convert(c);
-    BOOST_LOG_SEV(slg, severity_level::error)<<__LINE__<<":status:"<<temp;
-    if (!temp)
-    {   
-        fprintf(stderr, "Conversion failed!");
-        ret=false;
+    bool ret=false;
+    string cmdstring="/usr/local/wkhtmltox/bin/wkhtmltopdf "+src+" "+dst;
+    
+    int status = system(cmdstring);
+    if(status < 0)
+    {
+        printf("cmd: %s\t error: %s", cmdstring, strerror(errno)); // 这里务必要把errno信息输出或记入Log
     }
 
-    /* Output possible http error code encountered */
-    printf("httpErrorCode: %d\n", wkhtmltopdf_http_error_code(c));
-    BOOST_LOG_SEV(slg, severity_level::error)<<__LINE__<<":Got error code:"<<wkhtmltopdf_http_error_code(c);
-    /* Destroy the converter object since we are done with it */
-    wkhtmltopdf_destroy_converter(c);
+    if(WIFEXITED(status))
+    {
+        printf("normal termination, exit status = %d\n", WEXITSTATUS(status)); //取得cmdstring执行结果
+        ret=true;
+    }
+    else if(WIFSIGNALED(status))
+    {
+        printf("abnormal termination,signal number =%d\n", WTERMSIG(status)); //如果cmdstring被信号中断，取得信号值
+    }
+    else if(WIFSTOPPED(status))
+    {
+        printf("process stopped, signal number =%d\n", WSTOPSIG(status)); //如果cmdstring被信号暂停执行，取得信号值
+    }
+    // wkhtmltopdf_global_settings * gs;
+    // wkhtmltopdf_object_settings * os;
+    // wkhtmltopdf_converter * c;
 
-    /* We will no longer be needing wkhtmltopdf funcionality */
-    wkhtmltopdf_deinit();
+    // /* Init wkhtmltopdf in graphics less mode */
+    // wkhtmltopdf_init(false);
+
+    // /*
+    //  * Create a global settings object used to store options that are not
+    //  * related to input objects, note that control of this object is parsed to
+    //  * the converter later, which is then responsible for freeing it
+    //  */
+    // gs = wkhtmltopdf_create_global_settings();
+    // /* We want the result to be storred in the file called test.pdf */
+    // wkhtmltopdf_set_global_setting(gs, "out", dst.c_str());
+
+    // // wkhtmltopdf_set_global_setting(gs, "load.cookieJar", "myjar.jar");
+    // /*
+    //  * Create a input object settings object that is used to store settings
+    //  * related to a input object, note again that control of this object is parsed to
+    //  * the converter later, which is then responsible for freeing it
+    //  */
+    // os = wkhtmltopdf_create_object_settings();
+    // /* We want to convert to convert the qstring documentation page */
+    // wkhtmltopdf_set_object_setting(os, "page", src.c_str());
+    // wkhtmltopdf_set_object_setting(os, "load.blockLocalFileAccess","false");
+    // /* Create the actual converter object used to convert the pages */
+    // c = wkhtmltopdf_create_converter(gs);
+
+    // /* Call the progress_changed function when progress changes */
+    // wkhtmltopdf_set_progress_changed_callback(c, pdf_impl::progress_changed);
+
+    // /* Call the phase _changed function when the phase changes */
+    // wkhtmltopdf_set_phase_changed_callback(c, pdf_impl::phase_changed);
+
+    // /* Call the error function when an error occurs */
+    // wkhtmltopdf_set_error_callback(c, pdf_impl::error);
+
+    // /* Call the warning function when a warning is issued */
+    // wkhtmltopdf_set_warning_callback(c, pdf_impl::warning);
+
+    // /*
+    //  * Add the the settings object describing the qstring documentation page
+    //  * to the list of pages to convert. Objects are converted in the order in which
+    //  * they are added
+    //  */
+    // wkhtmltopdf_add_object(c, os, NULL);
+
+    // /* Perform the actual conversion */
+    // bool ret=true;
+    // int temp=wkhtmltopdf_convert(c);
+    // BOOST_LOG_SEV(slg, severity_level::error)<<__LINE__<<":status:"<<temp;
+    // if (!temp)
+    // {   
+    //     fprintf(stderr, "Conversion failed!");
+    //     ret=false;
+    // }
+
+    // /* Output possible http error code encountered */
+    // printf("httpErrorCode: %d\n", wkhtmltopdf_http_error_code(c));
+    // BOOST_LOG_SEV(slg, severity_level::error)<<__LINE__<<":Got error code:"<<wkhtmltopdf_http_error_code(c);
+    // /* Destroy the converter object since we are done with it */
+    // wkhtmltopdf_destroy_converter(c);
+
+    // /* We will no longer be needing wkhtmltopdf funcionality */
+    // wkhtmltopdf_deinit();
     return ret;
 }
