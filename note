@@ -20,6 +20,8 @@ spawn-fcgi -a 127.0.0.1 -p 8891 -f ./all.fcgi
 
 
 curl -X GET http://172.18.100.85/pdf -d '{"src":"/root/go_fcgi/src/wkhtmltox/test.html","dst":"test.pdf"}'
+curl -X GET http://127.0.0.1/pdf -d '{"src":"/root/Newshop_International/WEB-INF/quotation_pdf.html","dst":"/root/asio_coro_frame/build/release/bin/test.pdf"}'
+
 ab -n 1000000 -k -r -c 100 http://127.0.0.1/pdf
 ./weighttp -n 500000 -c 100 -t 2 -k 127.0.0.1/pdf
 

@@ -89,21 +89,25 @@ bool pdf_impl::convert(std::string src,std::string dst)
     int status = system(cmdstring.c_str());
     if(status < 0)
     {
-        printf("cmd: %s\t error: %s", cmdstring, strerror(errno)); // 这里务必要把errno信息输出或记入Log
+        // printf("cmd: %s\t error: %s", cmdstring, strerror(errno)); // 这里务必要把errno信息输出或记入Log
+        BOOST_LOG_SEV(slg, error)<<":cmd :"<<cmdstring<<":"<<errno<<":"<<__FILE__<<":"<<__LINE__;
     }
 
     if(WIFEXITED(status))
     {
-        printf("normal termination, exit status = %d\n", WEXITSTATUS(status)); //取得cmdstring执行结果
+        // printf("normal termination, exit status = %d\n", WEXITSTATUS(status)); //取得cmdstring执行结果
         ret=true;
+        BOOST_LOG_SEV(slg, error)<<":cmd :exit status ="<<WEXITSTATUS(status)<<":"<<__FILE__<<":"<<__LINE__;
     }
     else if(WIFSIGNALED(status))
     {
-        printf("abnormal termination,signal number =%d\n", WTERMSIG(status)); //如果cmdstring被信号中断，取得信号值
+        // printf("abnormal termination,signal number =%d\n", WTERMSIG(status)); //如果cmdstring被信号中断，取得信号值
+        BOOST_LOG_SEV(slg, error)<<":term signal number  ="<<WTERMSIG(status)<<":"<<__FILE__<<":"<<__LINE__;
     }
     else if(WIFSTOPPED(status))
     {
-        printf("process stopped, signal number =%d\n", WSTOPSIG(status)); //如果cmdstring被信号暂停执行，取得信号值
+        // printf("process stopped, signal number =%d\n", WSTOPSIG(status)); //如果cmdstring被信号暂停执行，取得信号值
+        BOOST_LOG_SEV(slg, error)<<":stop signal number  ="<<WSTOPSIG(status)<<":"<<__FILE__<<":"<<__LINE__;
     }
     // wkhtmltopdf_global_settings * gs;
     // wkhtmltopdf_object_settings * os;
