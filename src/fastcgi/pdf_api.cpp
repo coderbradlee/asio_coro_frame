@@ -1,6 +1,7 @@
 #include "pdf_api.hpp"
 #include "json_map.hpp"
 #include <stdio.h>
+#include <string>
 pdf_api::pdf_api()
 {
 }
@@ -86,7 +87,7 @@ bool pdf_impl::convert(std::string src,std::string dst)
     bool ret=false;
     string cmdstring="/usr/local/wkhtmltox/bin/wkhtmltopdf "+src+" "+dst;
     
-    int status = system(cmdstring);
+    int status = system(cmdstring.c_str());
     if(status < 0)
     {
         printf("cmd: %s\t error: %s", cmdstring, strerror(errno)); // 这里务必要把errno信息输出或记入Log
