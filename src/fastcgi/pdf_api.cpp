@@ -50,14 +50,14 @@ void pdf_api::run(FCGX_Request& request)
     }
     catch(std::exception& e)
     {
-        BOOST_LOG_SEV(slg, error)<<__LINE__<<"json:"<<e.what();
+        BOOST_LOG_SEV(slg, severity_level::error)<<__LINE__<<"json:"<<e.what();
         m_response="failed";
     }
 
     int num_bytes_written = FCGX_PutStr( m_response.c_str(), m_response.length(), request.out );
     if( num_bytes_written != (int)m_response.length() || num_bytes_written == -1 )
     {
-        BOOST_LOG_SEV(slg, error)<<__LINE__<<":write content:"<<num_bytes_written;
+        BOOST_LOG_SEV(slg, severity_level::error)<<__LINE__<<":write content:"<<num_bytes_written;
     }
 
     FCGX_Finish_r( &request );
@@ -90,7 +90,7 @@ bool pdf_impl::convert(std::string src,std::string dst)
     if(status < 0)
     {
         // printf("cmd: %s\t error: %s", cmdstring, strerror(errno)); // 这里务必要把errno信息输出或记入Log
-        BOOST_LOG_SEV(slg, error)<<":cmd :"<<cmdstring<<":"<<errno<<":"<<__FILE__<<":"<<__LINE__;
+        BOOST_LOG_SEV(slg, severity_level::error)<<":cmd :"<<cmdstring<<":"<<strerror(errno)<<":"<<__FILE__<<":"<<__LINE__;
     }
 
     if(WIFEXITED(status))
