@@ -141,8 +141,8 @@ void test_coro()
         {
           for (;;)
           {
-            yield [](){std::cout<<i++<<std::endl;}
-            yield [](){std::cout<<i++<<std::endl;}
+            yield [&i](){std::cout<<i++<<std::endl;}
+            yield [&i](){std::cout<<i++<<std::endl;}
           }
         }
       });
