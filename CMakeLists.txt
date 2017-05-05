@@ -109,3 +109,5 @@ configure_file(${PROJECT_SOURCE_DIR}/src/fastcgi/wkhtmltox/libwkhtmltox.so ${PRO
 configure_file(${PROJECT_SOURCE_DIR}/src/fastcgi/wkhtmltox/test.html ${PROJECT_BINARY_DIR}/bin/test.html COPYONLY)
 
 file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/bin/logs)
+
+ADD_DEFINITIONS(-DBOOST_COROUTINES_NO_DEPRECATION_WARNING)
