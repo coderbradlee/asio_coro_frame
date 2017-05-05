@@ -21,7 +21,7 @@ void foo()
 }
 void test()
 {
-  co_chan<std::unique_ptr<int>> ch_u;
+  co_chan<std::unique_ptr<int>> co_u;
   std::unique_ptr<int> xx(new int(11));
   co_u<<std::move(xx);
   std::unique_ptr<int> out;
