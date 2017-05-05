@@ -147,7 +147,10 @@ void test_coro()
             printf("%d\n", i++);
             
             if(i>10)
+            {
+              printf("break\n");
               yield break;
+            }
           }
         }
       });
