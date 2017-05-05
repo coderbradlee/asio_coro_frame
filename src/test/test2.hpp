@@ -21,6 +21,25 @@ void foo()
 }
 void test()
 {
+  co_chan<boost::shared_ptr<int>> ch_1(1);
+  go [=]{
+    boost::shared_ptr<int> x(new int(2));
+    ch_1<<x;
+    (*x)++;
+    ch_1<<x;
+  };
+  go [=]{
+    boost::shared_ptr<int> x;
+    ch_1>>x;
+    printf("%d\n", *x);
+    (*x)++;
+    ch_1>>x;
+    printf("%d\n", *x);
+  };
+  co_sched.RunUntilNoTask();
+}
+void test2()
+{
   co_chan<int> ch_0;
   go [=]{
     ch_0<<1;
