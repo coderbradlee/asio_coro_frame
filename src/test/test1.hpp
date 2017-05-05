@@ -130,30 +130,33 @@ void client()
     std::cerr << "Exception: " << e.what() << "\n";
   }
 }
+struct task:boost::asio::coroutine
+{
+  task(int i):m_i(i){}
+  void operator()()
+  {
+    reenter (this)
+    {
+      for(;;)
+      {
+        printf("%d\n", m_i++);
+        yield;
+        printf("%d\n", m_i++);
+        yield;
+      }
+    }
+  }
+private:
+  int m_i;
+};
 void test_coro()
 {
-  boost::asio::coroutine coro;
-  boost::thread_group m_thread_group;
-  int i=0;
-  for (size_t j = 0; j < 8; ++j)
-      m_thread_group.create_thread([&](boost::system::error_code ec = boost::system::error_code(), std::size_t n = 0){
-        if (!ec) reenter (coro)
-        {
-          for (;;)
-          {
-            printf("%d\n", i++);
-            yield;
-            printf("%d\n", i++);
-            yield;
-            if(i>10)
-            {
-              printf("break\n");
-              yield break;
-            }
-          }
-        }
-      });
-  m_thread_group.join_all();
+  task t1(0), t2(0);
+  for (;;)
+  {
+    t1();
+    t2();
+  }
 }
 void test()
 {
