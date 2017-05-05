@@ -141,11 +141,10 @@ void test_coro()
         {
           for (;;)
           {
-            yield;
             printf("%d\n", i++);
             yield;
             printf("%d\n", i++);
-            
+            yield;
             if(i>10)
             {
               printf("break\n");
