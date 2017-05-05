@@ -19,7 +19,7 @@ void foo()
         v *= i;
   c += v;
 }
-int test()
+void test()
 {
   co_chan<int> ch_0;
   go [=]{
@@ -31,6 +31,7 @@ int test()
     printf("%d\n", i);
   };  
   co_sched.RunUntilNoTask();
+
 }
 int test1()
 {
