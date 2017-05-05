@@ -4,7 +4,7 @@
 // #include <boost/asio/yield.hpp>
 #include <boost/enable_shared_from_this.hpp>  
 #include <boost/shared_ptr.hpp> 
-#include "test1.hpp"
+#include "test2.hpp"
 using std::string;
 using std::cout;
 using std::endl;
