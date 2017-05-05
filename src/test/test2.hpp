@@ -7,7 +7,6 @@
 #include <iostream>
 #include <boost/thread.hpp>
 #include "coroutine.h"
-#include "win_exit.h"
 using namespace std;
 using namespace std::chrono;
 
