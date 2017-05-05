@@ -156,12 +156,9 @@ private:
 };
 void test_coro()
 {
-  task t1(0), t2(0);
-  for (;;)
-  {
-    t1();
-    t2();
-  }
+  task t1(0);
+  t1();
+  
 }
 void test()
 {
