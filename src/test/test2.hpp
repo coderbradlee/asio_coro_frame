@@ -29,9 +29,9 @@ int test()
     int i;
     ch_0>>i;
     printf("%d\n", i);
-  }  
+  };  
   co_sched.RunUntilNoTask();
-};
+}
 int test1()
 {
     // 普通的for循环做法
