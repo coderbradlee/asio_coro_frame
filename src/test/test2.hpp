@@ -19,8 +19,20 @@ void foo()
         v *= i;
   c += v;
 }
-
 int test()
+{
+  co_chan<int> ch_0;
+  go [=]{
+    ch_0<<1;
+  };
+  go [=]{
+    int i;
+    ch_0>>i;
+    printf("%d\n", i);
+  }  
+  co_sched.RunUntilNoTask();
+}
+int test1()
 {
     // 普通的for循环做法
     auto start = system_clock::now();
@@ -46,7 +58,7 @@ int test()
     end = system_clock::now();
     cout << "go with coroutine, cost ";
     cout << duration_cast<milliseconds>(end - start).count() << "ms" << endl;
-  cout << "result zero:" << c * 0 << endl;
+    cout << "result zero:" << c * 0 << endl;
     return 0;
 }
 
