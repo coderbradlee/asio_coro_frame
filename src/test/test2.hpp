@@ -31,7 +31,7 @@ int test()
     printf("%d\n", i);
   }  
   co_sched.RunUntilNoTask();
-}
+};
 int test1()
 {
     // 普通的for循环做法
