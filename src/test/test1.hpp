@@ -161,7 +161,8 @@ void test_coro()
   // for (size_t i = 0; i < 8; ++i)
   //     m_thread_group.create_thread(t1);
   // m_thread_group.join_all();
-  t1();
+  for(;;)
+    t1();
 }
 void test()
 {
