@@ -1,4 +1,5 @@
 include_directories(../common)
+include_directories(../common/json_parser)
 include_directories(wkhtmltox/include)
 set(SRC_LIST ../common/config.cpp ../common/log.cpp redis_api.cpp pdf_api.cpp router.cpp main.cpp)
 
