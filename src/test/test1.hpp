@@ -136,8 +136,8 @@ void test_coro()
   boost::thread_group m_thread_group;
   int i=0;
   for (size_t i = 0; i < 8; ++i)
-      m_thread_group.create_thread([&i](){
-        reenter (coro)
+      m_thread_group.create_thread([&i](boost::system::error_code ec = boost::system::error_code(), std::size_t n = 0){
+        if (!ec) reenter (coro)
         {
           for (;;)
           {
