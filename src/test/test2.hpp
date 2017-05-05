@@ -21,10 +21,10 @@ void foo()
 }
 void test()
 {
-  co_chan<boost::unique_ptr<int>> ch_u;
-  boost::unique_ptr<int> xx(new int(11));
-  co_u<<boost::move(xx);
-  boost::unique_ptr<int> out;
+  co_chan<std::unique_ptr<int>> ch_u;
+  std::unique_ptr<int> xx(new int(11));
+  co_u<<std::move(xx);
+  std::unique_ptr<int> out;
   co_u>>out;
   printf("%d\n", *out);
 }
