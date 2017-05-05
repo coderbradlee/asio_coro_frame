@@ -21,6 +21,15 @@ void foo()
 }
 void test()
 {
+  co_chan<boost::unique_ptr<int>> ch_u;
+  boost::unique_ptr<int> xx(new int(11));
+  co_u<<boost::move(xx);
+  boost::unique_ptr<int> out;
+  co_u>>out;
+  printf("%d\n", *out);
+}
+void test3()
+{
   co_chan<boost::shared_ptr<int>> ch_1(1);
   go [=]{
     boost::shared_ptr<int> x(new int(2));
