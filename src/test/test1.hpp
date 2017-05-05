@@ -111,12 +111,12 @@ void client()
     boost::asio::connect(s, resolver.resolve({"127.0.0.1", "localhost"}));
 
     std::cout << "Enter message: ";
-    char request[max_length];
+    char request[1024];
     std::cin.getline(request, max_length);
     size_t request_length = std::strlen(request);
     boost::asio::write(s, boost::asio::buffer(request, request_length));
 
-    char reply[max_length];
+    char reply[1024];
     size_t reply_length = boost::asio::read(s,
         boost::asio::buffer(reply, request_length));
     std::cout << "Reply is: ";
