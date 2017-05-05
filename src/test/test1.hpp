@@ -75,7 +75,7 @@ private:
   boost::asio::deadline_timer m_timer;
   boost::asio::io_service::strand m_strand;
 };
-void test1()
+void server()
 {
   boost::asio::io_service io;
   boost::asio::spawn(io,[&io](boost::asio::yield_context yields)
@@ -98,8 +98,42 @@ void test1()
   io.run();
   m_thread_group.join_all();
 }
+void client()
+{
+  sleep(2);
+  try
+  {
 
+    boost::asio::io_service io_service;
+
+    tcp::socket s(io_service);
+    tcp::resolver resolver(io_service);
+    boost::asio::connect(s, resolver.resolve({"127.0.0.1", "localhost"}));
+
+    std::cout << "Enter message: ";
+    char request[max_length];
+    std::cin.getline(request, max_length);
+    size_t request_length = std::strlen(request);
+    boost::asio::write(s, boost::asio::buffer(request, request_length));
+
+    char reply[max_length];
+    size_t reply_length = boost::asio::read(s,
+        boost::asio::buffer(reply, request_length));
+    std::cout << "Reply is: ";
+    std::cout.write(reply, reply_length);
+    std::cout << "\n";
+  }
+  catch (std::exception& e)
+  {
+    std::cerr << "Exception: " << e.what() << "\n";
+  }
+}
 void test()
 {
-  test1();
+  boost::thread_group m_thread_group;
+  m_thread_group.create_thread(server);
+  m_thread_group.create_thread(client);
+  m_thread_group.join_all();
+  // server();
+
 }
