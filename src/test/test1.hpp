@@ -157,10 +157,11 @@ private:
 void test_coro()
 {
   task t1(0);
-  boost::thread_group m_thread_group;
-  for (size_t i = 0; i < 8; ++i)
-      m_thread_group.create_thread(t1);
-  m_thread_group.join_all();
+  // boost::thread_group m_thread_group;
+  // for (size_t i = 0; i < 8; ++i)
+  //     m_thread_group.create_thread(t1);
+  // m_thread_group.join_all();
+  t1();
 }
 void test()
 {
