@@ -142,9 +142,9 @@ void test_coro()
           for (;;)
           {
             yield;
-            std::cout<<i++<<std::endl;
+            printf("%d\n", i++);
             yield;
-            std::cout<<i++<<std::endl;
+            printf("%d\n", i++);
             
             if(i>10)
               yield break;
