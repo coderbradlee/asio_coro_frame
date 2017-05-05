@@ -2,6 +2,7 @@
 add_subdirectory(common)
 
 add_subdirectory(test)
+add_subdirectory(libgo)
 add_subdirectory(tools/all_report)
 add_subdirectory(tools/excel_to_mysql)
 include_directories(common)
