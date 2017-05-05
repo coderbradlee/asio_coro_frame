@@ -130,12 +130,29 @@ void client()
     std::cerr << "Exception: " << e.what() << "\n";
   }
 }
+void test_coro()
+{
+  boost::asio::coroutine coro;
+  boost::thread_group m_thread_group;
+  int i=0;
+  for (size_t i = 0; i < 8; ++i)
+      m_thread_group.create_thread([](){
+        reenter (coro)
+        {
+          for (;;)
+          {
+            yield [](){std::cout<<i++<<std::endl;}
+            yield [](){std::cout<<i++<<std::endl;}
+          }
+        }
+      });
+  m_thread_group.join_all();
+}
 void test()
 {
-  boost::thread_group m_thread_group;
-  m_thread_group.create_thread(server);
-  m_thread_group.create_thread(client);
-  m_thread_group.join_all();
-  // server();
-
+  // boost::thread_group m_thread_group;
+  // m_thread_group.create_thread(server);
+  // m_thread_group.create_thread(client);
+  // m_thread_group.join_all();
+  test_coro();
 }
