@@ -108,8 +108,9 @@ void client()
 
     tcp::socket s(io_service);
     tcp::resolver resolver(io_service);
-    boost::asio::connect(s, resolver.resolve({"127.0.0.1", "localhost"}));
-
+    boost::asio::ip::tcp::resolver::query query("localhost", "8888"); 
+    boost::asio::connect(s, resolver.resolve(query));
+     
     std::cout << "Enter message: ";
     const int max_length=1024;
     char request[1024];
