@@ -1,3 +1,4 @@
+#define BOOST_COROUTINE_NO_DEPRECATION_WARNING
 #include <iostream>
 #include <boost/asio.hpp>
 // #include <boost/asio/yield.hpp>
