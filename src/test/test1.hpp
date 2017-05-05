@@ -135,14 +135,19 @@ void test_coro()
   boost::asio::coroutine coro;
   boost::thread_group m_thread_group;
   int i=0;
-  for (size_t i = 0; i < 8; ++i)
+  for (size_t j = 0; j < 8; ++j)
       m_thread_group.create_thread([&](boost::system::error_code ec = boost::system::error_code(), std::size_t n = 0){
         if (!ec) reenter (coro)
         {
           for (;;)
           {
-            yield [&](){std::cout<<i++<<std::endl;}
-            yield [&](){std::cout<<i++<<std::endl;}
+            yield;
+            std::cout<<i++<<std::endl;
+            yield;
+            std::cout<<i++<<std::endl;
+            
+            if(i>10)
+              yield break;
           }
         }
       });
