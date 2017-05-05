@@ -111,6 +111,7 @@ void client()
     boost::asio::connect(s, resolver.resolve({"127.0.0.1", "localhost"}));
 
     std::cout << "Enter message: ";
+    const int max_length=1024;
     char request[1024];
     std::cin.getline(request, max_length);
     size_t request_length = std::strlen(request);
